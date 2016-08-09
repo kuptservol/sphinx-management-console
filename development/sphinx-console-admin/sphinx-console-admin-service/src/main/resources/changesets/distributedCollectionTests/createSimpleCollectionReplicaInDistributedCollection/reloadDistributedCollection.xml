@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../../../changesets.properties</jsonPropsFilePath>
+    <command id="addSimpleCollections-20150618-2">
+        <methodName>reloadDistributedCollection/${distributed.collection.name.2}</methodName>
+    </command>
+</changeset>

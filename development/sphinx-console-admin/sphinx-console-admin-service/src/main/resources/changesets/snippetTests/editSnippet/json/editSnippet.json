@@ -1,0 +1,20 @@
+{
+    "collectionName" : "test_snippet_collection",
+    "snippetConfiguration" : {
+                "preQuery" : "select id, value from test.main",
+        "postQuery" : "select id, value from test.delta",
+        "mainQuery" : "select id, value from test.files",
+        "fullPreQuery" : "select id, value from test.files",
+        "fullPostQuery" : "select id, value from test.delta",
+        "fullMainQuery" : "select id, value from test.delta",
+        "fields" : [ {
+                        "fieldName" : "value"
+        }, {
+                        "fieldName" : "id"
+        } ]
+    },
+    "cron" : {
+        "cronSchedule" : "0 /10 * * * ?",
+        "enabled" : true
+    }
+}

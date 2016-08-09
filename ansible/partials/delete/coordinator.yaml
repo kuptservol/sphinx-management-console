@@ -1,0 +1,25 @@
+# Остановить сервис координатора
+- service: name=sphinx-console-coordinator state=stopped sleep=5
+  ignore_errors: yes #Если сервис не стоит при all или уже удалён
+
+# Удалить все папки
+- file: path={{sphinx-console_path}} state=absent
+  when: type == "all"
+
+- file: path={{coordinator_path}} state=absent
+
+- file: path={{admin_path}} state=absent
+
+# Удалить файлы сервиса
+- name:  Delete coordinator service-files
+  command: "rm -f /etc/init.d/sphinx-console-coordinator"
+  ignore_errors: yes
+
+#Проверить что бд поднято для удаления данных
+- service: name=mysqld state=started sleep=5
+
+#Удаление данных из БД
+- name: delete db data
+  shell: mysql -u {{db_root_user}} -P {{db_port}} --password={{db_root_pass}} --execute="drop database if exists sphinx-console;"
+
+

@@ -1,0 +1,15 @@
+CATALINA_OPTS="
+-Dcom.sun.management.jmxremote
+  -Dcom.sun.management.jmxremote.port={{java_coordinator_management_port}}
+  -Dcom.sun.management.jmxremote.ssl=false
+  -Dcom.sun.management.jmxremote.authenticate=false
+  -Djava.rmi.server.hostname={{rmi_host}}
+  -Xms2048m
+  -Xmx2048m
+  -XX:MaxPermSize=256m
+  -DconfigLocation={{conf_path}}
+  -Dfile.encoding=UTF8
+  -Dlog.base={{sphinx-console_path}}
+  -Dlog4j.configuration=file:{{conf_path}}/coordinator-log4j.properties"
+
+CATALINA_PID={{coordinator_path}}/temp/catalina.pid

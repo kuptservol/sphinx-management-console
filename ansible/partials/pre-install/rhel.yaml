@@ -1,0 +1,18 @@
+---
+- yum: name=java-1.6.0-openjdk state=present
+- command: "update-alternatives --set java /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java"
+  sudo: yes
+
+- lineinfile: dest=~/.bash_profile line="JAVA_HOME=/usr/lib/jvm/jre-openjdk"
+- lineinfile: dest=~/.bash_profile line="PATH=$JAVA_HOME:$PATH" insertafter=EOF
+- lineinfile: dest=~/.bash_profile line="export JAVA_HOME" insertafter=EOF
+- lineinfile: dest=~/.bash_profile line="export PATH" insertafter=EOF
+
+- name: Install coordinator app
+  include: rhel-coordinator.yaml
+  when: type == "all" or type == "coordinator"
+
+- name: Install agent app
+  include: rhel-agent.yaml
+  when: type == "all" or type == "agent"
+

@@ -1,0 +1,10 @@
+{{sphinx_base_path}}/log/*/*/*.log {
+    daily
+    rotate 14
+    compress
+    delaycompress
+    create 644 sphinx-console sphinx-console
+    postrotate
+        killall -SIGUSR1 searchd
+    endscript
+}

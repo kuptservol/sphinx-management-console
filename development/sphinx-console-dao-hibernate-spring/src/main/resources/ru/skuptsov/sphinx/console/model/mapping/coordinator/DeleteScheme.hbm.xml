@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.DeleteScheme" table="DELETE_SCHEME">
+        <id name="id" type="java.lang.Long">
+            <column name="delete_scheme_id" />
+            <generator class="increment" />
+        </id>
+
+        <property name="type">
+            <column name="TYPE" not-null="true"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.DeleteSchemeType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <property name="fieldKey">
+            <column name="field_name" not-null="true"/>
+        </property>
+
+        <property name="fieldValueFrom">
+            <column name="field_value_from" not-null="true"/>
+        </property>
+
+        <property name="fieldValueTo">
+            <column name="field_value_to" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

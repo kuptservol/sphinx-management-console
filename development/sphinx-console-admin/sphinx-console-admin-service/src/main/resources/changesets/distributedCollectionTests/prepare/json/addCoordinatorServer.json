@@ -1,0 +1,16 @@
+{
+    "adminProcesses" : [ {
+                "port" : ${coordinator.server.port},
+        "type" : "COORDINATOR",
+        "server" : {
+                        "ip" : "${coordinator.server.ip}",
+            "domain" : null,
+            "name" : "${coordinator.server.name}"
+        }
+    } ],
+    "server" : {
+                "ip" : "${coordinator.server.ip}",
+        "domain" : null,
+        "name" : "${coordinator.server.name}"
+    }
+}

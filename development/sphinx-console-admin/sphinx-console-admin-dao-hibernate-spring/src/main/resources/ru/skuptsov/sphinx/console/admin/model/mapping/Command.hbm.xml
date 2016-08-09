@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="ru.skuptsov.sphinx.console.admin.model.Command2Save" table="COMMAND">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+
+        <property name="commandId">
+            <column name="command_id" not-null="true"/>
+        </property>
+
+        <property name="methodName">
+            <column name="method_name" not-null="true"/>
+        </property>
+
+        <property name="jsonFilePath">
+            <column name="json_file_path"/>
+        </property>
+
+        <property name="executeDate">
+            <column name="execute_date" not-null="true"/>
+        </property>
+
+        <!--private Command rollback;-->
+        <!--<property name="rollback">-->
+            <!--<column name="is_rollback"/>-->
+        <!--</property>-->
+    </class>
+</hibernate-mapping>

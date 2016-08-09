@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <preConditions>
+        <dbms type="mysql"/>
+    </preConditions>
+
+    <changeSet author="lnovikova" id="20151005-1">
+        <comment>Drop table "SEARCH_QUERY_RESULT"</comment>
+        <sql>
+            DROP TABLE IF EXISTS `SEARCH_QUERY_RESULT`;
+        </sql>
+    </changeSet>
+
+    <changeSet author="lnovikova" id="20151005-2">
+        <comment>Drop table "SEARCH_QUERY"</comment>
+        <sql>
+            DROP TABLE IF EXISTS `SEARCH_QUERY`;
+        </sql>
+    </changeSet>
+
+    <changeSet author="lnovikova" id="20151005-3">
+        <comment>Create table "SEARCH_QUERY"</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `SEARCH_QUERY` (
+            `search_query_id` bigint(20) NOT NULL AUTO_INCREMENT,
+            `collection_id` bigint(20) NOT NULL,
+            `query` varchar(2000) NOT NULL,
+            `query_crc32` INT unsigned NOT NULL default 0,
+            PRIMARY KEY (`search_query_id`),
+            CONSTRAINT `FK_SEARCH_QUERY_RESULT_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION` (`collection_id`) ON DELETE CASCADE,
+            INDEX(collection_id),
+            INDEX(query_crc32)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `SEARCH_QUERY`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="lnovikova" id="20151005-4">
+        <comment>Create table "SEARCH_QUERY_RESULT"</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `SEARCH_QUERY_RESULT` (
+            `search_query_result_id` bigint(20) NOT NULL,
+            `search_query_id` bigint(20) NOT NULL,
+            `replica_id` bigint(20) NOT NULL,
+            `date_time` datetime(3) NOT NULL,
+            `total_time` INT UNSIGNED NOT NULL COMMENT 'duration time in milliseconds',
+            `result_count` INT UNSIGNED NOT NULL,
+            `offset` INT UNSIGNED NOT NULL DEFAULT '0',
+            PRIMARY KEY (`search_query_result_id`),
+            CONSTRAINT `FK_SEARCH_QUERY_RESULT_SEARCH_QUERY` FOREIGN KEY (`search_query_id`) REFERENCES `SEARCH_QUERY` (`search_query_id`) ON DELETE CASCADE,
+            CONSTRAINT `FK_SEARCH_QUERY_RESULT_REPLICA` FOREIGN KEY (`replica_id`) REFERENCES `REPLICA` (`replica_id`) ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `SEARCH_QUERY_RESULT`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="lnovikova" id="20151020-1">
+        <comment>Create trigger SEARCH_QUERY_query_crc32_trigger for saving hash for column SEARCH_QUERY.query</comment>
+        <sql endDelimiter=";\ndelimiter ;;">
+            CREATE TRIGGER SEARCH_QUERY_query_crc32_trigger BEFORE insert ON SEARCH_QUERY
+            FOR EACH ROW
+            BEGIN
+            SET new.query_crc32 = CRC32(new.`query`);
+            END
+            ;;
+        </sql>
+        <rollback>
+            DROP TRIGGER IF EXISTS `SEARCH_QUERY_query_crc32_trigger`;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

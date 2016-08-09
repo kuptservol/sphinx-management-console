@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <command id="addDistributedCollection-20150617-1">
+        <methodName>modifyDistributedCollectionAttributes</methodName>
+        <jsonFilePath>json/modifyDistributedCollection.json</jsonFilePath>
+    </command>
+</changeset>

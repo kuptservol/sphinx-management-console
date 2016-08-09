@@ -1,0 +1,162 @@
+#
+# Sphinx configuration - конфигурация сфинкс
+#
+
+common
+{
+
+# lemmatizer dictionaries base path
+# optional, defaut is /usr/local/share (see ./configure --datadir)
+#
+lemmatizer_base = {{lemmatizer_path}}
+plugin_dir = {{udf_path}}
+
+}
+
+source src1
+{
+ #if ($database.type.title == "oracle")
+ type = odbc 
+ #else
+ type = $database.type.title
+  #end
+ 
+
+ sql_host		= $database.host
+ sql_user		= $database.user
+ sql_pass		= $database.password
+ sql_db			= $database.sqlDb
+ sql_port		= $database.port
+ 
+  #if ($database.type.title == "oracle")
+ odbc_dsn      = DSN=$database.odbcDsn;DRIVER=Dbq=$database.host:$database.port/$database.sqlDb;Uid=$database.user;Pwd=$database.password
+  #end
+ 
+ #foreach( $item in $mappingsWithoutIdField )
+    $item.indexFieldType.title     = $item.indexField
+ #end
+}
+
+source src_${root_index_name}_delta : src1 {
+	#foreach( $item in $sourceDeltaConfigurationFields )
+	     #if ($item.fieldKey != "sql_query")
+	         #if ($item.fieldCommentary && $item.fieldCommentary != "")
+	         # $item.fieldCommentary
+	         #end
+	         $item.fieldKey     =  #lineBreakBlock($item.fieldValue) #end
+	     #end
+	 #end
+	 
+    #if ($deltaSqlQuery)
+        sql_query = #lineBreakBlock($deltaSqlQuery) #end
+    #else
+	     #if ($mainSqlQuery)
+           sql_query = #lineBreakBlock($mainSqlQuery) #end
+         #else
+           sql_query        = \
+           SELECT $idFieldName, \
+	        #foreach( $item in $mappingsWithoutIdFieldForTableCase )
+	            $item.sourceField as $item.indexField  #if( $foreach.hasNext ), #end \
+	        #end
+           FROM $tableName
+        #end    
+    #end
+}
+
+source src_${root_index_name}_main : src1 {
+   #foreach( $item in $sourceMainConfigurationFields )
+     #if($item.fieldKey == "sql_query_range" && $collectionType=="SIMPLE")
+          #if ($database.type.title == "oracle")
+                sql_query_range = SELECT 1,1 from dual
+          #end
+     #else
+         #if ($item.fieldKey != "sql_query")
+                #if ($item.fieldCommentary && $item.fieldCommentary != "")
+                # $item.fieldCommentary
+                #end
+             $item.fieldKey     = #lineBreakBlock($item.fieldValue) #end
+         #end
+     #end
+   #end
+
+   #if ($mainSqlQuery)
+       sql_query = #lineBreakBlock($mainSqlQuery) #end
+   #else
+       sql_query        = \
+       SELECT $idFieldName, \
+	        #foreach( $item in $mappingsWithoutIdFieldForTableCase )
+	            $item.sourceField as $item.indexField  #if( $foreach.hasNext ), #end \
+	        #end
+       FROM $tableName
+   #end
+    
+}
+
+index ${root_index_name}_delta
+{
+ path			     = ${baseDir}data/${pathPrefix}/${index_name}/${root_index_name}_delta
+ #foreach( $item in $index )
+ #if ($item.fieldKey != "path")
+     #if ($item.fieldCommentary && $item.fieldCommentary != "")
+	 # $item.fieldCommentary
+	 #end
+     $item.fieldKey     = #lineBreakBlock($item.fieldValue) #end
+ #end
+ #end
+source			 = src_${root_index_name}_delta
+}
+
+index ${root_index_name}_main
+{
+ path			     = ${baseDir}data/${pathPrefix}/${index_name}/${root_index_name}_main
+ #foreach( $item in $index )
+ #if ($item.fieldKey != "path")
+     #if ($item.fieldCommentary && $item.fieldCommentary != "")
+	 # $item.fieldCommentary
+	 #end
+     $item.fieldKey     = #lineBreakBlock($item.fieldValue) #end
+ #end
+ #end
+source			 = src_${root_index_name}_main
+}
+
+index ${root_index_name}
+{
+    type = distributed
+    local = ${root_index_name}_main
+    local = ${root_index_name}_delta  
+}
+
+
+indexer
+{
+ #foreach( $item in $indexer )
+     #if ($item.fieldCommentary && $item.fieldCommentary != "")
+     # $item.fieldCommentary
+     #end
+$item.fieldKey     = $item.fieldValue
+ #end
+
+}
+
+
+searchd
+{
+ mysql_version_string = 5.5.21
+ workers = threads
+
+ log                =  ${baseDir}log/${pathPrefix}/${index_name}/searchd.log
+ query_log          = ${baseDir}log/${pathPrefix}/${index_name}/query.log
+ pid_file		     = ${baseDir}pid/${pathPrefix}/${index_name}/searchd.pid
+ binlog_path		 = ${baseDir}binlog/${pathPrefix}/${index_name}
+#foreach( $item in $searchd )
+#if($item.fieldKey != "log" && $item.fieldKey != "query_log" && $item.fieldKey != "pid_file" && $item.fieldKey != "binlog_path")
+ #if ($item.fieldCommentary && $item.fieldCommentary != "")
+ # $item.fieldCommentary
+ #end
+ $item.fieldKey     = $item.fieldValue
+#end
+#end
+
+    sphinxql_state = ${baseDir}state/init.sql
+}

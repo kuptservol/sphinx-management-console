@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <command id="20150331-1">
+        <methodName>test</methodName>
+        <type>GET</type>
+    </command>
+    <command id="20150331-2">
+        <methodName>server/add</methodName>
+        <jsonFilePath>json/addServer.json</jsonFilePath>
+        <rollbackChangeset>
+            <changesetFilePath>../deleteServer/deleteServer.xml</changesetFilePath>
+        </rollbackChangeset>
+    </command>
+</changeset>

@@ -1,0 +1,14 @@
+jdbc.admin.db.driverClassName=com.mysql.jdbc.Driver
+jdbc.admin.db.url=jdbc:mysql://{{db_host}}:{{db_port}}/{{db_name}}?useUnicode=true&characterEncoding=UTF8
+jdbc.admin.db.username={{db_user}}
+jdbc.admin.db.password={{db_pass}}
+jdbc.admin.db.initialSize=10
+jdbc.admin.db.minIdle=3
+jdbc.admin.db.maxIdle=10
+jdbc.admin.db.maxActive=10
+jdbc.admin.db.testWhileIdle=true
+jdbc.admin.db.testOnBorrow=true
+jdbc.admin.db.testOnReturn=true
+jdbc.admin.db.initSQL=SELECT 1 FROM DUAL
+jdbc.admin.db.validationQuery=SELECT 1 FROM DUAL
+jdbc.admin.db.timeBetweenEvictionRunsMillis=30000

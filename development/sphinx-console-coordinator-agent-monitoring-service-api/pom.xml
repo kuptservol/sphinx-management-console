@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.skuptsov.sphinx.console</groupId>
+	<artifactId>sphinx-console-coordinator-agent-monitoring-service-api</artifactId>
+	<name>sphinx-console: coordinator agent monitoring service api</name>
+	
+	<parent>
+        <groupId>ru.skuptsov.sphinx.console</groupId>
+        <artifactId>sphinx-console-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath>../sphinx-console-parent</relativePath>
+    </parent>
+    
+    <dependencies>
+        <dependency>
+            <groupId>ru.skuptsov.sphinx.console</groupId>
+            <artifactId>sphinx-console-common-model</artifactId>
+        </dependency>
+    </dependencies>
+    
+</project>

@@ -1,0 +1,678 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.skuptsov.sphinx.console</groupId>
+    <artifactId>sphinx-console-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>sphinx-console: dev parent</name>
+
+    <parent>
+        <groupId>ru.skuptsov.sphinx.console</groupId>
+        <artifactId>sphinx-console-root</artifactId>
+        <version>3.2.0</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <properties>
+        <file.encoding>UTF-8</file.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <dependency.locations.enabled>false</dependency.locations.enabled>
+
+        <jetty-plugin.version>6.1.22</jetty-plugin.version>
+        
+        <java-version>1.6</java-version>
+		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.8.2</org.aspectj-version>
+		<org.slf4j-version>1.7.5</org.slf4j-version>
+		<jackson.databind-version>2.2.3</jackson.databind-version>
+        <commons-lang-version>2.6</commons-lang-version>
+        <commons.beanutils.version>1.8.3</commons.beanutils.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
+        
+        <skipTests>false</skipTests>
+       
+    </properties>
+
+    
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.18.1</version>
+                    <configuration>
+                        <failIfNoTests>false</failIfNoTests>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+
+                        <forkMode>once</forkMode>
+                        <argLine>
+                            -javaagent:"${settings.localRepository}/org/springframework/spring-instrument/${org.springframework-version}/spring-instrument-${org.springframework-version}.jar"
+                        </argLine>
+                        <systemProperties>
+                            <property>
+                                <name>localDevMode</name>
+                                <value>${localDevMode}</value>
+                            </property>
+                        </systemProperties>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.6</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.0-beta-2</version>
+                    <configuration>
+                        <reportPlugins>
+                            <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-project-info-reports-plugin</artifactId>
+                                <version>2.4</version>
+                                <reportSets>
+                                    <reportSet>
+                                        <reports>
+                                            <report>summary</report>
+                                        </reports>
+                                    </reportSet>
+                                </reportSets>
+                                <configuration>
+                                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                                </configuration>
+                            </plugin>
+                            <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-jxr-plugin</artifactId>
+                                <version>2.3</version>
+                            </plugin>
+                            <plugin>
+                                <artifactId>maven-pmd-plugin</artifactId>
+                                <version>2.5</version>
+                                <configuration>
+                                    <sourceEncoding>utf-8</sourceEncoding>
+                                    <targetJdk>1.6</targetJdk>
+                                    <excludeRoots>
+                                        <excludeRoot>target</excludeRoot>
+                                    </excludeRoots>
+                                    <rulesets>
+                                        <ruleset>/rulesets/basic.xml</ruleset>
+                                        <ruleset>/rulesets/codesize.xml</ruleset>
+                                        <ruleset>/rulesets/controversial.xml</ruleset>
+                                        <ruleset>/rulesets/coupling.xml</ruleset>
+                                        <ruleset>/rulesets/design.xml</ruleset>
+                                        <ruleset>/rulesets/junit.xml</ruleset>
+                                        <ruleset>/rulesets/naming.xml</ruleset>
+                                        <ruleset>/rulesets/strictexception.xml</ruleset>
+                                        <ruleset>/rulesets/strings.xml</ruleset>
+                                        <ruleset>/rulesets/sunsecure.xml</ruleset>
+                                        <ruleset>/rulesets/unusedcode.xml</ruleset>
+                                    </rulesets>
+                                </configuration>
+                            </plugin>
+                            <plugin>
+                                <groupId>org.codehaus.mojo</groupId>
+                                <artifactId>cobertura-maven-plugin</artifactId>
+                                <version>2.4</version>
+                                <configuration>
+                                    <formats>
+                                        <format>html</format>
+                                        <format>xml</format>
+                                    </formats>
+                                    <outputDirectory>target/site/cobertura</outputDirectory>
+                                </configuration>
+                            </plugin>
+                            <plugin>
+                                <artifactId>maven-surefire-report-plugin</artifactId>
+                                <version>2.7.2</version>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/surefire-reports</outputDirectory>
+                                </configuration>
+                            </plugin>
+                            <plugin>
+                                <groupId>org.codehaus.mojo</groupId>
+                                <artifactId>jdepend-maven-plugin</artifactId>
+                                <version>2.0-beta-2</version>
+                            </plugin>
+                            <plugin>
+                                <groupId>org.codehaus.mojo</groupId>
+                                <artifactId>findbugs-maven-plugin</artifactId>
+                                <version>2.3.2</version>
+                                <configuration>
+                                    <findbugsXmlOutput>true</findbugsXmlOutput>
+                                    <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+                                    <xmlOutput>true</xmlOutput>
+                                    <excludeFilterFile>${basedir}/../tt-parent/findbugs-exclude.xml</excludeFilterFile>
+                                </configuration>
+                            </plugin>
+                            <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-checkstyle-plugin</artifactId>
+                                <version>2.7</version>
+                                <configuration>
+                                    <configLocation>${basedir}/../tt-parent/checkstyle.xml</configLocation>
+                                    <propertyExpansion>cacheFile=${project.build.directory}/checkstyle-cachefile</propertyExpansion>
+                                </configuration>
+                            </plugin>
+                        </reportPlugins>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+             <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-install-plugin</artifactId>
+			    <version>2.3.1</version>
+			    <executions>
+			        <execution>
+			            <id>install-oracle-jdbc</id>
+			            <goals>
+			                <goal>install-file</goal>
+			            </goals>
+			            <configuration>
+			                <groupId>com.oracle</groupId>
+			                <artifactId>ojdbc6</artifactId>
+			                <version>11.2.0</version>
+			                <packaging>jar</packaging>
+			                <generatePom>true</generatePom>
+			                <createChecksum>true</createChecksum>
+			                <file>../../lib/ojdbc6-11.2.0.jar</file>
+			            </configuration>
+			        </execution>
+			    </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-agent-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-agent-monitoring-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-dao-hibernate-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-callback-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-callback-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-common-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-common-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-common-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-agent-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-coordinator-agent-monitoring-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-sphinx-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-sphinx-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-snippet-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-admin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-admin-dao-hibernate-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-admin-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-admin-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Jackson -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.databind-version}</version>
+			</dependency>
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${org.springframework-version}</version>
+				<exclusions>
+					<!-- Exclude Commons Logging in favor of SLF4j -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${org.springframework-version}</version>
+			</dependency>
+			<dependency> 
+			    <groupId>org.springframework</groupId> 
+	            <artifactId>spring-jmx</artifactId> 
+	            <version>2.0.8</version> 
+	        </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>1.4</version>
+            </dependency>
+
+            <!-- AspectJ -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${org.aspectj-version}</version>
+			</dependency>
+	
+			<!-- Logging -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${org.slf4j-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${org.slf4j-version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${org.slf4j-version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.17</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.mail</groupId>
+						<artifactId>mail</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.jms</groupId>
+						<artifactId>jms</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun.jdmk</groupId>
+						<artifactId>jmxtools</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun.jmx</groupId>
+						<artifactId>jmxri</artifactId>
+					</exclusion>
+				</exclusions>
+				<scope>runtime</scope>
+			</dependency>
+
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>apache-log4j-extras</artifactId>
+                <version>1.2.17</version>
+            </dependency>
+
+			<!-- @Inject -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>1</version>
+			</dependency>
+	
+			<!-- Servlet -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>2.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+			</dependency>
+			<dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang-version}</version>
+            </dependency>
+	
+			<!-- Test -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+				<scope>test</scope>
+			</dependency>
+
+            <!-- MySQL Java Connector library -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.24</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>com.oracle</groupId>
+                <artifactId>ojdbc6</artifactId>
+                <version>11.2.0</version>
+            </dependency>
+            
+
+            <dependency>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>1.0.2.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${org.springframework-version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>1.8.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>1.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-instrument</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${org.springframework-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${org.aspectj-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.jsqlparser</groupId>
+                <artifactId>jsqlparser</artifactId>
+                <version>0.9</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons.beanutils.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sourceforge.jtds</groupId>
+                <artifactId>jtds</artifactId>
+                <version>1.2.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>9.1-901-1.jdbc4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+                <!--             <exclusions> -->
+                <!--                 <exclusion> -->
+                <!--                     <groupId>log4j</groupId> -->
+                <!--                     <artifactId>log4j</artifactId> -->
+                <!--                 </exclusion> -->
+                <!--             </exclusions> -->
+            </dependency>
+
+            <!-- required for hibernate libraries-->
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>1.6.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>3.18.1-GA</version>
+            </dependency>
+
+            <dependency>
+                <groupId>antlr</groupId>
+                <artifactId>antlr</artifactId>
+                <version>2.7.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.1.0.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>5.2.0.Beta1</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>../sphinx-console-base</module>
+        <module>../sphinx-console-util</module>
+        <module>../sphinx-console-dao-hibernate-spring</module>
+        <module>../sphinx-console-coordinator-service-api</module>
+        <module>../sphinx-console-coordinator-service</module>
+        <module>../sphinx-console-sphinx-service-api</module>
+        <module>../sphinx-console-sphinx-service</module>
+        <module>../sphinx-console-snippet-service</module>
+        <module>../sphinx-console-coordinator-agent-service-api</module>
+        <module>../sphinx-console-coordinator-agent-service</module>
+        <module>../sphinx-console-coordinator-agent-monitoring-service-api</module>
+        <module>../sphinx-console-coordinator-agent-monitoring-service</module>
+        <module>../sphinx-console-coordinator-callback-service-api</module>
+        <module>../sphinx-console-coordinator-callback-service</module>
+        <module>../sphinx-console-coordinator</module>
+        <module>../sphinx-console-coordinator-agent</module>
+        <module>../sphinx-console-admin</module>
+<!--         <module>../sphinx-console-admin-core</module> -->
+<!--         <module>../sphinx-console-admin-dao-hibernate-spring</module> -->
+        <module>../sphinx-console-web</module>
+    </modules>
+
+</project>

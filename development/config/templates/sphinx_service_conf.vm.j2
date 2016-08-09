@@ -1,0 +1,109 @@
+#!/bin/bash
+# sphinx: Startup script for Sphinx search
+#
+# chkconfig: 345 86 14
+# description:  This is a daemon for high performance full text \
+#               search of MySQL and PostgreSQL databases. \
+#               See http://www.sphinxsearch.com/ for more info.
+#
+# processname: searchd
+# pidfile: /opt/sphinx/pid/searching/${index_name}/searchd.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+processname=${processname}
+servicename=sphinx-console-service_${index_name}
+wdir=${wdir}
+configpath={{sphinx_base_path}}/cfg/searching/${index_name}/sphinx.conf
+RETVAL=0
+PIDPATH={{sphinx_base_path}}/pid/searching/${index_name}/searchd.pid
+
+PATH=$PATH:${path}
+
+start() {
+    echo -n $"Starting Sphinx ${servicename} daemon: "
+    cd $wdir
+    daemon --user=${user} --check $servicename ${wdir}/$processname --config $configpath --iostats --cpustats
+    RETVAL=$?
+
+    # Actualy we cant rely on this RETVAL as Sphinx sometimes returns error code 0 on fatal errors (for example when it finds listen = null:mysql41 in config)
+    if [ ! -f $PIDPATH ] || [ ! -s $PIDPATH ]; then
+        echo ""
+        echo "Actually Sphinx daemon has not started!"
+        RETVAL=1
+    fi
+
+    echo
+    [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$servicename
+}
+
+stop() {
+    echo -n "Stopping Sphinx $servicename daemon: "
+    if [ -f $PIDPATH ]
+    then
+        cd $wdir
+        $wdir/$processname --config $configpath --stopwait
+        ret=$?
+        echo "Result: $ret"
+        if [ -f $PIDPATH ]
+        then
+            echo "searchd.pid still exists"
+            if [ -s $PIDPATH ]
+            then
+                echo "searchd.pid not empty"
+                proc_id=$(cat $PIDPATH)
+                echo "kill process $proc_id"
+                kill -9 $proc_id
+                ret=$?
+                echo "Result: $ret"
+            else
+                echo "empty pid file"
+            fi
+
+            echo "delete pid file and lock"
+            rm -f $PIDPATH
+            rm -f /var/lock/subsys/$servicename
+		else
+			echo "Ok. Pid file does not exists."
+        fi
+    else
+        echo "Ok. Pid file does not exists."
+    fi
+
+}
+
+# See how we were called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        if [ -f {{sphinx_base_path}}/pid/searching/${index_name}/searchd.pid ];
+        then
+            echo $(cat {{sphinx_base_path}}/pid/searching/${index_name}/searchd.pid)
+        else
+            echo ""
+        fi
+        ;;
+    restart)
+        stop
+        sleep 3
+        start
+        ;;
+    condrestart)
+        if [ -f /var/lock/subsys/$servicename ]; then
+            stop
+            sleep 3
+            start
+        fi
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart}"
+        ;;
+esac
+exit $RETVAL
+

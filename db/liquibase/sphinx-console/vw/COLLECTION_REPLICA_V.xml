@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <preConditions>
+        <dbms type="mysql"/>
+    </preConditions>
+
+    <changeSet author="lnovikova" id="20150921-01" runOnChange="true">
+        <comment>View of collection with search replicas</comment>
+        <sql>
+            CREATE OR REPLACE VIEW `COLLECTION_REPLICA_V` AS
+            select col.collection_id, col.collection_name, s.server_id, s.name as server_name, s.ip as server_ip, r.replica_id,
+            r.replica_number, sp.sphinx_process_id, cf.field_value as listen_port, cf2.field_value as distributed_listen_port
+            from COLLECTION col
+            inner join SPHINX_PROCESS sp on(col.collection_id = sp.collection_id and sp.type='SEARCHING')
+            inner join SERVER s on(sp.server_id = s.server_id)
+            inner join REPLICA r on(sp.replica_id = r.replica_id)
+            inner join CONFIGURATION conf on(sp.configuration_id = conf.configuration_id)
+            inner join CONFIGURATION_FIELDS cf on(conf.configuration_id = cf.configuration_id and cf.field_key='listen')
+            left join CONFIGURATION_FIELDS cf2 on(conf.configuration_id = cf2.configuration_id and cf2.field_key='distributed_listen')
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+

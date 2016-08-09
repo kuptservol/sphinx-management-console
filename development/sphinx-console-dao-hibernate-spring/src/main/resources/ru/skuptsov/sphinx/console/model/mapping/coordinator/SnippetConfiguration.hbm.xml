@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.SnippetConfiguration" table="SNIPPET_CONFIGURATION">
+         <id name="id" type="java.lang.Long">
+            <column name="SNIPPET_CONFIGURATION_ID" />
+            <generator class="increment" />
+        </id>
+        
+        <many-to-one name="collection" class="ru.skuptsov.sphinx.console.coordinator.model.Collection" lazy="false">
+            <column name="collection_id" not-null="true"/>
+        </many-to-one>
+        
+        <many-to-one name="dataSource" class="ru.skuptsov.sphinx.console.coordinator.model.DataSource" lazy="false">
+            <column name="datasource_id" not-null="true"/>
+        </many-to-one>
+        
+        <many-to-one name="scheduledTask" class="ru.skuptsov.sphinx.console.coordinator.model.ScheduledTask" lazy="false">
+            <column name="scheduled_task_id" not-null="true"/>
+        </many-to-one>
+        
+         <property name="lastBuildSnippet">
+            <column name="last_buildsnippet" not-null="false"/>
+        </property>
+        
+         <property name="nextBuildSnippet">
+            <column name="next_buildsnippet" not-null="false"/>
+        </property>
+        
+        <property name="preQuery" type="text" column="PRE_QUERY" not-null="false" />
+        <property name="postQuery" type="text" column="POST_QUERY" not-null="false" />
+        <property name="mainQuery" type="text" column="MAIN_QUERY" not-null="false" />
+        
+        <property name="fullPreQuery" type="text" column="FULL_PRE_QUERY" not-null="false" />
+        <property name="fullPostQuery" type="text" column="FULL_POST_QUERY" not-null="false" />
+        <property name="fullMainQuery" type="text" column="FULL_MAIN_QUERY" not-null="false" />
+        
+        <set name="fields" table="SNIPPET_CONFIGURATION_FIELD" cascade="all, all-delete-orphan" lazy="false" inverse="true">
+            <key column="SNIPPET_CONFIGURATION_ID" not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.SnippetConfigurationField" />
+        </set>
+    </class>
+</hibernate-mapping>

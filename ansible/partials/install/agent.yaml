@@ -1,0 +1,106 @@
+---
+# Installs agent
+- name: Stop sphinx-console Coordinator Agent (if exists)
+  command: "{{service_path}} sphinx-console-agent stop"
+  ignore_errors: yes
+
+- name: Remove old services
+  command: "rm -rf /etc/init.d/sphinx-console-service_*"
+
+- file: path={{sphinx-console_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- file: path={{sphinx-console_path}}/bin state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- file: path={{sphinx-console_path}}/logs state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+
+- file: path={{conf_path}} state=directory
+- file: path={{conf_path}}/templates state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- template: src={{dist_dir}}/conf/templates/{{ item }}.j2  dest={{conf_path}}/templates/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx_service_conf.vm
+    - sphinx_conf.vm
+
+- copy: src={{dist_dir}}/conf/{{ item }} dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - agent-jmx.properties
+    - retry.properties
+    - agent-log4j.properties
+    - agent-log4j.properties
+
+- template: src={{dist_dir}}/conf/{{ item }}.j2 dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx.properties
+    - sphinx_service_conf.properties
+
+- file: path={{agent_path}} state=absent
+- file: path={{agent_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- file: path={{udf_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+
+- file: path={{sphinx_base_path}} state=absent
+- file: path={{sphinx_base_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+
+- file: path={{sphinx_binaries_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+  when: use_own_sphinx == "true"
+- copy: src={{sphinx_binaries}}/{{ item }} dest={{sphinx_binaries_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0755"
+  when: use_own_sphinx == "true"
+  with_items:
+    - searchd
+    - indexer
+
+
+# name: Upload coordinator agent
+- copy: src={{dist_dir}}/agent/sphinx-console-coordinator-agent.jar dest={{sphinx-console_path}}/agent/sphinx-console-coordinator-agent.jar owner={{sw_user}} group={{sw_group}} mode="0644"
+
+- template: src={{dist_dir}}/bin/{{ item }}.j2 dest={{sphinx-console_path}}/bin/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0755"
+  with_items:
+    - start-agent.sh
+    - stop-agent.sh
+
+# wordforms
+- file: path={{wordforms_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/data/wordforms/ru-txt.zip dest=/tmp/
+- unarchive: src=/tmp/ru-txt.zip dest={{wordforms_path}}/ copy=no
+- command: "rm /tmp/ru-txt.zip"
+
+# dictionary
+- file: path={{lemmatizer_path}} state=directory
+- copy: src={{dist_dir}}/data/dict/ru-pak.zip dest=/tmp/
+- unarchive: src=/tmp/ru-pak.zip dest={{lemmatizer_path}}/ copy=no
+- command: "rm /tmp/ru-pak.zip"
+
+# stopwords
+- file: path={{stopwords_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/data/stopwords/ dest={{stopwords_path}}/
+
+# Install logrotate
+- template: src={{dist_dir}}/etc/logrotate.d/{{ item }}.j2 dest=/etc/logrotate.d/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0755"
+  with_items:
+    - sphinx-console
+
+# Install sphinx-console .so
+- file: path=/tmp/sphinx-console-udf-src state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- file: path={{udf_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/sphinx/udf dest=/tmp/sphinx-console-udf-src/ owner={{sw_user}} group={{sw_group}}
+- template: src={{dist_dir}}/sphinx/udf/sphinx-console_get_snippet.c.j2 dest=/tmp/sphinx-console-udf-src/udf/sphinx-console_get_snippet.c owner={{sw_user}} group={{sw_group}} mode="0755"
+- command: "gcc -shared -fPIC -o {{udf_path}}/sphinx-console_get_snippet.so /tmp/sphinx-console-udf-src/udf/sphinx-console_get_snippet.c"
+# - command: "rm -rf /tmp/sphinx-console-udf-src"
+
+# Install state file
+- file: path={{sphinx_base_path}}/state state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/sphinx/state/init.sql dest={{sphinx_base_path}}/state/init.sql owner={{sw_user}} group={{sw_group}}
+
+- command: "chown -R {{sw_user}}:{{sw_group}} {{sphinx-console_path}} {{sphinx_base_path}}"
+
+# Configure logrotate
+- template: src={{dist_dir}}/etc/logrotate.d/{{ item }}.j2 dest=/etc/logrotate.d/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0755"
+  with_items:
+    - sphinx-console
+- command: "logrotate --force /etc/logrotate.d/sphinx-console"
+  ignore_errors: yes
+
+# Create agent service
+- template: src={{dist_dir}}/bin/sphinx-console-agent.j2 dest=/etc/init.d/sphinx-console-agent owner={{sw_user}} group={{sw_group}} mode="0755"
+- command: "chkconfig --add sphinx-console-agent"
+
+- name: Start sphinx-console Coordinator Agent
+  command: "{{service_path}} sphinx-console-agent start"
+
+- pause: seconds=10

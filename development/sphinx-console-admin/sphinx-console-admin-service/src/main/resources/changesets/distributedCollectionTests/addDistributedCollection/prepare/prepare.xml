@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <command id="addSimpleCollections-20150618-1">
+        <methodName>addCollection</methodName>
+        <jsonFilePath>json/addSimpleCollection1.json</jsonFilePath>
+    </command>
+    <command id="addSimpleCollections-20150618-2">
+        <methodName>replica/create</methodName>
+        <jsonFilePath>json/createReplica1.json</jsonFilePath>
+    </command>
+    <command id="addSimpleCollections-20150618-3">
+        <methodName>addCollection</methodName>
+        <jsonFilePath>json/addSimpleCollection2.json</jsonFilePath>
+    </command>
+    <command id="addSimpleCollections-20150618-4">
+        <methodName>replica/create</methodName>
+        <jsonFilePath>json/createReplica2.json</jsonFilePath>
+    </command>
+</changeset>

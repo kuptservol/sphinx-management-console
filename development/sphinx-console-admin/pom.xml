@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.skuptsov.sphinx.console</groupId>
+    <artifactId>sphinx-console-admin</artifactId>
+    <packaging>pom</packaging>
+    
+    <name>sphinx-console: admin</name>
+
+    <parent>
+        <groupId>ru.skuptsov.sphinx.console</groupId>
+        <artifactId>sphinx-console-root</artifactId>
+        <version>3.2.0</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <modules>
+        <module>sphinx-console-admin-core</module>
+        <module>sphinx-console-admin-dao-hibernate-spring</module>
+        <module>sphinx-console-admin-service</module>
+    </modules>
+    
+    
+</project>

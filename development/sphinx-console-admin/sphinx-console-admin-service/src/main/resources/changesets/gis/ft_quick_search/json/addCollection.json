@@ -1,0 +1,964 @@
+{
+    "searchConfigurationPort" : {
+        "searchConfigurationPort" : 9301
+    },
+    "distributedConfigurationPort" : {
+        "distributedConfigurationPort" : 9310
+    },
+    "searchConfiguration" : {
+        "name" : "search-conf-ft_quick_search-1",
+        "filePath" : "",
+        "configurationTemplate" : {
+            "name" : "Base configuration template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "CONFIGURATION",
+            "configurationFields" : [ {
+                "fieldKey" : "min_infix_len",
+                "fieldValue" : "3",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "expand_keywords",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "index_exact_words",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "morphology",
+                "fieldValue" : "lemmatize_ru",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "wordforms",
+                "fieldValue" : "/usr/local/bin/ru.txt",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "searchConfigurationTemplate" : {
+            "name" : "Base search template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "SEARCH",
+            "configurationFields" : [ {
+                "fieldKey" : "max_filters",
+                "fieldValue" : "512",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_filter_values",
+                "fieldValue" : "8192",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "read_timeout",
+                "fieldValue" : "5",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_packet_size",
+                "fieldValue" : "16M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "client_timeout",
+                "fieldValue" : "200",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "unlink_old",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mva_updates_pool",
+                "fieldValue" : "1M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "seamless_rotate",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_children",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_batch_queries",
+                "fieldValue" : "22",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "preopen_indexes",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "thread_stack",
+                "fieldValue" : "512K",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "indexerConfigurationTemplate" : {
+            "name" : "Base index template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "INDEX",
+            "configurationFields" : [ {
+                "fieldKey" : "lemmatizer_cache",
+                "fieldValue" : "256M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mem_limit",
+                "fieldValue" : "512M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "datasource" : {
+            "name" : "hcs_srch",
+            "type" : "PGSQL",
+            "host" : "195.26.187.155",
+            "port" : 5432,
+            "user" : "hcs_srch_rw",
+            "password" : "hcs_srch_rw",
+            "odbcDsn" : "",
+            "sqlDb" : "hcssrchdb"
+        },
+        "fieldMappings" : [ {
+            "sourceField" : "id",
+            "sourceFieldType" : "int8",
+            "indexField" : "id",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : true
+        }, {
+            "sourceField" : "entity_year",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_year",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_ogrn",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_ogrn",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_link",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_link",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "latitude",
+            "sourceFieldType" : "text",
+            "indexField" : "latitude",
+            "indexFieldType" : "SQL_ATTR_FLOAT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_description",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_description",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_location",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_location",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_type",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_type",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_name",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_name",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_short_name",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_short_name",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_title",
+            "sourceFieldType" : "varchar",
+            "indexField" : "entity_title",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_identifying_numbers",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_identifying_numbers",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_date",
+            "sourceFieldType" : "varchar",
+            "indexField" : "entity_date",
+            "indexFieldType" : "SQL_ATTR_TIMESTAMP",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_text_files",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_text_files",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_file_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "entity_file_name",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_role_codes",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_role_codes",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_category",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_category",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_location",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_location",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_inn",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_inn",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_uid",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_uid",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_tag",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_tag",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_deleted",
+            "sourceFieldType" : "int4",
+            "indexField" : "entity_deleted",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "longitude",
+            "sourceFieldType" : "text",
+            "indexField" : "longitude",
+            "indexFieldType" : "SQL_ATTR_FLOAT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_text",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_text",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        } ],
+        "sourceConfigurationFields" : [ {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_ws where object_type='WS' ) where object_type='S'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wz where object_type='WZ' ) where object_type='Z'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(min_id), max(max_id) from (\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_doc_discounts\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_doc_laws\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_doc_rates\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_passports_dwelling\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_passports_apartment\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_houses\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_infr_documents\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_news\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_organizations\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_people_events\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_useful_links\n) extr",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  entity_uid,\n  entity_title,\n  entity_date,\n  entity_text,\n  entity_category,\n  entity_type,\n  ft_identifying_numbers,\n  ft_location,\n  ft_name,\n  ft_description,\n  ft_short_name,\n  ft_tag,\n  ft_text_files,\n  entity_file_name,\n  entity_location,\n  entity_year,\n  longitude,\n  latitude,\n  entity_ogrn,\n  entity_inn,\n  entity_deleted,\n  entity_role_codes,\n  entity_link\nfrom\n  (\nselect\n  id                  id,\n  file_guids          entity_uid,\n  title               entity_title,\n  round(extract(epoch from acceptance_date)::numeric)::varchar entity_date,\n  doc_numbers         entity_text,\n  'DISCOUNT_DOCUMENT' entity_category,\n  '2'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_discounts\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  file_guids          entity_uid,\n  title               entity_title,\n  round(extract(epoch from acceptance_date)::numeric)::varchar entity_date,\n  doc_numbers         entity_text,\n  'LAW_DOCUMENT'      entity_category,\n  '3'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  title               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_laws\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  ''                  entity_date,\n  municipal_services  entity_text,\n  'RATE_DOCUMENT'     entity_category,\n  '4'                 entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  subject             entity_location,\n  to_char(effective_period_to, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_rates\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' || reporting_period_year) entity_text,\n  'EP_JD'             entity_category,\n  '10'                entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  object_guid         entity_link\nFROM srchsm.search_passports_dwelling\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' || reporting_period_year) entity_text,\n  'EP_MKD'            entity_category,\n  '9'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  object_guid         entity_link\nFROM srchsm.search_passports_apartment\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  house_type_name     entity_text,\n  'HOUSES'            entity_category,\n  '7'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  ''                  entity_year,\n  longitude::varchar           longitude,\n  latitude::varchar            latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_houses\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  names               entity_title,\n  round(extract(epoch from last_changed_date)::numeric)::varchar entity_date,\n  oktmo_full_name     entity_text,\n  'INFRASTRUCTURE_DOCUMENTS'     entity_category,\n  '11'                entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  oktmo_full_name     ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_infr_documents\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  round(extract(epoch from publish_date)::numeric)::varchar entity_date,\n  short_text          entity_text,\n  'News'              entity_category,\n  '1'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_news\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  organization_name   entity_title,\n  ''                  entity_date,\n  roles               entity_text,\n  'ORGANIZATIONS'     entity_category,\n  '8'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  fact_addr           entity_location,\n  ''                  entity_year,\n  longitude::varchar           longitude,\n  latitude::varchar            latitude,\n  ogrn                entity_ogrn,\n  inn                 entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_organizations\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  round(extract(epoch from event_date)::numeric)::varchar entity_date,\n  ''                  entity_text,\n  'PEOPLE_EVENTS'     entity_category,\n  '5'                 entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  place               entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_people_events\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  link_name           entity_title,\n  ''                  entity_date,\n  link_desc           entity_text,\n  'USEFULL_LINKS'     entity_category,\n  '6'                 entity_type,\n  ''                  ft_identifying_numbers,\n  ''                  ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  link_url            entity_link\nFROM srchsm.search_useful_links\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n) as alltbls",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wa where object_type='WA' ) where object_type='A'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wb where object_type='WB' ) where object_type='B'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wt where object_type='WT' ) where object_type='T'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wh where object_type='WH' ) where object_type='H'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wo where object_type='WO' ) where object_type='O'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wv where object_type='WV' ) where object_type='V'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre ",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wk where object_type='WK' ) where object_type='ID'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wh where object_type='WN' ) where object_type='N'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_range_step",
+            "fieldValue" : "3600000000",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_post_index",
+            "fieldValue" : "update srchsm.search_update_indexer set merge_date = index_date where object_type IN ('S', 'Z', 'T', 'H', 'A', 'B', 'ID', 'N', 'O', 'V', 'L')",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wk where object_type='WL' ) where object_type='L'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(min_ts), coalesce(max(max_ts), min(min_ts)) from (\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_ws l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'S' AND l.object_type = 'WS'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wz l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'Z' AND l.object_type = 'WZ'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wt l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'T' AND l.object_type = 'WT'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wh l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'H' AND l.object_type = 'WH'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wa l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'A' AND l.object_type = 'WA'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wb l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'B' AND l.object_type = 'WB'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wk l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'ID' AND l.object_type = 'WK'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wn l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'N' AND l.object_type = 'WN'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wo l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'O' AND l.object_type = 'WO'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wv l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'V' AND l.object_type = 'WV'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wl l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'L' AND l.object_type = 'WL'\n) extrs",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  entity_uid,\n  entity_title,\n  entity_date,\n  entity_text,\n  entity_category,\n  entity_type,\n  ft_identifying_numbers,\n  ft_location,\n  ft_name,\n  ft_description,\n  ft_short_name,\n  ft_tag,\n  ft_text_files,\n  entity_file_name,\n  entity_location,\n  entity_year,\n  longitude,\n  latitude,\n  entity_ogrn,\n  entity_inn,\n  entity_deleted,\n  entity_role_codes,\n  entity_link\nfrom\n  (\nselect\n  id                  id,\n  file_guids          entity_uid,\n  title               entity_title,\n  round(extract(epoch from acceptance_date)::numeric)::varchar entity_date,\n  doc_numbers         entity_text,\n  'DISCOUNT_DOCUMENT' entity_category,\n  '2'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_discounts\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  file_guids          entity_uid,\n  title               entity_title,\n  round(extract(epoch from acceptance_date)::numeric)::varchar entity_date,\n  doc_numbers         entity_text,\n  'LAW_DOCUMENT'      entity_category,\n  '3'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  title               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_laws\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  ''                  entity_date,\n  municipal_services  entity_text,\n  'RATE_DOCUMENT'     entity_category,\n  '4'                 entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  subject             entity_location,\n  to_char(effective_period_to, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_rates\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' || reporting_period_year) entity_text,\n  'EP_JD'             entity_category,\n  '10'                entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  object_guid         entity_link\nFROM srchsm.search_passports_dwelling\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' || reporting_period_year) entity_text,\n  'EP_MKD'            entity_category,\n  '9'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  object_guid         entity_link\nFROM srchsm.search_passports_apartment\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  house_type_name     entity_text,\n  'HOUSES'            entity_category,\n  '7'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  ''                  entity_year,\n  longitude::varchar           longitude,\n  latitude::varchar            latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_houses\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  names               entity_title,\n  round(extract(epoch from last_changed_date)::numeric)::varchar entity_date,\n  oktmo_full_name     entity_text,\n  'INFRASTRUCTURE_DOCUMENTS'     entity_category,\n  '11'                entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  oktmo_full_name     ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_infr_documents\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  round(extract(epoch from publish_date)::numeric)::varchar entity_date,\n  short_text          entity_text,\n  'News'              entity_category,\n  '1'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_news\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  organization_name   entity_title,\n  ''                  entity_date,\n  roles               entity_text,\n  'ORGANIZATIONS'     entity_category,\n  '8'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  fact_addr           entity_location,\n  ''                  entity_year,\n  longitude::varchar           longitude,\n  latitude::varchar            latitude,\n  ogrn                entity_ogrn,\n  inn                 entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_organizations\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  round(extract(epoch from event_date)::numeric)::varchar entity_date,\n  ''                  entity_text,\n  'PEOPLE_EVENTS'     entity_category,\n  '5'                 entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  place               entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_people_events\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  link_name           entity_title,\n  ''                  entity_date,\n  link_desc           entity_text,\n  'USEFULL_LINKS'     entity_category,\n  '6'                 entity_type,\n  ''                  ft_identifying_numbers,\n  ''                  ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  link_url            entity_link\nFROM srchsm.search_useful_links\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n) as alltbls",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  entity_uid,\n  entity_title,\n  entity_date,\n  entity_text,\n  entity_category,\n  entity_type,\n  ft_identifying_numbers,\n  ft_location,\n  ft_name,\n  ft_description,\n  ft_short_name,\n  ft_tag,\n  ft_text_files,\n  entity_file_name,\n  entity_location,\n  entity_year,\n  longitude,\n  latitude,\n  entity_ogrn,\n  entity_inn,\n  entity_deleted,\n  entity_role_codes,\n  entity_link\nfrom (\n  SELECT\n    id                                                               id,\n    file_guids                                                       entity_uid,\n    title                                                            entity_title,\n    round(extract(EPOCH FROM acceptance_date) :: NUMERIC) :: VARCHAR entity_date,\n    doc_numbers                                                      entity_text,\n    'DISCOUNT_DOCUMENT'                                              entity_category,\n    '2'                                                              entity_type,\n    doc_numbers                                                      ft_identifying_numbers,\n    place                                                            ft_location,\n    names                                                            ft_name,\n    ''                                                               ft_description,\n    ''                                                               ft_short_name,\n    ''                                                               ft_tag,\n    converted_content                                                ft_text_files,\n    file_name                                                        entity_file_name,\n    ''                                                               entity_location,\n    ''                                                               entity_year,\n    ''                                                               longitude,\n    ''                                                               latitude,\n    ''                                                               entity_ogrn,\n    ''                                                               entity_inn,\n    0                                                                entity_deleted,\n    ''                                                               entity_role_codes,\n    ''                                                               entity_link\n  FROM srchsm.search_doc_discounts s\n  WHERE\n    s.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_ws l\n      WHERE l.object_type = 'WS'\n            AND l.object_id = s.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                               id,\n    file_guids                                                       entity_uid,\n    title                                                            entity_title,\n    round(extract(EPOCH FROM acceptance_date) :: NUMERIC) :: VARCHAR entity_date,\n    doc_numbers                                                      entity_text,\n    'LAW_DOCUMENT'                                                   entity_category,\n    '3'                                                              entity_type,\n    doc_numbers                                                      ft_identifying_numbers,\n    place                                                            ft_location,\n    title                                                            ft_name,\n    ''                                                               ft_description,\n    ''                                                               ft_short_name,\n    ''                                                               ft_tag,\n    converted_content                                                ft_text_files,\n    file_name                                                        entity_file_name,\n    ''                                                               entity_location,\n    ''                                                               entity_year,\n    ''                                                               longitude,\n    ''                                                               latitude,\n    ''                                                               entity_ogrn,\n    ''                                                               entity_inn,\n    0                                                                entity_deleted,\n    ''                                                               entity_role_codes,\n    ''                                                               entity_link\n  FROM srchsm.search_doc_laws z\n  WHERE\n    z.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wz l\n      WHERE l.object_type = 'WZ'\n            AND l.object_id = z.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                   id,\n    object_guid                          entity_uid,\n    title                                entity_title,\n    ''                                   entity_date,\n    municipal_services                   entity_text,\n    'RATE_DOCUMENT'                      entity_category,\n    '4'                                  entity_type,\n    ''                                   ft_identifying_numbers,\n    place                                ft_location,\n    names                                ft_name,\n    ''                                   ft_description,\n    ''                                   ft_short_name,\n    tegs                                 ft_tag,\n    converted_content                    ft_text_files,\n    file_name                            entity_file_name,\n    subject                              entity_location,\n    to_char(effective_period_to, 'YYYY') entity_year,\n    ''                                   longitude,\n    ''                                   latitude,\n    ''                                   entity_ogrn,\n    ''                                   entity_inn,\n    0                                    entity_deleted,\n    ''                                   entity_role_codes,\n    ''                                   entity_link\n  FROM srchsm.search_doc_rates t\n  WHERE\n    t.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wt l\n      WHERE l.object_type = 'WT'\n            AND l.object_id = t.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                     id,\n    object_guid                            entity_uid,\n    address                                entity_title,\n    ''                                     entity_date,\n    ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' ||\n     reporting_period_year)                entity_text,\n    'EP_JD'                                entity_category,\n    '10'                                   entity_type,\n    doc_numbers                            ft_identifying_numbers,\n    place                                  ft_location,\n    names                                  ft_name,\n    ''                                     ft_description,\n    ''                                     ft_short_name,\n    tegs                                   ft_tag,\n    ''                                     ft_text_files,\n    ''                                     entity_file_name,\n    address                                entity_location,\n    to_char(reporting_period_year, 'YYYY') entity_year,\n    ''                                     longitude,\n    ''                                     latitude,\n    ''                                     entity_ogrn,\n    ''                                     entity_inn,\n    0                                      entity_deleted,\n    ''                                     entity_role_codes,\n    object_guid                            entity_link\n  FROM srchsm.search_passports_dwelling h\n  WHERE\n    h.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wh l\n      WHERE l.object_type = 'WH'\n            AND l.object_id = h.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                     id,\n    object_guid                            entity_uid,\n    address                                entity_title,\n    ''                                     entity_date,\n    ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' ||\n     reporting_period_year)                entity_text,\n    'EP_MKD'                               entity_category,\n    '9'                                    entity_type,\n    doc_numbers                            ft_identifying_numbers,\n    place                                  ft_location,\n    names                                  ft_name,\n    ''                                     ft_description,\n    ''                                     ft_short_name,\n    tegs                                   ft_tag,\n    ''                                     ft_text_files,\n    ''                                     entity_file_name,\n    address                                entity_location,\n    to_char(reporting_period_year, 'YYYY') entity_year,\n    ''                                     longitude,\n    ''                                     latitude,\n    ''                                     entity_ogrn,\n    ''                                     entity_inn,\n    0                                      entity_deleted,\n    ''                                     entity_role_codes,\n    object_guid                            entity_link\n  FROM srchsm.search_passports_apartment a\n  WHERE\n    a.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wa l\n      WHERE l.object_type = 'WA'\n            AND l.object_id = a.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                   id,\n    object_guid          entity_uid,\n    address              entity_title,\n    ''                   entity_date,\n    house_type_name      entity_text,\n    'HOUSES'             entity_category,\n    '7'                  entity_type,\n    doc_numbers          ft_identifying_numbers,\n    place                ft_location,\n    names                ft_name,\n    ''                   ft_description,\n    ''                   ft_short_name,\n    tegs                 ft_tag,\n    ''                   ft_text_files,\n    ''                   entity_file_name,\n    address              entity_location,\n    ''                   entity_year,\n    longitude :: VARCHAR longitude,\n    latitude :: VARCHAR  latitude,\n    ''                   entity_ogrn,\n    ''                   entity_inn,\n    0                    entity_deleted,\n    ''                   entity_role_codes,\n    ''                   entity_link\n  FROM srchsm.search_houses b\n  WHERE\n    b.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wb l\n      WHERE l.object_type = 'WB'\n            AND l.object_id = b.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                                 id,\n    object_guid                                                        entity_uid,\n    names                                                              entity_title,\n    round(extract(EPOCH FROM last_changed_date) :: NUMERIC) :: VARCHAR entity_date,\n    oktmo_full_name                                                    entity_text,\n    'INFRASTRUCTURE_DOCUMENTS'                                         entity_category,\n    '11'                                                               entity_type,\n    ''                                                                 ft_identifying_numbers,\n    place                                                              ft_location,\n    names                                                              ft_name,\n    oktmo_full_name                                                    ft_description,\n    ''                                                                 ft_short_name,\n    tegs                                                               ft_tag,\n    ''                                                                 ft_text_files,\n    ''                                                                 entity_file_name,\n    ''                                                                 entity_location,\n    to_char(reporting_period_year, 'YYYY')                             entity_year,\n    ''                                                                 longitude,\n    ''                                                                 latitude,\n    ''                                                                 entity_ogrn,\n    ''                                                                 entity_inn,\n    0                                                                  entity_deleted,\n    ''                                                                 entity_role_codes,\n    ''                                                                 entity_link\n  FROM srchsm.search_infr_documents k\n  WHERE\n    k.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wk l\n      WHERE l.object_type = 'WK'\n            AND l.object_id = k.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                            id,\n    object_guid                                                   entity_uid,\n    title                                                         entity_title,\n    round(extract(EPOCH FROM publish_date) :: NUMERIC) :: VARCHAR entity_date,\n    short_text                                                    entity_text,\n    'News'                                                        entity_category,\n    '1'                                                           entity_type,\n    doc_numbers                                                   ft_identifying_numbers,\n    place                                                         ft_location,\n    names                                                         ft_name,\n    descriptions                                                  ft_description,\n    ''                                                            ft_short_name,\n    tegs                                                          ft_tag,\n    ''                                                            ft_text_files,\n    ''                                                            entity_file_name,\n    ''                                                            entity_location,\n    ''                                                            entity_year,\n    ''                                                            longitude,\n    ''                                                            latitude,\n    ''                                                            entity_ogrn,\n    ''                                                            entity_inn,\n    0                                                             entity_deleted,\n    ''                                                            entity_role_codes,\n    ''                                                            entity_link\n  FROM srchsm.search_news n\n  WHERE\n    n.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wn l\n      WHERE l.object_type = 'WN'\n            AND l.object_id = n.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                   id,\n    object_guid          entity_uid,\n    organization_name    entity_title,\n    ''                   entity_date,\n    roles                entity_text,\n    'ORGANIZATIONS'      entity_category,\n    '8'                  entity_type,\n    doc_numbers          ft_identifying_numbers,\n    place                ft_location,\n    names                ft_name,\n    ''                   ft_description,\n    ''                   ft_short_name,\n    ''                   ft_tag,\n    ''                   ft_text_files,\n    ''                   entity_file_name,\n    fact_addr            entity_location,\n    ''                   entity_year,\n    longitude :: VARCHAR longitude,\n    latitude :: VARCHAR  latitude,\n    ogrn                 entity_ogrn,\n    inn                  entity_inn,\n    0                    entity_deleted,\n    ''                   entity_role_codes,\n    ''                   entity_link\n  FROM srchsm.search_organizations o\n  WHERE\n    o.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wo l\n      WHERE l.object_type = 'WO'\n            AND l.object_id = o.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                          id,\n    object_guid                                                 entity_uid,\n    title                                                       entity_title,\n    round(extract(EPOCH FROM event_date) :: NUMERIC) :: VARCHAR entity_date,\n    ''                                                          entity_text,\n    'PEOPLE_EVENTS'                                             entity_category,\n    '5'                                                         entity_type,\n    ''                                                          ft_identifying_numbers,\n    place                                                       ft_location,\n    names                                                       ft_name,\n    descriptions                                                ft_description,\n    ''                                                          ft_short_name,\n    tegs                                                        ft_tag,\n    ''                                                          ft_text_files,\n    ''                                                          entity_file_name,\n    place                                                       entity_location,\n    ''                                                          entity_year,\n    ''                                                          longitude,\n    ''                                                          latitude,\n    ''                                                          entity_ogrn,\n    ''                                                          entity_inn,\n    0                                                           entity_deleted,\n    ''                                                          entity_role_codes,\n    ''                                                          entity_link\n  FROM srchsm.search_people_events v\n  WHERE\n    v.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wv l\n      WHERE l.object_type = 'WV'\n            AND l.object_id = v.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id              id,\n    object_guid     entity_uid,\n    link_name       entity_title,\n    ''              entity_date,\n    link_desc       entity_text,\n    'USEFULL_LINKS' entity_category,\n    '6'             entity_type,\n    ''              ft_identifying_numbers,\n    ''              ft_location,\n    names           ft_name,\n    descriptions    ft_description,\n    ''              ft_short_name,\n    ''              ft_tag,\n    ''              ft_text_files,\n    ''              entity_file_name,\n    ''              entity_location,\n    ''              entity_year,\n    ''              longitude,\n    ''              latitude,\n    ''              entity_ogrn,\n    ''              entity_inn,\n    0               entity_deleted,\n    ''              entity_role_codes,\n    link_url        entity_link\n  FROM srchsm.search_useful_links ul\n  WHERE\n    ul.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wl l\n      WHERE l.object_type = 'WL'\n            AND l.object_id = ul.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n) alltbls",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_killlist",
+            "fieldValue" : "SELECT object_id FROM\n(select object_id, object_type, update_date from (\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_ws\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wz\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wt\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wh\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wa\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wb\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wk\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wn\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wo\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wv\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wl\n) ul) l,\n    (select max(d.index_date) AS index_date, 'W' || d.object_type AS object_type from srchsm.search_update_indexer d group by d.object_type) i\n    where l.object_type = i.object_type AND l.update_date <= i.index_date",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        } ],
+        "searchConfigurationFields" : [ {
+            "fieldKey" : "listen",
+            "fieldValue" : "9301",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        }, {
+            "fieldKey" : "distributed_listen",
+            "fieldValue" : "9311",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        } ]
+    },
+    "indexConfiguration" : {
+        "name" : "index-conf-ft_quick_search",
+        "filePath" : "",
+        "configurationTemplate" : {
+            "name" : "Base configuration template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "CONFIGURATION",
+            "configurationFields" : [ {
+                "fieldKey" : "min_infix_len",
+                "fieldValue" : "3",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "expand_keywords",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "index_exact_words",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "morphology",
+                "fieldValue" : "lemmatize_ru",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "wordforms",
+                "fieldValue" : "/usr/local/bin/ru.txt",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "searchConfigurationTemplate" : {
+            "name" : "Base search template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "SEARCH",
+            "configurationFields" : [ {
+                "fieldKey" : "max_filters",
+                "fieldValue" : "512",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_filter_values",
+                "fieldValue" : "8192",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "read_timeout",
+                "fieldValue" : "5",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_packet_size",
+                "fieldValue" : "16M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "client_timeout",
+                "fieldValue" : "200",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "unlink_old",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mva_updates_pool",
+                "fieldValue" : "1M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "seamless_rotate",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_children",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_batch_queries",
+                "fieldValue" : "22",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "preopen_indexes",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "thread_stack",
+                "fieldValue" : "512K",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "indexerConfigurationTemplate" : {
+            "name" : "Base index template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "INDEX",
+            "configurationFields" : [ {
+                "fieldKey" : "lemmatizer_cache",
+                "fieldValue" : "256M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mem_limit",
+                "fieldValue" : "512M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "datasource" : {
+            "name" : "hcs_srch",
+            "type" : "PGSQL",
+            "host" : "195.26.187.155",
+            "port" : 5432,
+            "user" : "hcs_srch_rw",
+            "password" : "hcs_srch_rw",
+            "odbcDsn" : "",
+            "sqlDb" : "hcssrchdb"
+        },
+        "fieldMappings" : [ {
+            "sourceField" : "id",
+            "sourceFieldType" : "int8",
+            "indexField" : "id",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : true
+        }, {
+            "sourceField" : "entity_year",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_year",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_ogrn",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_ogrn",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_link",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_link",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "latitude",
+            "sourceFieldType" : "text",
+            "indexField" : "latitude",
+            "indexFieldType" : "SQL_ATTR_FLOAT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_description",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_description",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_location",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_location",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_type",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_type",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_name",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_name",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_short_name",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_short_name",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_title",
+            "sourceFieldType" : "varchar",
+            "indexField" : "entity_title",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_identifying_numbers",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_identifying_numbers",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_date",
+            "sourceFieldType" : "varchar",
+            "indexField" : "entity_date",
+            "indexFieldType" : "SQL_ATTR_TIMESTAMP",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_text_files",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_text_files",
+            "indexFieldType" : "SQL_FIELD",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_file_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "entity_file_name",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_role_codes",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_role_codes",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_category",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_category",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_location",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_location",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_inn",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_inn",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_uid",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_uid",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ft_tag",
+            "sourceFieldType" : "text",
+            "indexField" : "ft_tag",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_deleted",
+            "sourceFieldType" : "int4",
+            "indexField" : "entity_deleted",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "longitude",
+            "sourceFieldType" : "text",
+            "indexField" : "longitude",
+            "indexFieldType" : "SQL_ATTR_FLOAT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "entity_text",
+            "sourceFieldType" : "text",
+            "indexField" : "entity_text",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        } ],
+        "sourceConfigurationFields" : [ {
+            "fieldKey" : "sql_query_killlist",
+            "fieldValue" : "SELECT object_id FROM\n(select object_id, object_type, update_date from (\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_ws\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wz\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wt\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wh\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wa\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wb\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wk\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wn\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wo\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wv\nUNION ALL\nSELECT object_id, object_type, update_date FROM srchsm.search_update_list_wl\n) ul) l,\n    (select max(d.index_date) AS index_date, 'W' || d.object_type AS object_type from srchsm.search_update_indexer d group by d.object_type) i\n    where l.object_type = i.object_type AND l.update_date <= i.index_date",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_post_index",
+            "fieldValue" : "update srchsm.search_update_indexer set merge_date = index_date where object_type IN ('S', 'Z', 'T', 'H', 'A', 'B', 'ID', 'N', 'O', 'V', 'L')",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  entity_uid,\n  entity_title,\n  entity_date,\n  entity_text,\n  entity_category,\n  entity_type,\n  ft_identifying_numbers,\n  ft_location,\n  ft_name,\n  ft_description,\n  ft_short_name,\n  ft_tag,\n  ft_text_files,\n  entity_file_name,\n  entity_location,\n  entity_year,\n  longitude,\n  latitude,\n  entity_ogrn,\n  entity_inn,\n  entity_deleted,\n  entity_role_codes,\n  entity_link\nfrom (\n  SELECT\n    id                                                               id,\n    file_guids                                                       entity_uid,\n    title                                                            entity_title,\n    round(extract(EPOCH FROM acceptance_date) :: NUMERIC) :: VARCHAR entity_date,\n    doc_numbers                                                      entity_text,\n    'DISCOUNT_DOCUMENT'                                              entity_category,\n    '2'                                                              entity_type,\n    doc_numbers                                                      ft_identifying_numbers,\n    place                                                            ft_location,\n    names                                                            ft_name,\n    ''                                                               ft_description,\n    ''                                                               ft_short_name,\n    ''                                                               ft_tag,\n    converted_content                                                ft_text_files,\n    file_name                                                        entity_file_name,\n    ''                                                               entity_location,\n    ''                                                               entity_year,\n    ''                                                               longitude,\n    ''                                                               latitude,\n    ''                                                               entity_ogrn,\n    ''                                                               entity_inn,\n    0                                                                entity_deleted,\n    ''                                                               entity_role_codes,\n    ''                                                               entity_link\n  FROM srchsm.search_doc_discounts s\n  WHERE\n    s.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_ws l\n      WHERE l.object_type = 'WS'\n            AND l.object_id = s.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                               id,\n    file_guids                                                       entity_uid,\n    title                                                            entity_title,\n    round(extract(EPOCH FROM acceptance_date) :: NUMERIC) :: VARCHAR entity_date,\n    doc_numbers                                                      entity_text,\n    'LAW_DOCUMENT'                                                   entity_category,\n    '3'                                                              entity_type,\n    doc_numbers                                                      ft_identifying_numbers,\n    place                                                            ft_location,\n    title                                                            ft_name,\n    ''                                                               ft_description,\n    ''                                                               ft_short_name,\n    ''                                                               ft_tag,\n    converted_content                                                ft_text_files,\n    file_name                                                        entity_file_name,\n    ''                                                               entity_location,\n    ''                                                               entity_year,\n    ''                                                               longitude,\n    ''                                                               latitude,\n    ''                                                               entity_ogrn,\n    ''                                                               entity_inn,\n    0                                                                entity_deleted,\n    ''                                                               entity_role_codes,\n    ''                                                               entity_link\n  FROM srchsm.search_doc_laws z\n  WHERE\n    z.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wz l\n      WHERE l.object_type = 'WZ'\n            AND l.object_id = z.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                   id,\n    object_guid                          entity_uid,\n    title                                entity_title,\n    ''                                   entity_date,\n    municipal_services                   entity_text,\n    'RATE_DOCUMENT'                      entity_category,\n    '4'                                  entity_type,\n    ''                                   ft_identifying_numbers,\n    place                                ft_location,\n    names                                ft_name,\n    ''                                   ft_description,\n    ''                                   ft_short_name,\n    tegs                                 ft_tag,\n    converted_content                    ft_text_files,\n    file_name                            entity_file_name,\n    subject                              entity_location,\n    to_char(effective_period_to, 'YYYY') entity_year,\n    ''                                   longitude,\n    ''                                   latitude,\n    ''                                   entity_ogrn,\n    ''                                   entity_inn,\n    0                                    entity_deleted,\n    ''                                   entity_role_codes,\n    ''                                   entity_link\n  FROM srchsm.search_doc_rates t\n  WHERE\n    t.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wt l\n      WHERE l.object_type = 'WT'\n            AND l.object_id = t.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                     id,\n    object_guid                            entity_uid,\n    address                                entity_title,\n    ''                                     entity_date,\n    ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' ||\n     reporting_period_year)                entity_text,\n    'EP_JD'                                entity_category,\n    '10'                                   entity_type,\n    doc_numbers                            ft_identifying_numbers,\n    place                                  ft_location,\n    names                                  ft_name,\n    ''                                     ft_description,\n    ''                                     ft_short_name,\n    tegs                                   ft_tag,\n    ''                                     ft_text_files,\n    ''                                     entity_file_name,\n    address                                entity_location,\n    to_char(reporting_period_year, 'YYYY') entity_year,\n    ''                                     longitude,\n    ''                                     latitude,\n    ''                                     entity_ogrn,\n    ''                                     entity_inn,\n    0                                      entity_deleted,\n    ''                                     entity_role_codes,\n    object_guid                            entity_link\n  FROM srchsm.search_passports_dwelling h\n  WHERE\n    h.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wh l\n      WHERE l.object_type = 'WH'\n            AND l.object_id = h.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                     id,\n    object_guid                            entity_uid,\n    address                                entity_title,\n    ''                                     entity_date,\n    ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' ||\n     reporting_period_year)                entity_text,\n    'EP_MKD'                               entity_category,\n    '9'                                    entity_type,\n    doc_numbers                            ft_identifying_numbers,\n    place                                  ft_location,\n    names                                  ft_name,\n    ''                                     ft_description,\n    ''                                     ft_short_name,\n    tegs                                   ft_tag,\n    ''                                     ft_text_files,\n    ''                                     entity_file_name,\n    address                                entity_location,\n    to_char(reporting_period_year, 'YYYY') entity_year,\n    ''                                     longitude,\n    ''                                     latitude,\n    ''                                     entity_ogrn,\n    ''                                     entity_inn,\n    0                                      entity_deleted,\n    ''                                     entity_role_codes,\n    object_guid                            entity_link\n  FROM srchsm.search_passports_apartment a\n  WHERE\n    a.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wa l\n      WHERE l.object_type = 'WA'\n            AND l.object_id = a.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                   id,\n    object_guid          entity_uid,\n    address              entity_title,\n    ''                   entity_date,\n    house_type_name      entity_text,\n    'HOUSES'             entity_category,\n    '7'                  entity_type,\n    doc_numbers          ft_identifying_numbers,\n    place                ft_location,\n    names                ft_name,\n    ''                   ft_description,\n    ''                   ft_short_name,\n    tegs                 ft_tag,\n    ''                   ft_text_files,\n    ''                   entity_file_name,\n    address              entity_location,\n    ''                   entity_year,\n    longitude :: VARCHAR longitude,\n    latitude :: VARCHAR  latitude,\n    ''                   entity_ogrn,\n    ''                   entity_inn,\n    0                    entity_deleted,\n    ''                   entity_role_codes,\n    ''                   entity_link\n  FROM srchsm.search_houses b\n  WHERE\n    b.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wb l\n      WHERE l.object_type = 'WB'\n            AND l.object_id = b.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                                 id,\n    object_guid                                                        entity_uid,\n    names                                                              entity_title,\n    round(extract(EPOCH FROM last_changed_date) :: NUMERIC) :: VARCHAR entity_date,\n    oktmo_full_name                                                    entity_text,\n    'INFRASTRUCTURE_DOCUMENTS'                                         entity_category,\n    '11'                                                               entity_type,\n    ''                                                                 ft_identifying_numbers,\n    place                                                              ft_location,\n    names                                                              ft_name,\n    oktmo_full_name                                                    ft_description,\n    ''                                                                 ft_short_name,\n    tegs                                                               ft_tag,\n    ''                                                                 ft_text_files,\n    ''                                                                 entity_file_name,\n    ''                                                                 entity_location,\n    to_char(reporting_period_year, 'YYYY')                             entity_year,\n    ''                                                                 longitude,\n    ''                                                                 latitude,\n    ''                                                                 entity_ogrn,\n    ''                                                                 entity_inn,\n    0                                                                  entity_deleted,\n    ''                                                                 entity_role_codes,\n    ''                                                                 entity_link\n  FROM srchsm.search_infr_documents k\n  WHERE\n    k.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wk l\n      WHERE l.object_type = 'WK'\n            AND l.object_id = k.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                            id,\n    object_guid                                                   entity_uid,\n    title                                                         entity_title,\n    round(extract(EPOCH FROM publish_date) :: NUMERIC) :: VARCHAR entity_date,\n    short_text                                                    entity_text,\n    'News'                                                        entity_category,\n    '1'                                                           entity_type,\n    doc_numbers                                                   ft_identifying_numbers,\n    place                                                         ft_location,\n    names                                                         ft_name,\n    descriptions                                                  ft_description,\n    ''                                                            ft_short_name,\n    tegs                                                          ft_tag,\n    ''                                                            ft_text_files,\n    ''                                                            entity_file_name,\n    ''                                                            entity_location,\n    ''                                                            entity_year,\n    ''                                                            longitude,\n    ''                                                            latitude,\n    ''                                                            entity_ogrn,\n    ''                                                            entity_inn,\n    0                                                             entity_deleted,\n    ''                                                            entity_role_codes,\n    ''                                                            entity_link\n  FROM srchsm.search_news n\n  WHERE\n    n.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wn l\n      WHERE l.object_type = 'WN'\n            AND l.object_id = n.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                   id,\n    object_guid          entity_uid,\n    organization_name    entity_title,\n    ''                   entity_date,\n    roles                entity_text,\n    'ORGANIZATIONS'      entity_category,\n    '8'                  entity_type,\n    doc_numbers          ft_identifying_numbers,\n    place                ft_location,\n    names                ft_name,\n    ''                   ft_description,\n    ''                   ft_short_name,\n    ''                   ft_tag,\n    ''                   ft_text_files,\n    ''                   entity_file_name,\n    fact_addr            entity_location,\n    ''                   entity_year,\n    longitude :: VARCHAR longitude,\n    latitude :: VARCHAR  latitude,\n    ogrn                 entity_ogrn,\n    inn                  entity_inn,\n    0                    entity_deleted,\n    ''                   entity_role_codes,\n    ''                   entity_link\n  FROM srchsm.search_organizations o\n  WHERE\n    o.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wo l\n      WHERE l.object_type = 'WO'\n            AND l.object_id = o.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id                                                          id,\n    object_guid                                                 entity_uid,\n    title                                                       entity_title,\n    round(extract(EPOCH FROM event_date) :: NUMERIC) :: VARCHAR entity_date,\n    ''                                                          entity_text,\n    'PEOPLE_EVENTS'                                             entity_category,\n    '5'                                                         entity_type,\n    ''                                                          ft_identifying_numbers,\n    place                                                       ft_location,\n    names                                                       ft_name,\n    descriptions                                                ft_description,\n    ''                                                          ft_short_name,\n    tegs                                                        ft_tag,\n    ''                                                          ft_text_files,\n    ''                                                          entity_file_name,\n    place                                                       entity_location,\n    ''                                                          entity_year,\n    ''                                                          longitude,\n    ''                                                          latitude,\n    ''                                                          entity_ogrn,\n    ''                                                          entity_inn,\n    0                                                           entity_deleted,\n    ''                                                          entity_role_codes,\n    ''                                                          entity_link\n  FROM srchsm.search_people_events v\n  WHERE\n    v.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wv l\n      WHERE l.object_type = 'WV'\n            AND l.object_id = v.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n  UNION ALL\n  SELECT\n    id              id,\n    object_guid     entity_uid,\n    link_name       entity_title,\n    ''              entity_date,\n    link_desc       entity_text,\n    'USEFULL_LINKS' entity_category,\n    '6'             entity_type,\n    ''              ft_identifying_numbers,\n    ''              ft_location,\n    names           ft_name,\n    descriptions    ft_description,\n    ''              ft_short_name,\n    ''              ft_tag,\n    ''              ft_text_files,\n    ''              entity_file_name,\n    ''              entity_location,\n    ''              entity_year,\n    ''              longitude,\n    ''              latitude,\n    ''              entity_ogrn,\n    ''              entity_inn,\n    0               entity_deleted,\n    ''              entity_role_codes,\n    link_url        entity_link\n  FROM srchsm.search_useful_links ul\n  WHERE\n    ul.indexing_ready = true\n    AND EXISTS(\n      SELECT 1\n      FROM srchsm.search_update_list_wl l\n      WHERE l.object_type = 'WL'\n            AND l.object_id = ul.id\n            AND l.update_date >= timezone('UTC', to_timestamp( $start / 1000000 - 1))\n            AND l.update_date <= timezone('UTC', to_timestamp($end / 1000000 + 1))\n            AND l.operation IN ('I', 'U')\n  )\n) alltbls",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wk where object_type='WL' ) where object_type='L'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wv where object_type='WV' ) where object_type='V'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_range_step",
+            "fieldValue" : "3600000000",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(min_ts), coalesce(max(max_ts), min(min_ts)) from (\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_ws l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'S' AND l.object_type = 'WS'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wz l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'Z' AND l.object_type = 'WZ'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wt l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'T' AND l.object_type = 'WT'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wh l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'H' AND l.object_type = 'WH'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wa l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'A' AND l.object_type = 'WA'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wb l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'B' AND l.object_type = 'WB'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wk l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'ID' AND l.object_type = 'WK'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wn l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'N' AND l.object_type = 'WN'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wo l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'O' AND l.object_type = 'WO'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wv l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'V' AND l.object_type = 'WV'\n  UNION ALL\n  SELECT\n    round(extract(EPOCH FROM min(l.update_date)) :: NUMERIC * 1000000) min_ts,\n    round(extract(EPOCH FROM max(d.index_date)) :: NUMERIC * 1000000)  max_ts\n  FROM srchsm.search_update_list_wl l, srchsm.search_update_indexer d\n  WHERE d.object_type = 'L' AND l.object_type = 'WL'\n) extrs",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_ws where object_type='WS' ) where object_type='S'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  entity_uid,\n  entity_title,\n  entity_date,\n  entity_text,\n  entity_category,\n  entity_type,\n  ft_identifying_numbers,\n  ft_location,\n  ft_name,\n  ft_description,\n  ft_short_name,\n  ft_tag,\n  ft_text_files,\n  entity_file_name,\n  entity_location,\n  entity_year,\n  longitude,\n  latitude,\n  entity_ogrn,\n  entity_inn,\n  entity_deleted,\n  entity_role_codes,\n  entity_link\nfrom\n  (\nselect\n  id                  id,\n  file_guids          entity_uid,\n  title               entity_title,\n  round(extract(epoch from acceptance_date)::numeric)::varchar entity_date,\n  doc_numbers         entity_text,\n  'DISCOUNT_DOCUMENT' entity_category,\n  '2'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_discounts\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  file_guids          entity_uid,\n  title               entity_title,\n  round(extract(epoch from acceptance_date)::numeric)::varchar entity_date,\n  doc_numbers         entity_text,\n  'LAW_DOCUMENT'      entity_category,\n  '3'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  title               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_laws\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  ''                  entity_date,\n  municipal_services  entity_text,\n  'RATE_DOCUMENT'     entity_category,\n  '4'                 entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  converted_content   ft_text_files,\n  file_name           entity_file_name,\n  subject             entity_location,\n  to_char(effective_period_to, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_doc_rates\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' || reporting_period_year) entity_text,\n  'EP_JD'             entity_category,\n  '10'                entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  object_guid         entity_link\nFROM srchsm.search_passports_dwelling\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  ('Электронный паспорт дома. Отчетный период: ' || reporting_period_month || '.' || reporting_period_year) entity_text,\n  'EP_MKD'            entity_category,\n  '9'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  object_guid         entity_link\nFROM srchsm.search_passports_apartment\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  address             entity_title,\n  ''                  entity_date,\n  house_type_name     entity_text,\n  'HOUSES'            entity_category,\n  '7'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  address             entity_location,\n  ''                  entity_year,\n  longitude::varchar           longitude,\n  latitude::varchar            latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_houses\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  names               entity_title,\n  round(extract(epoch from last_changed_date)::numeric)::varchar entity_date,\n  oktmo_full_name     entity_text,\n  'INFRASTRUCTURE_DOCUMENTS'     entity_category,\n  '11'                entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  oktmo_full_name     ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  to_char(reporting_period_year, 'YYYY') entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_infr_documents\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  round(extract(epoch from publish_date)::numeric)::varchar entity_date,\n  short_text          entity_text,\n  'News'              entity_category,\n  '1'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_news\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  organization_name   entity_title,\n  ''                  entity_date,\n  roles               entity_text,\n  'ORGANIZATIONS'     entity_category,\n  '8'                 entity_type,\n  doc_numbers         ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  ''                  ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  fact_addr           entity_location,\n  ''                  entity_year,\n  longitude::varchar           longitude,\n  latitude::varchar            latitude,\n  ogrn                entity_ogrn,\n  inn                 entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_organizations\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  title               entity_title,\n  round(extract(epoch from event_date)::numeric)::varchar entity_date,\n  ''                  entity_text,\n  'PEOPLE_EVENTS'     entity_category,\n  '5'                 entity_type,\n  ''                  ft_identifying_numbers,\n  place               ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  tegs                ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  place               entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  ''                  entity_link\nFROM srchsm.search_people_events\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n \nUNION ALL\n \nselect\n  id                  id,\n  object_guid         entity_uid,\n  link_name           entity_title,\n  ''                  entity_date,\n  link_desc           entity_text,\n  'USEFULL_LINKS'     entity_category,\n  '6'                 entity_type,\n  ''                  ft_identifying_numbers,\n  ''                  ft_location,\n  names               ft_name,\n  descriptions        ft_description,\n  ''                  ft_short_name,\n  ''                  ft_tag,\n  ''                  ft_text_files,\n  ''                  entity_file_name,\n  ''                  entity_location,\n  ''                  entity_year,\n  ''                  longitude,\n  ''                  latitude,\n  ''                  entity_ogrn,\n  ''                  entity_inn,\n  0                   entity_deleted,\n  ''                  entity_role_codes,\n  link_url            entity_link\nFROM srchsm.search_useful_links\nWHERE indexing_ready = true\n      AND id >= $start AND id <= $end\n) as alltbls",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(min_id), max(max_id) from (\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_doc_discounts\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_doc_laws\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_doc_rates\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_passports_dwelling\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_passports_apartment\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_houses\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_infr_documents\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_news\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_organizations\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_people_events\n  UNION ALL\n  SELECT min(id) min_id, max(id) max_id FROM srchsm.search_useful_links\n) extr",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wa where object_type='WA' ) where object_type='A'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wh where object_type='WH' ) where object_type='H'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wt where object_type='WT' ) where object_type='T'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wz where object_type='WZ' ) where object_type='Z'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wo where object_type='WO' ) where object_type='O'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wh where object_type='WN' ) where object_type='N'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre ",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wk where object_type='WK' ) where object_type='ID'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchsm.search_update_indexer set index_date = (select max(update_date) from srchsm.search_update_list_wb where object_type='WB' ) where object_type='B'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        } ],
+        "searchConfigurationFields" : [ {
+            "fieldKey" : "distributed_listen",
+            "fieldValue" : "9311",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        }, {
+            "fieldKey" : "listen",
+            "fieldValue" : "9301",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        } ]
+    },
+    "searchServer" : {
+        "ip" : "${search.server.ip}",
+        "domain" : null,
+        "name" : "${search.server.name}"
+    },
+    "indexServer" : {
+        "ip" : "${index.server.ip}",
+        "domain" : null,
+        "name" : "${index.server.name}"
+    },
+    "indexServerPort" : null,
+    "collection" : {
+        "name" : "ft_quick_search",
+        "type" : "MAIN_DELTA",
+        "description" : "",
+        "lastIndexingTime" : 1435322244000,
+        "nextIndexingTime" : 1435322400000,
+        "lastMergeTime" : null,
+        "nextMergeTime" : null,
+        "isProcessingFailed" : false,
+        "delta" : {
+            "type" : "DELTA",
+            "period" : 1435322241000,
+            "externalAction" : {
+                "type" : "SQL",
+                "code" : "DELETE FROM srchsm.search_update_list_ws WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'S'\n);\nDELETE FROM srchsm.search_update_list_wz WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'Z'\n);\nDELETE FROM srchsm.search_update_list_wt WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'T'\n);\nDELETE FROM srchsm.search_update_list_wh WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'H'\n);\nDELETE FROM srchsm.search_update_list_wa WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'A'\n);\nDELETE FROM srchsm.search_update_list_wb WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'B'\n);\nDELETE FROM srchsm.search_update_list_wk WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'ID'\n);\nDELETE FROM srchsm.search_update_list_wn WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'N'\n);\nDELETE FROM srchsm.search_update_list_wo WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'O'\n);\nDELETE FROM srchsm.search_update_list_wv WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'V'\n);\nDELETE FROM srchsm.search_update_list_wl WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchsm.search_update_indexer WHERE srchsm.search_update_indexer.object_type = 'L'\n);",
+                "dataSource" : {
+                    "name" : "hcs_srch",
+                    "type" : "PGSQL",
+                    "host" : "195.26.187.155",
+                    "port" : 5432,
+                    "user" : "hcs_srch_rw",
+                    "password" : "hcs_srch_rw",
+                    "odbcDsn" : "",
+                    "sqlDb" : "hcssrchdb"
+                },
+                "server" : null
+            },
+            "field" : null,
+            "mergeTime" : 1435322241000,
+            "deleteScheme" : null
+        },
+        "collectionType" : "SIMPLE",
+        "needReload" : false,
+        "processingFailed" : false
+    },
+    "cronSchedule" : {
+        "cronSchedule" : "0 */10 * * * ?",
+        "enabled" : true
+    },
+    "mainCronSchedule" : {
+        "cronSchedule" : "0 5 */2 * * ?",
+        "enabled" : true
+    },
+    "tableName" : null,
+    "fullIndexingServer" : null,
+    "collectionInfo" : null,
+    "collectionType" : null
+}

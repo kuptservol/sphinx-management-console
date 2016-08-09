@@ -1,0 +1,49 @@
+package ru.skuptsov.sphinx.console.coordinator.task.command;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import ru.skuptsov.sphinx.console.coordinator.agent.service.api.CoordinatorAgentService;
+import ru.skuptsov.sphinx.console.coordinator.model.Status;
+import ru.skuptsov.sphinx.console.coordinator.model.Task;
+import ru.skuptsov.sphinx.console.coordinator.task.IndexNameTask;
+import ru.skuptsov.sphinx.console.coordinator.template.GenerateSphinxServiceConfService;
+
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: Crow
+ * Date: 12.08.14
+ * Time: 20:51
+ * To change this template use File | Settings | File Templates.
+ */
+@Component("START_CREATING_SEARCHD_PROCESS")
+@Scope("prototype")
+public class CreatingSearchProcessCommand<T extends IndexNameTask> extends AgentCommand<T> implements AsyncCommand {
+
+    public static final String AGENT_REMOTE_METHOD_NAME = "startCreatingProcess";
+
+    @Autowired
+    private GenerateSphinxServiceConfService generateSphinxServiceConfService;
+
+    String sphinxServiceContent;
+
+    @Override
+    public AgentRemoteMethod getAgentRemoteMethod(IndexNameTask task) throws NoSuchMethodException {
+        Object[] arguments = {task, task.getProcessName(), sphinxServiceContent};
+        return new AgentRemoteMethod(AGENT_REMOTE_CLASS.getMethod(AGENT_REMOTE_METHOD_NAME, Task.class, String.class, String.class), arguments);
+    }
+
+    @Override
+    public void executeBeforeAgentRemoteMethod(IndexNameTask task) {
+        logger.debug("START_CREATING_" + task.getSphinxProcessType().name() + "_PROCESS STATE EXECUTION...");
+
+        sphinxServiceContent = generateSphinxServiceConfService.generateContent(task.getProcessName());
+    }
+
+    @Override
+    public String getAgentAddress(IndexNameTask task){
+        return task.getSearchAgentAddress();
+    }
+}

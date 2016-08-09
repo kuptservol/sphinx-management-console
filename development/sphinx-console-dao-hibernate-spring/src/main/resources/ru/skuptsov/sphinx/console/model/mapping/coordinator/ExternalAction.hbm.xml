@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.ExternalAction" table="EXTERNAL_ACTION">
+        <id name="id" type="java.lang.Long">
+            <column name="EXTERNAL_ACTION_ID" />
+            <generator class="increment" />
+        </id>
+
+        <property name="type">
+            <column name="EXTERNAL_ACTION_TYPE" not-null="true"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.ExternalActionType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <property name="code">
+            <column name="EXTERNAL_ACTION_CODE" sql-type="CHAR" length="25"/>
+        </property>
+
+        <many-to-one name="dataSource" class="ru.skuptsov.sphinx.console.coordinator.model.DataSource" cascade="save-update" lazy="false">
+            <column name="datasource_id" not-null="false"/>
+        </many-to-one>
+
+        <many-to-one name="server" class="ru.skuptsov.sphinx.console.coordinator.model.Server" lazy="false">
+            <column name="server_id" not-null="false"/>
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

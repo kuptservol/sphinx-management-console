@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <command id="20150331-1">
+        <methodName>deleteCollection/test_collection_delta_main_distributed_server</methodName>
+    </command>
+</changeset>

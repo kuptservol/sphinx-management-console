@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationFields" table="CONFIGURATION_FIELDS">
+         <id name="id" type="java.lang.Long">
+            <column name="configuration_fields_id" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="fieldKey">
+            <column name="field_key" sql-type="CHAR" length="20" not-null="true"/>
+        </property>
+        
+        <property name="fieldValue">
+            <column name="field_value" sql-type="CHAR" length="100" not-null="false"/>
+        </property>
+
+        
+        <many-to-one name="configurationTemplate" insert="false" lazy="false" class="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationTemplate">
+            <column name="configuration_template_id" not-null="false"/>
+        </many-to-one>
+
+        <property name="configurationType" column="configuration_type" not-null="false">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.ConfigurationType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <many-to-one name="configuration" class="ru.skuptsov.sphinx.console.coordinator.model.Configuration" lazy="false">
+            <column name="CONFIGURATION_ID" not-null="false" />
+        </many-to-one>
+
+        <property name="fieldCommentary">
+            <column name="field_commentary" sql-type="CHAR" length="100" not-null="false"/>
+        </property>
+
+        <property name="indexType" column="index_type" not-null="false">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.IndexType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+    </class>
+</hibernate-mapping>

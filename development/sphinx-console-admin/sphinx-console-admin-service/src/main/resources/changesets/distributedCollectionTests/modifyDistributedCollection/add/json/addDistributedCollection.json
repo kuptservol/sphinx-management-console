@@ -1,0 +1,132 @@
+{
+    "nodes" : [ {
+        "collectionName" : "test_collection_simple_one_server",
+        "agents" : [ {
+            "nodeHost" : "${search.server.ip}",
+            "nodeDistribPort" : "8306"
+        } ]
+    } ],
+    "searchConfigurationPort" : {
+        "searchConfigurationPort" : ${collection.port}
+    },
+    "searchConfiguration" : {
+        "id" : null,
+        "name" : null,
+        "filePath" : null,
+        "configurationTemplate" : {
+                        "name" : "Base Distributed configuration template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "CONFIGURATION",
+            "configurationFields" : [ ],
+            "collectionType" : "DISTRIBUTED"
+        },
+        "searchConfigurationTemplate" : {
+                        "name" : "Base Distributed search template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "SEARCH",
+            "configurationFields" : [ {
+                                "fieldKey" : "seamless_rotate",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_children",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_batch_queries",
+                "fieldValue" : "22",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "preopen_indexes",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "thread_stack",
+                "fieldValue" : "512K",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_filters",
+                "fieldValue" : "512",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_filter_values",
+                "fieldValue" : "8192",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "read_timeout",
+                "fieldValue" : "5",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_packet_size",
+                "fieldValue" : "16M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "client_timeout",
+                "fieldValue" : "200",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "unlink_old",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "mva_updates_pool",
+                "fieldValue" : "1M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "DISTRIBUTED"
+        },
+        "indexerConfigurationTemplate" : null,
+        "datasource" : null,
+        "fieldMappings" : [ ],
+        "sourceConfigurationFields" : [ ],
+        "searchConfigurationFields" : [ ]
+    },
+    "searchServer" : {
+        "ip" : "${search.server.ip}",
+        "domain" : null,
+        "name" : "${search.server.name}"
+    },
+    "collection" : {
+        "id" : null,
+        "name" : "${distributed.collection.name.1}",
+        "type" : "DISTRIBUTED",
+        "description" : null,
+        "lastIndexingTime" : null,
+        "nextIndexingTime" : null,
+        "lastMergeTime" : null,
+        "nextMergeTime" : null,
+        "isProcessingFailed" : true,
+        "delta" : null,
+        "collectionType" : "DISTRIBUTED",
+        "needReload" : false,
+        "processingFailed" : true
+    }
+}

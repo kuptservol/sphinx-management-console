@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.ActivityLog" table="ACTIVITY_LOG">
+         <id name="id" type="java.lang.Long">
+            <column name="activity_log_id" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="taskName">
+            <column name="task_name" not-null="true"/>
+        </property>
+        
+        <property name="taskUid">
+            <column name="task_uid" not-null="true"/>
+        </property>
+
+        <property name="date">
+            <column name="date_time" not-null="true"/>
+        </property>
+
+        <many-to-one name="collection" class="ru.skuptsov.sphinx.console.coordinator.model.Collection" lazy="false">
+            <column name="collection_id" not-null="false"/>
+        </many-to-one>
+
+        <property name="indexName">
+            <column name="index_name" not-null="true"/>
+        </property>
+
+        <many-to-one name="server" class="ru.skuptsov.sphinx.console.coordinator.model.Server" lazy="false">
+            <column name="server_id" not-null="true"/>
+        </many-to-one>
+
+        <property name="serverName">
+            <column name="server_name" not-null="false"/>
+        </property>
+
+        <many-to-one name="process" class="ru.skuptsov.sphinx.console.coordinator.model.SphinxProcess" lazy="false">
+            <column name="process_id" not-null="false"/>
+        </many-to-one>
+
+        <property name="sphinxProcessType" >
+            <column name="process_type" not-null="false"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.SphinxProcessType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <property name="startTime">
+            <column name="start_time" sql-type="TimeStamp" not-null="false"/>
+        </property>
+
+        <property name="endTime">
+            <column name="end_time" sql-type="TimeStamp" not-null="false"/>
+        </property>
+        
+        <property name="taskStartTime">
+            <column name="task_start_time" sql-type="TimeStamp" not-null="false"/>
+        </property>
+
+        <property name="taskEndTime">
+            <column name="task_end_time" sql-type="TimeStamp" not-null="false"/>
+        </property>
+        
+
+        <property name="operationType">
+            <column name="operation_type" not-null="true"/>
+        </property>
+
+        <property name="status" >
+            <column name="stage_status" not-null="false"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.StageStatus</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        
+        
+        <property name="taskStatus" >
+            <column name="task_status" not-null="false"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.TaskStatus</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        
+        
+        <property name="exceptionText">
+            <column name="exception_text" not-null="false"/>
+        </property>
+
+        <property name="data">
+            <column name="data" not-null="false"/>
+        </property>
+
+        <property name="replicaNumber">
+            <column name="replica_number" not-null="true"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

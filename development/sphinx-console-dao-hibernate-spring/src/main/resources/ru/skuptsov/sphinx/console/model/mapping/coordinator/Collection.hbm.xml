@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.Collection" table="COLLECTION">
+         <id name="id" type="java.lang.Long">
+            <column name="COLLECTION_ID" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="name">
+            <column name="COLLECTION_NAME" sql-type="CHAR" length="25" not-null="true"/>
+        </property>
+
+        <property name="type">
+            <column name="type" not-null="true"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.CollectionType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        
+        <property name="description">
+            <column name="DESCRIPTION" sql-type="CHAR" length="100" not-null="false"/>
+        </property>
+
+        <property name="lastIndexingTime">
+            <column name="last_indexing_time" not-null="false"/>
+        </property>
+
+        <property name="nextIndexingTime">
+            <column name="next_indexing_time" not-null="false"/>
+        </property>
+
+        <property name="lastMergeTime">
+            <column name="last_merge_time" not-null="false"/>
+        </property>
+
+        <property name="nextMergeTime">
+            <column name="next_merge_time" not-null="false"/>
+        </property>
+
+        <property name="isProcessingFailed">
+            <column name="is_processing_failed" sql-type="yes_no" not-null="true"/>
+        </property>
+        
+        <property name="collectionType">
+            <column name="collection_type" not-null="false"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.CollectionRoleType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        
+        <property name="needReload">
+            <column name="need_reload" sql-type="yes_no" not-null="false"/>
+        </property>
+
+        <set name="scheduledTasks" inverse="true" table="SCHEDULED_TASK" cascade="all" lazy="true">
+            <key column="COLLECTION_ID" not-null="true"></key>
+            <one-to-many not-found="ignore" class="ru.skuptsov.sphinx.console.coordinator.model.ScheduledTask" />
+        </set>
+
+        <set name="activityLogs" inverse="true" table="ACTIVITY_LOG" cascade="all" lazy="true">
+            <key column="COLLECTION_ID" not-null="true"></key>
+            <one-to-many not-found="ignore" class="ru.skuptsov.sphinx.console.coordinator.model.ActivityLog" />
+        </set>
+
+        <set name="sphinxProcesses" inverse="true" table="SPHINX_PROCESS" cascade="all,all-delete-orphan" lazy="false">
+            <key column="COLLECTION_ID" not-null="true"></key>
+            <one-to-many not-found="ignore" class="ru.skuptsov.sphinx.console.coordinator.model.SphinxProcess" />
+        </set>
+        
+        <one-to-one name="delta" class="ru.skuptsov.sphinx.console.coordinator.model.Delta" lazy="false" cascade="all" property-ref="collection"/>
+            
+        <one-to-one name="snippetConfiguration" class="ru.skuptsov.sphinx.console.coordinator.model.SnippetConfiguration" lazy="false" cascade="all" property-ref="collection"/>
+        
+        <set name="replicas" table="REPLICA" cascade="save-update, all-delete-orphan"
+             lazy="false" inverse="false">
+            <key column="COLLECTION_ID" not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.Replica" />
+        </set>
+        
+        <set name="distributedCollectionNodes" table="DISTRIBUTED_COLLECTION_NODE" cascade="all,all-delete-orphan" lazy="false" inverse="true">
+            <key column="DISTRIBUTED_COLLECTION_ID"  not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.DistributedCollectionNode" />
+        </set>
+        
+        <set name="simpleCollectionInNodes" table="DISTRIBUTED_COLLECTION_NODE" cascade="delete" lazy="false" inverse="true">
+            <key column="SIMPLE_COLLECTION_ID"  not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.DistributedCollectionNode" />
+        </set>
+
+    </class>
+</hibernate-mapping>

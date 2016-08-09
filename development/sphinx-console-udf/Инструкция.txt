@@ -1,0 +1,13 @@
+Для компиляции и работы нужны только 2 файла:
+sphinx-console_get_snippet.c
+sphinxudf.h
+
+CONSOLE:
+--gcc -o /opt/udf/sphinx-console_get_snippet.o -c /opt/udf/sphinx-console_get_snippet.c
+--gcc -shared -fPIC -o /opt/udf/sphinx-console_get_snippet.so /opt/udf/sphinx-console_get_snippet.c -lm
+gcc -shared -fPIC -o /opt/udf/sphinx-console_get_snippet.so /opt/udf/sphinx-console_get_snippet.c
+
+SPHINX:
+drop function sphinx-console_get_snippet;
+create function sphinx-console_get_snippet returns string soname 'sphinx-console_get_snippet.so';
+select sphinx-console_get_snippet(1, 'test_snippet_collection_1', 'snippet_text');

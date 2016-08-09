@@ -1,0 +1,31 @@
+---
+# Предустановочный скрипт для sphinx-console
+#
+# Устанавливает
+#   MySQL 5.5 / 5.6
+#   Java 1.6.0 JDK
+#   Sphinx (только для all или agent)
+#
+# Входные параметры для запуска (--extra-vars)
+#   target:       <имя хоста установки>                   (должно быть прописано в /etc/ansible/hosts)
+#   remote_user:  <имя пользователя на хосте установки>   (должны быть настроены ssh-ключи)
+#   type:         all|coordinator|agent                   (по умолчанию - all)
+#
+# Пример команды запуска:
+#   ansible-playbook sphinx-console-preinstall.yaml --extra-vars "target=sphinx-console02 remote_user=demo type=coordinator" --ask-sudo-pass
+#
+- hosts: '{{target}}'
+  remote_user: '{{user}}'
+  vars:
+      type: all
+      with_sphinx: false
+      dist_dir: ./distrib
+      sphinx_rpm: http://sphinxsearch.com/files/sphinx-2.2.9-1.rhel6.x86_64.rpm
+  tasks:
+    # это для прогонов с параметром --check
+    - command: /bin/true
+      register: noop_result
+    - set_fact: check_mode={{ noop_result|skipped }}
+
+    - name: Install server software
+      include: partials/pre-install/rhel.yaml

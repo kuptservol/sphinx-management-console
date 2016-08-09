@@ -1,0 +1,1 @@
+create function sphinx-console_get_snippet returns string soname 'sphinx-console_get_snippet.so';

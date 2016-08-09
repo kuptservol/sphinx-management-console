@@ -1,0 +1,33 @@
+# Остановить сервис координатора
+- service: name=sphinx-console-agent state=stopped sleep=5
+  ignore_errors: yes #Если сервис не стоит при all или уже удалён
+
+# Остановить все поисковые сервисы коллекций
+- name:  Stop search services
+  shell: kill $(ps aux | grep 'searchw.*searchd\|searchd.*searchw' | awk '{print $2}')
+  ignore_errors: yes
+
+# Остановить индексовые сервисы коллекций
+- name:  Stop indexer processes
+  shell: kill $(ps aux | grep 'searchw.*indexer\|indexer.*searchw' | awk '{print $2}')
+  ignore_errors: yes
+
+# Удалить файл
+- file: path={{agent_path}} state=absent
+
+# Удалить файл
+- file: path={{sphinx-console_path}}/data state=absent
+
+# Удалить содержимое коллекций
+- file: path={{sphinx_base_path}} state=absent
+
+# Удалить файлы сервиса
+- name:  Delete agent service
+  shell: rm -f /etc/init.d/sphinx-console-agent
+  ignore_errors: yes
+
+# Удалить файлы сервисов коллекций
+- name:  Delete coordinator service-files
+  shell: rm -f /etc/init.d/sphinx-console-service*
+  ignore_errors: yes
+

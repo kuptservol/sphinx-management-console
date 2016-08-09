@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../../changesets.properties</jsonPropsFilePath>
+    <command id="20150331-1">
+        <methodName>modifyCollectionAttributes</methodName>
+        <jsonFilePath>json/modifyCollectionAttributes.json</jsonFilePath>
+    </command>
+</changeset>

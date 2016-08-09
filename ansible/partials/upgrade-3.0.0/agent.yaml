@@ -1,0 +1,72 @@
+---
+# Installs agent
+- name: Stop sphinx-console Coordinator Agent (if exists)
+  command: "{{service_path}} sphinx-console-agent stop"
+  ignore_errors: yes
+
+#
+# Обновить скрипты сервисов и рестартовать
+#
+# --user=root заменить на --user=${user}
+- name: List search services
+  shell: "ls -1 /etc/init.d/sphinx-console-service_*"
+  register: search_services
+
+- replace: dest={{item}} regexp="--user=root" replace="--user={{sw_user}}"
+  with_items: search_services.stdout_lines
+
+- command: "{{item}} restart"
+  with_items: search_services.stdout_lines
+
+#
+# Обновить sphinx_*.vm
+#
+- template: src={{dist_dir}}/conf/templates/{{ item }}.j2  dest={{conf_path}}/templates/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx_conf.vm
+    - sphinx_distributed_conf.vm
+    - sphinx_service_conf.vm
+
+#
+# Обновить конфиги
+#
+- copy: src={{dist_dir}}/conf/{{ item }} dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - agent-jmx.properties
+    - agent-log4j.properties
+    - retry.properties
+
+# Удаляем устаревший
+- file: path={{dist_dir}}/conf/sphinx-console-log4j.properties state=absent
+
+- template: src={{dist_dir}}/conf/{{ item }}.j2 dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx.properties
+    - sphinx_service_conf.properties
+
+#
+# name: Upload coordinator agent
+#
+- file: path={{agent_path}} state=absent
+- file: path={{agent_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/agent/sphinx-console-coordinator-agent.jar dest={{sphinx-console_path}}/agent/sphinx-console-coordinator-agent.jar owner={{sw_user}} group={{sw_group}} mode="0644"
+
+#
+# Обновить скрипты
+#
+- template: src={{dist_dir}}/bin/{{ item }}.j2 dest={{sphinx-console_path}}/bin/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0755"
+  with_items:
+    - start-agent.sh
+    - stop-agent.sh
+
+- command: "chown -R {{sw_user}}:{{sw_group}} {{sphinx-console_path}} {{sphinx_base_path}}"
+
+# Update agent service
+- template: src={{dist_dir}}/bin/sphinx-console-agent.j2 dest=/etc/init.d/sphinx-console-agent owner={{sw_user}} group={{sw_group}} mode="0755"
+- command: "chkconfig --add sphinx-console-agent"
+
+- name: Start sphinx-console Coordinator Agent
+  when: not check_mode
+  command: "{{service_path}} sphinx-console-agent start"
+
+- pause: seconds=10

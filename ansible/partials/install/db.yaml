@@ -1,0 +1,31 @@
+#Проверить что бд поднято и установлен сервис mysqld
+- service: name=mysqld state=started sleep=5
+
+- name: DB setup - preparing mysql database dump
+  template: src={{dist_dir}}/sql/create_db.sql.j2 dest=/tmp/create_db.sql
+
+- name: DB setup - creating database and setting grants
+  shell: mysql -u {{db_root_user}} --password={{db_root_pass}} < /tmp/create_db.sql
+
+- name: DB setup - cleanup db dump
+  command: "rm /tmp/create_db.sql"
+
+# run liquibase : start
+#- command: mv {{liquibase_dir}} {{liquibase_temp_dir}}
+
+- copy: src={{liquibase_dir}} dest={{liquibase_temp_dir}}
+
+- command: "chmod 755 mk_exec.sh"
+  args :
+    chdir: "{{liquibase_temp_dir}}"
+
+- command: "./mk_exec.sh"
+  args :
+    chdir: "{{liquibase_temp_dir}}"
+
+- command: "./apply_sphinx-console.sh jdbc:mysql://{{db_host}}:{{db_port}} {{db_pass}} {{db_user}} -Dwordforms_path={{wordforms_path}} -Dstopwords_path={{stopwords_path}}"
+  args :
+    chdir: "{{liquibase_temp_dir}}"
+
+- file: path={{liquibase_temp_dir}} state=absent
+# run liquibase : end

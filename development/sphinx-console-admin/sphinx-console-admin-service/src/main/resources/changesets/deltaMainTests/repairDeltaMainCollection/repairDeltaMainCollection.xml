@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../../changesets.properties</jsonPropsFilePath>
+    <command id="20150331-1">
+        <methodName>addCollection</methodName>
+        <jsonFilePath>json/addCollection.json</jsonFilePath>
+        <ignoreErrors>true</ignoreErrors>
+    </command>
+    <command id="20150331-2">
+        <methodName>modifyCollectionAttributes</methodName>
+        <jsonFilePath>json/modifyCollectionAttributesNoChange.json</jsonFilePath>
+    </command>
+</changeset>

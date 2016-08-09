@@ -1,0 +1,548 @@
+{
+  "searchConfigurationPort": {
+    "searchConfigurationPort": 9307
+  },
+  "distributedConfigurationPort": {
+    "distributedConfigurationPort": 9407
+  },
+  "searchConfiguration": {
+    "name": null,
+    "filePath": null,
+    "configurationTemplate": {
+      "name": "Base configuration template",
+      "description": "",
+      "defaultTemplate": true,
+      "systemTemplate": false,
+      "type": "CONFIGURATION",
+      "configurationFields": [
+        {
+          "fieldKey": "expand_keywords",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "min_infix_len",
+          "fieldValue": "3",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "morphology",
+          "fieldValue": "lemmatize_ru",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "index_exact_words",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "wordforms",
+          "fieldValue": "/usr/local/bin/ru.txt",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        }
+      ],
+      "collectionType": "SIMPLE"
+    },
+    "searchConfigurationTemplate": {
+      "name": "Base search template",
+      "description": "",
+      "defaultTemplate": true,
+      "systemTemplate": false,
+      "type": "SEARCH",
+      "configurationFields": [
+        {
+          "fieldKey": "max_filters",
+          "fieldValue": "512",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_filter_values",
+          "fieldValue": "8192",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "read_timeout",
+          "fieldValue": "5",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_packet_size",
+          "fieldValue": "16M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "client_timeout",
+          "fieldValue": "200",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "unlink_old",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "mva_updates_pool",
+          "fieldValue": "1M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "seamless_rotate",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_children",
+          "fieldValue": "0",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_batch_queries",
+          "fieldValue": "22",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "preopen_indexes",
+          "fieldValue": "0",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "thread_stack",
+          "fieldValue": "512K",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        }
+      ],
+      "collectionType": "SIMPLE"
+    },
+    "indexerConfigurationTemplate": {
+      "name": "Base index template",
+      "description": "",
+      "defaultTemplate": true,
+      "systemTemplate": false,
+      "type": "INDEX",
+      "configurationFields": [
+        {
+          "fieldKey": "lemmatizer_cache",
+          "fieldValue": "256M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "mem_limit",
+          "fieldValue": "512M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        }
+      ],
+      "collectionType": "SIMPLE"
+    },
+    "datasource": {
+      "name": "deltaMainCollectionDataSource",
+      "type": "PGSQL",
+      "host": "195.26.187.155",
+      "port": 5432,
+      "user": "sphinx-console",
+      "password": "sphinx-console",
+      "odbcDsn": null,
+      "sqlDb": "sphinx-console"
+    },
+    "fieldMappings": [
+      {
+        "sourceField": "id",
+        "sourceFieldType": null,
+        "indexField": "id",
+        "indexFieldType": "SQL_ATTR_UINT",
+        "indexFieldCommentary": null,
+        "isId": true
+      },
+      {
+        "sourceField": "value",
+        "sourceFieldType": null,
+        "indexField": "value",
+        "indexFieldType": "SQL_FIELD_STRING",
+        "indexFieldCommentary": null,
+        "isId": false
+      },
+      {
+        "sourceField": "is_deleted",
+        "sourceFieldType": null,
+        "indexField": "is_deleted",
+        "indexFieldType": "SQL_ATTR_UINT",
+        "indexFieldCommentary": null,
+        "isId": false
+      }
+    ],
+    "sourceConfigurationFields": [
+      {
+        "fieldKey": "sql_range_step",
+        "fieldValue": "1000",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "MAIN"
+      },
+      {
+        "fieldKey": "sql_query",
+        "fieldValue": "select id, value, case when is_deleted = true then 1 else 0 end as is_deleted from test.main WHERE id>=$start AND id<=$end",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "MAIN"
+      },
+      {
+        "fieldKey": "sql_query",
+        "fieldValue": "select id, value, is_deleted from test.delta",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "DELTA"
+      },
+      {
+        "fieldKey": "sql_range_step",
+        "fieldValue": "1000",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "DELTA"
+      },
+      {
+        "fieldKey": "sql_query_range",
+        "fieldValue": "SELECT MIN(id),MAX(id) FROM test.main",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "MAIN"
+      }
+    ],
+    "searchConfigurationFields": []
+  },
+  "indexConfiguration": {
+    "name": null,
+    "filePath": null,
+    "configurationTemplate": {
+      "name": "Base configuration template",
+      "description": "",
+      "defaultTemplate": true,
+      "systemTemplate": false,
+      "type": "CONFIGURATION",
+      "configurationFields": [
+        {
+          "fieldKey": "expand_keywords",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "min_infix_len",
+          "fieldValue": "3",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "morphology",
+          "fieldValue": "lemmatize_ru",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "index_exact_words",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "wordforms",
+          "fieldValue": "/usr/local/bin/ru.txt",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        }
+      ],
+      "collectionType": "SIMPLE"
+    },
+    "searchConfigurationTemplate": {
+      "name": "Base search template",
+      "description": "",
+      "defaultTemplate": true,
+      "systemTemplate": false,
+      "type": "SEARCH",
+      "configurationFields": [
+        {
+          "fieldKey": "max_filters",
+          "fieldValue": "512",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_filter_values",
+          "fieldValue": "8192",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "read_timeout",
+          "fieldValue": "5",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_packet_size",
+          "fieldValue": "16M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "client_timeout",
+          "fieldValue": "200",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "unlink_old",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "mva_updates_pool",
+          "fieldValue": "1M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "seamless_rotate",
+          "fieldValue": "1",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_children",
+          "fieldValue": "0",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "max_batch_queries",
+          "fieldValue": "22",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "preopen_indexes",
+          "fieldValue": "0",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "thread_stack",
+          "fieldValue": "512K",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        }
+      ],
+      "collectionType": "SIMPLE"
+    },
+    "indexerConfigurationTemplate": {
+      "name": "Base index template",
+      "description": "",
+      "defaultTemplate": true,
+      "systemTemplate": false,
+      "type": "INDEX",
+      "configurationFields": [
+        {
+          "fieldKey": "lemmatizer_cache",
+          "fieldValue": "256M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        },
+        {
+          "fieldKey": "mem_limit",
+          "fieldValue": "512M",
+          "configurationType": null,
+          "fieldCommentary": "",
+          "indexType": null
+        }
+      ],
+      "collectionType": "SIMPLE"
+    },
+    "datasource": {
+      "name": "deltaMainCollectionDataSource",
+      "type": "PGSQL",
+      "host": "195.26.187.155",
+      "port": 5432,
+      "user": "sphinx-console",
+      "password": "sphinx-console",
+      "odbcDsn": null,
+      "sqlDb": "sphinx-console"
+    },
+    "fieldMappings": [
+      {
+        "sourceField": "id",
+        "sourceFieldType": null,
+        "indexField": "id",
+        "indexFieldType": "SQL_ATTR_UINT",
+        "indexFieldCommentary": null,
+        "isId": true
+      },
+      {
+        "sourceField": "value",
+        "sourceFieldType": null,
+        "indexField": "value",
+        "indexFieldType": "SQL_FIELD_STRING",
+        "indexFieldCommentary": null,
+        "isId": false
+      },
+      {
+        "sourceField": "is_deleted",
+        "sourceFieldType": null,
+        "indexField": "is_deleted",
+        "indexFieldType": "SQL_ATTR_UINT",
+        "indexFieldCommentary": null,
+        "isId": false
+      }
+    ],
+    "sourceConfigurationFields": [
+      {
+        "fieldKey": "sql_query_range",
+        "fieldValue": "SELECT MIN(id),MAX(id) FROM test.main",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "MAIN"
+      },
+      {
+        "fieldKey": "sql_range_step",
+        "fieldValue": "1000",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "MAIN"
+      },
+      {
+        "fieldKey": "sql_query",
+        "fieldValue": "select id, value, case when is_deleted = true then 1 else 0 end as is_deleted from test.main WHERE id>=$start AND id<=$end",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "MAIN"
+      },
+      {
+        "fieldKey": "sql_query",
+        "fieldValue": "select id, value, is_deleted from test.delta",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "DELTA"
+      },
+      {
+        "fieldKey": "sql_range_step",
+        "fieldValue": "1000",
+        "configurationType": "SOURCE",
+        "fieldCommentary": null,
+        "indexType": "DELTA"
+      }
+    ],
+    "searchConfigurationFields": []
+  },
+  "searchServer": {
+    "ip": "${search.server.ip}",
+    "domain": null,
+    "name": "${search.server.name}"
+  },
+  "indexServer": {
+    "ip": "${index.server.ip}",
+    "domain": null,
+    "name": "${index.server.name}"
+  },
+  "indexServerPort": null,
+  "collection": {
+    "name": "test_collection_delta_main_distributed_server",
+    "type": "MAIN_DELTA",
+    "description": null,
+    "lastIndexingTime": null,
+    "nextIndexingTime": null,
+    "lastMergeTime": null,
+    "nextMergeTime": null,
+    "isProcessingFailed": true,
+    "delta": {
+      "type": "DELTA",
+      "period": 1435665258208,
+      "externalAction": {
+        "type": "SQL",
+        "code": "insert into test.merge_date (merge_date) values(current_timestamp)",
+        "dataSource": {
+          "name": "deltaMainCollectionDataSource",
+          "type": "PGSQL",
+          "host": "195.26.187.155",
+          "port": 5432,
+          "user": "sphinx-console",
+          "password": "sphinx-console",
+          "odbcDsn": null,
+          "sqlDb": "sphinx-console"
+        },
+        "server": null
+      },
+      "field": null,
+      "mergeTime": 1435665258208,
+      "deleteScheme": null
+    },
+    "collectionType": "SIMPLE",
+    "needReload": null,
+    "processingFailed": true
+  },
+  "cronSchedule": {
+    "cronSchedule": "0 /10 * * * ?",
+    "enabled": false
+  },
+  "mainCronSchedule": {
+    "cronSchedule": "0 /50 * * * ?",
+    "enabled": false
+  },
+  "tableName": null,
+  "fullIndexingServer": null,
+  "collectionInfo": null,
+  "collectionType": null
+}

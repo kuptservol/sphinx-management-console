@@ -1,0 +1,72 @@
+---
+# Installs agent
+- name: Stop sphinx-console Coordinator Agent (if exists)
+  command: "{{service_path}} sphinx-console-agent stop"
+  ignore_errors: yes
+
+#
+# Обновить конфиги
+#
+- template: src={{dist_dir}}/conf/{{ item }}.j2 dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx.properties
+
+#
+# Обновить приложение
+#
+- file: path={{agent_path}} state=absent
+- file: path={{agent_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/agent/sphinx-console-coordinator-agent.jar dest={{sphinx-console_path}}/agent/sphinx-console-coordinator-agent.jar owner={{sw_user}} group={{sw_group}} mode="0644"
+
+- file: path={{conf_path}} state=directory
+- file: path={{conf_path}}/templates state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- template: src={{dist_dir}}/conf/templates/{{ item }}.j2  dest={{conf_path}}/templates/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx_service_conf.vm
+    - sphinx_conf.vm
+
+- template: src={{dist_dir}}/conf/{{ item }}.j2 dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx.properties
+    - sphinx_service_conf.properties
+
+#
+# Создать папки для сниппетов
+#
+- name: List indexing replicas
+  command: "ls -1 {{sphinx_base_path}}/log/indexing"
+  register: indexing_replicas
+
+- file: path="{{sphinx_base_path}}/snippet/indexing/{{item}}" owner={{sw_user}} group={{sw_group}} mode="0755" state="directory"
+  with_items: indexing_replicas.stdout_lines
+
+- name: List searching replicas
+  command: "ls -1 {{sphinx_base_path}}/log/searching"
+  register: searching_replicas
+
+- file: path="{{sphinx_base_path}}/snippet/searching/{{item}}" owner={{sw_user}} group={{sw_group}} mode="0755" state="directory"
+  with_items: searching_replicas.stdout_lines
+
+# Install logrotate
+- template: src={{dist_dir}}/etc/logrotate.d/{{ item }}.j2 dest=/etc/logrotate.d/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0755"
+  with_items:
+    - sphinx-console
+
+# Install sphinx-console .so
+- file: path=/tmp/sphinx-console-udf-src state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- file: path={{udf_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/sphinx/udf dest=/tmp/sphinx-console-udf-src/ owner={{sw_user}} group={{sw_group}}
+- template: src={{dist_dir}}/sphinx/udf/sphinx-console_get_snippet.c.j2 dest=/tmp/sphinx-console-udf-src/udf/sphinx-console_get_snippet.c owner={{sw_user}} group={{sw_group}} mode="0755"
+- command: "gcc -shared -fPIC -o {{udf_path}}/sphinx-console_get_snippet.so /tmp/sphinx-console-udf-src/udf/sphinx-console_get_snippet.c"
+# - command: "rm -rf /tmp/sphinx-console-udf-src"
+
+# Install state file
+- file: path={{sphinx_base_path}}/state state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- copy: src={{dist_dir}}/sphinx/state/init.sql dest={{sphinx_base_path}}/state/init.sql owner={{sw_user}} group={{sw_group}}
+
+- command: "chown -R {{sw_user}}:{{sw_group}} {{sphinx-console_path}} {{sphinx_base_path}}"
+
+- name: Start sphinx-console Coordinator Agent
+  command: "{{service_path}} sphinx-console-agent start"
+
+- pause: seconds=10

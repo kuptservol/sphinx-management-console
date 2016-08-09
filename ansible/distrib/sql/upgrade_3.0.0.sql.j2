@@ -1,0 +1,226 @@
+SET NAMES utf8;
+
+USE {{db_name}};
+
+drop procedure if exists AddColumnUnlessExists;
+delimiter //
+
+create procedure AddColumnUnlessExists(
+    IN dbName tinytext,
+    IN tableName tinytext,
+    IN fieldName tinytext,
+    IN fieldDef text)
+begin
+    IF NOT EXISTS (
+        SELECT * FROM information_schema.COLUMNS
+        WHERE column_name=fieldName
+        and table_name=tableName
+        and table_schema=dbName
+        )
+    THEN
+        set @ddl=CONCAT('ALTER TABLE ',dbName,'.',tableName,
+            ' ADD COLUMN ',fieldName,' ',fieldDef);
+        prepare stmt from @ddl;
+        execute stmt;
+    END IF;
+end;
+//
+
+drop procedure if exists ChangeColumnIfExists;
+//
+create procedure ChangeColumnIfExists(
+	IN dbName tinytext,
+	IN tableName tinytext,
+	IN fieldName tinytext,
+	IN fieldDef text)
+begin
+	IF EXISTS (
+		SELECT * FROM information_schema.COLUMNS
+		WHERE column_name=fieldName
+		and table_name=tableName
+		and table_schema=dbName
+		)
+	THEN
+		set @ddl=CONCAT('ALTER TABLE ',dbName,'.',tableName, ' CHANGE COLUMN ',fieldName,' ', fieldDef);
+		prepare stmt from @ddl;
+		execute stmt;
+	END IF;
+end;
+//
+
+drop procedure if exists ExecuteIfColumnExists//
+
+create procedure ExecuteIfColumnExists(
+	IN dbName tinytext,
+	IN tableName tinytext,
+	IN fieldName tinytext,
+	IN comandText1 text,
+    IN comandText2 text,
+    IN comandText3 text)
+begin
+	IF EXISTS (
+		SELECT * FROM information_schema.COLUMNS
+		WHERE column_name=fieldName
+		and table_name=tableName
+		and table_schema=dbName
+		)
+	THEN
+		START TRANSACTION;
+			IF(comandText1 IS NOT NULL) THEN
+				set @ddl=comandText1;
+				prepare stmt from @ddl;
+				execute stmt;
+			END IF;
+			IF(comandText2 IS NOT NULL) THEN
+				set @ddl=comandText2;
+				prepare stmt from @ddl;
+				execute stmt;
+			END IF;
+			IF(comandText3 IS NOT NULL) THEN
+				set @ddl=comandText3;
+				prepare stmt from @ddl;
+				execute stmt;
+			END IF;
+		COMMIT;
+	END IF;
+end;
+//
+
+delimiter ;
+
+call AddColumnUnlessExists(Database(), "COLLECTION", "collection_type", "varchar(50) not null default 'SIMPLE'");
+
+call AddColumnUnlessExists(Database(), "COLLECTION", "need_reload", "tinyint(1) null");
+
+call AddColumnUnlessExists(Database(), "CONFIGURATION_TEMPLATE", "collection_type", "varchar(50) not null default 'SIMPLE'");
+
+CREATE TABLE IF NOT EXISTS `DISTRIBUTED_COLLECTION_NODE` (
+  `distributed_collection_node_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `distributed_collection_id` bigint(20) NOT NULL,
+  `simple_collection_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`distributed_collection_node_id`),
+  KEY `distributed_collection_id` (`distributed_collection_id`),
+  KEY `simple_collection_id` (`simple_collection_id`),
+  CONSTRAINT `FK_DISTIBUTED_COLLECTION_NODE_DISTRINUTED` FOREIGN KEY (`distributed_collection_id`) REFERENCES `COLLECTION` (`collection_id`),
+  CONSTRAINT `FK_DISTIBUTED_COLLECTION_NODE_SIMPLE` FOREIGN KEY (`simple_collection_id`) REFERENCES `COLLECTION` (`collection_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `DISTRIBUTED_COLLECTION_AGENT` (
+  `distributed_collection_agent_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `distributed_collection_node_id` bigint(20) DEFAULT NULL,
+  `node_host` varchar(100) DEFAULT NULL,
+  `node_distrib_port` varchar(6) DEFAULT NULL,
+  `sphinx_process_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`distributed_collection_agent_id`),
+  CONSTRAINT `FK_DISTRIBUTED_COLLECTION_AGENT_SP` FOREIGN KEY (`sphinx_process_id`) REFERENCES `SPHINX_PROCESS` (`sphinx_process_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `COMMAND` (
+  `id` bigint(20) NOT NULL,
+  `command_id` varchar(2000) NOT NULL,
+  `method_name` varchar(2000) NOT NULL,
+  `json_file_path` varchar(2000) DEFAULT NULL,
+  `execute_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `{{db_name}}`.`CONFIGURATION_FIELDS`
+CHANGE COLUMN `configuration_fields_id` `configuration_fields_id` BIGINT(20) NOT NULL AUTO_INCREMENT ;
+
+call ExecuteIfColumnExists(Database(), "DELETE_SCHEME", "field_value",
+"insert into {{db_name}}.CONFIGURATION_FIELDS (field_key, field_value, configuration_type, configuration_id, index_type)
+SELECT 'sql_query_killlist', DS.field_value, 'SOURCE', SP.configuration_id, 'DELTA'
+FROM {{db_name}}.DELETE_SCHEME AS DS
+inner JOIN {{db_name}}.DELTA AS D ON(DS.delete_scheme_id = D.delete_scheme_id)
+inner join {{db_name}}.SPHINX_PROCESS as SP on(D.collection_id = SP.collection_id)",
+"update {{db_name}}.DELTA set delete_scheme_id=null","delete from {{db_name}}.DELETE_SCHEME");
+
+call ChangeColumnIfExists(Database(), "DELETE_SCHEME", "field_value", "field_value_from TEXT NOT NULL");
+call AddColumnUnlessExists(Database(), "DELETE_SCHEME", "field_value_to", "TEXT NOT NULL");
+/*-----------------------*/
+
+ALTER TABLE CONFIGURATION_TEMPLATE 
+   DROP INDEX unique_name_configuration_type, 
+   ADD UNIQUE KEY unique_name_configuration_type (name, type, collection_type) USING BTREE;
+
+drop procedure if exists CreateBaseDistributedTemplatesUnlessExists;
+delimiter //
+
+create procedure CreateBaseDistributedTemplatesUnlessExists()
+  begin
+    IF NOT EXISTS (
+        SELECT * FROM CONFIGURATION_TEMPLATE
+        WHERE collection_type='DISTRIBUTED'
+    )
+    THEN
+      SELECT @distrTplConf := max(configuration_template_id) + 1, @distrTplSearch := max(configuration_template_id) + 2 from CONFIGURATION_TEMPLATE;
+
+      INSERT into CONFIGURATION_TEMPLATE values(@distrTplConf, 'Base Distributed configuration template', '', 1, 0, 'CONFIGURATION', 'DISTRIBUTED');
+      INSERT into CONFIGURATION_TEMPLATE values(@distrTplSearch, 'Base Distributed search template', '', 1, 0, 'SEARCH', 'DISTRIBUTED');
+
+      SELECT @fieldId := max(configuration_fields_id) + 1 FROM CONFIGURATION_FIELDS;
+
+      INSERT into CONFIGURATION_FIELDS values(@fieldId, 'ha_strategy', 'noerrors', @distrTplConf, null, null, '', null);
+
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 1, 'max_filter_values', '8192', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 2, 'read_timeout', '5', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 3, 'max_packet_size', '16M', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 4, 'client_timeout', '200', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 5, 'unlink_old', '1', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 6, 'mva_updates_pool', '1M', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 7, 'seamless_rotate', '1', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 8, 'max_children', '0', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 9, 'max_batch_queries', '22', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 10, 'preopen_indexes', '0', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 11, 'thread_stack', '512K', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 12, 'max_filters', '512', @distrTplSearch, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 13, 'query_log_format', 'sphinxql', @distrTplSearch, null, null, '', null);
+
+    END IF;
+  end;
+//
+
+delimiter ;
+
+alter table SPHINX_PROCESS modify column generated_sphinx_conf LONGBLOB;
+
+LOCK TABLES CONFIGURATION_TEMPLATE WRITE, CONFIGURATION_FIELDS WRITE;
+call  CreateBaseDistributedTemplatesUnlessExists();
+UNLOCK TABLES;
+
+
+/* Additional configuration search template (allows searches like "a*" */
+drop procedure if exists CreateAdditionalConfigurationTemplateUnlessExists;
+delimiter //
+
+create procedure CreateAdditionalConfigurationTemplateUnlessExists()
+  begin
+    IF NOT EXISTS (
+        SELECT * FROM CONFIGURATION_TEMPLATE
+        WHERE collection_type='SIMPLE' AND name='One char search'
+    )
+    THEN
+      SELECT @newTplConf := max(configuration_template_id) + 1 from CONFIGURATION_TEMPLATE;
+
+      INSERT into CONFIGURATION_TEMPLATE values(@newTplConf, 'One char search', 'Дает возможность искать по одной букве, например, "а*"', 0, 0, 'CONFIGURATION', 'SIMPLE');
+
+      SELECT @fieldId := max(configuration_fields_id) + 1 FROM CONFIGURATION_FIELDS;
+
+      INSERT into CONFIGURATION_FIELDS values(@fieldId, 'expand_keywords', '1', @newTplConf, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 1, 'min_infix_len', '1', @newTplConf, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 2, 'morphology', 'lemmatize_ru', @newTplConf, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 3, 'index_exact_words', '1', @newTplConf, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 4, 'wordforms', '{{wordforms_path}}/ru.txt', @newTplConf, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 5, 'charset_table', '0..9, english, russian', @newTplConf, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 6, 'blend_chars', '-, _, %, U+002C, U+002E, @', @newTplConf, null, null, '', null);
+      INSERT into CONFIGURATION_FIELDS values(@fieldId + 7, 'blend_mode', 'trim_none, skip_pure', @newTplConf, null, null, '', null);
+    END IF;
+  end;
+//
+
+delimiter ;
+
+
+LOCK TABLES CONFIGURATION_TEMPLATE WRITE, CONFIGURATION_FIELDS WRITE;
+call  CreateAdditionalConfigurationTemplateUnlessExists();
+UNLOCK TABLES;

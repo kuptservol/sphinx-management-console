@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+sphinx-console_PATH={{sphinx-console_path}}
+
+if [ "$1" != "-h" ]; then
+    # echo "java -DconfigLocation=$sphinx-console_PATH/conf -jar $sphinx-console_PATH/admin/sphinx-console-admin.jar $@"
+    java -DconfigLocation=$sphinx-console_PATH/conf -jar $sphinx-console_PATH/admin/sphinx-console-admin.jar $@
+else
+    echo "sphinx-console-Admin"
+    echo "Usage:"
+    echo "    sphinx-console-admin -h"
+    echo "    sphinx-console-admin <changeset_path> [<properties_path>] [rollback]"
+fi

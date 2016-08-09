@@ -1,0 +1,16 @@
+---
+- yum: name=unixODBC state=present
+  sudo: yes
+  when: type == "all" or type == "agent"
+- yum: name=postgresql-libs state=present
+  sudo: yes
+  when: type == "all" or type == "agent"
+- yum: name={{sphinx_rpm}} state=present
+  sudo: yes
+  when: with_sphinx and (type == "all" or type == "agent")
+- yum: name=mysqlclient16 state=present
+  sudo: yes
+  when: type == "all" or type == "agent"
+- yum: name=gcc state=present
+  sudo: yes
+  when: type == "all" or type == "agent"

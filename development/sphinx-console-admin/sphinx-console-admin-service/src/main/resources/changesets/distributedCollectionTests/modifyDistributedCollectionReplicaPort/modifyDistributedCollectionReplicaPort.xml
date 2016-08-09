@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../../changesets.properties</jsonPropsFilePath>
+    <command id="createReplicaDistributedCollection-20150619-1">
+        <methodName>replica/modifyDistributedReplicaPort</methodName>
+        <jsonFilePath>json/modifyDistributedReplicaPort.json</jsonFilePath>
+    </command>
+</changeset>

@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <preConditions>
+        <dbms type="mysql"/>
+    </preConditions>
+
+    <changeSet author="skuptsov" id="20150821-1">
+        <comment>Structure for table "DATASOURCE"</comment>
+        <sql>
+            CREATE TABLE `DATASOURCE` (
+            `datasource_id` bigint(20) NOT NULL,
+            `type` varchar(10) DEFAULT NULL,
+            `sql_host` varchar(15) DEFAULT NULL,
+            `sql_port` bigint(20) DEFAULT NULL,
+            `sql_user` varchar(50) DEFAULT NULL,
+            `sql_pass` varchar(50) DEFAULT NULL,
+            `odbc_dsn` varchar(100) DEFAULT NULL,
+            `sql_db` varchar(100) DEFAULT NULL,
+            `name` varchar(255) NOT NULL,
+            PRIMARY KEY (`datasource_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `DATASOURCE`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-2">
+        <comment>Structure for table "COLLECTION"</comment>
+        <sql>
+            CREATE TABLE `COLLECTION` (
+            `collection_id` bigint(20) NOT NULL,
+            `collection_name` varchar(200) NOT NULL,
+            `description` varchar(100) DEFAULT NULL,
+            `index_label` varchar(25) DEFAULT NULL,
+            `type` varchar(50) not null default 'SIMPLE',
+            `last_indexing_time` timestamp NULL DEFAULT NULL,
+            `next_indexing_time` timestamp NULL DEFAULT NULL,
+            `last_merge_time` timestamp NULL DEFAULT NULL,
+            `next_merge_time` timestamp NULL DEFAULT NULL,
+            `is_processing_failed` bool NOT NULL DEFAULT 1,
+            `collection_type` varchar(50) not null default 'SIMPLE',
+            `need_reload` tinyint(1) null,
+            PRIMARY KEY (`collection_id`),
+            UNIQUE KEY `UQ_COLLECTION_collection_name` (`collection_name`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `COLLECTION`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-3">
+        <comment>Structure for table "CONFIGURATION_TEMPLATE"</comment>
+        <sql>
+            CREATE TABLE `CONFIGURATION_TEMPLATE` (
+            `configuration_template_id` bigint(20) NOT NULL,
+            `name` varchar(50) NOT NULL,
+            `description` varchar(200) DEFAULT NULL,
+            `is_default` tinyint(1) DEFAULT NULL,
+            `is_system` tinyint(1) DEFAULT NULL,
+            `type` varchar(20) DEFAULT NULL,
+            `collection_type` varchar(50) NOT NULL DEFAULT 'SIMPLE',
+            PRIMARY KEY (`configuration_template_id`),
+            UNIQUE KEY `unique_name_configuration_type` (`name`,`type`) USING BTREE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `CONFIGURATION_TEMPLATE`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-4">
+        <comment>Structure for table "CONFIGURATION"</comment>
+        <sql>
+            CREATE TABLE `CONFIGURATION` (
+            `configuration_id` bigint(20) NOT NULL,
+            `name` varchar(100) NOT NULL DEFAULT '',
+            `searchd_configuration_template_id` bigint(20) DEFAULT NULL,
+            `datasource_id` bigint(20) DEFAULT NULL,
+            `configuration_template_id` bigint(20) DEFAULT NULL,
+            `indexer_configuration_template_id` bigint(20) DEFAULT NULL,
+            `file_path` varchar(200) DEFAULT NULL,
+            `port` int(11) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`configuration_id`),
+            UNIQUE KEY `configuration_name_constraint` (`name`) USING BTREE,
+            KEY `configuration_template_id` (`configuration_template_id`),
+            KEY `datasource_id` (`datasource_id`),
+            KEY `searchd_configuration_template_id` (`searchd_configuration_template_id`),
+            KEY `indexer_configuration_template_id` (`indexer_configuration_template_id`),
+            CONSTRAINT `FK_CONFIGURATION_CONFIGURATION_TEMPLATE` FOREIGN KEY (`configuration_template_id`) REFERENCES
+            `CONFIGURATION_TEMPLATE` (`configuration_template_id`),
+            CONSTRAINT `FK_CONFIGURATION_DATASOURCE` FOREIGN KEY (`datasource_id`) REFERENCES `DATASOURCE`
+            (`datasource_id`),
+            CONSTRAINT `FK_CONFIGURATION_INDEXER_CONFIGURATION_TEMPLATE` FOREIGN KEY
+            (`indexer_configuration_template_id`) REFERENCES `CONFIGURATION_TEMPLATE` (`configuration_template_id`),
+            CONSTRAINT `FK_CONFIGURATION_SEARCHD_CONFIGURATION_TEMPLATE` FOREIGN KEY
+            (`searchd_configuration_template_id`) REFERENCES `CONFIGURATION_TEMPLATE` (`configuration_template_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `CONFIGURATION`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-5">
+        <comment>Structure for table "CONFIGURATION_FIELDS"</comment>
+        <sql>
+            CREATE TABLE `CONFIGURATION_FIELDS` (
+            `configuration_fields_id` bigint(20) NOT NULL,
+            `field_key` varchar(255) DEFAULT NULL,
+            `field_value` text,
+            `configuration_template_id` bigint(20) DEFAULT NULL,
+            `configuration_type` varchar(10) DEFAULT NULL,
+            `configuration_id` bigint(20) NULL,
+            `field_commentary` varchar(100) DEFAULT NULL,
+            `index_type` varchar(20) DEFAULT NULL,
+            PRIMARY KEY (`configuration_fields_id`),
+            KEY `configuration_template_id` (`configuration_template_id`),
+            CONSTRAINT `FK_CONFIGURATION_FIELDS_CONFIGURATION_TEMPLATE` FOREIGN KEY (`configuration_template_id`)
+            REFERENCES `CONFIGURATION_TEMPLATE` (`configuration_template_id`),
+            CONSTRAINT `FK_CONFIGURATION_FIELDS_CONFIGURATION` FOREIGN KEY (`configuration_id`) REFERENCES
+            `CONFIGURATION` (`configuration_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `CONFIGURATION_FIELDS`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-6">
+        <comment>Structure for table "DELETE_SCHEME"</comment>
+        <sql>
+            CREATE TABLE `DELETE_SCHEME` (
+            `delete_scheme_id` bigint(20) NOT NULL,
+            `type` char(20) NOT NULL DEFAULT '',
+            `field_name` varchar(50) NOT NULL,
+            `field_value` text NOT NULL,
+            PRIMARY KEY (`delete_scheme_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `DELETE_SCHEME`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-7">
+        <comment>Structure for table "DELTA"</comment>
+        <sql>
+            CREATE TABLE `DELTA` (
+            `delta_id` bigint(20) NOT NULL,
+            `collection_id` bigint(20) NOT NULL,
+            `delta_type` char(25) NOT NULL,
+            `delta_period` datetime NOT NULL,
+            `external_action_id` bigint(20) DEFAULT NULL,
+            `delta_field` char(10) DEFAULT NULL,
+            `delta_merge_time` datetime NOT NULL,
+            `delete_scheme_id` bigint(20) DEFAULT NULL,
+            PRIMARY KEY (`delta_id`),
+            KEY `collection_id` (`collection_id`),
+            CONSTRAINT `FK_DELTA_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION` (`collection_id`),
+            CONSTRAINT `FK_DELTA_DELETE_SCHEME` FOREIGN KEY (`delete_scheme_id`) REFERENCES `DELETE_SCHEME`
+            (`delete_scheme_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `DELTA`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-8">
+        <comment>Structure for table "FIELD_MAPPING"</comment>
+        <sql>
+            CREATE TABLE `FIELD_MAPPING` (
+            `field_mapping_id` bigint(20) NOT NULL,
+            `source_field` varchar(100) DEFAULT NULL,
+            `index_field` varchar(100) DEFAULT NULL,
+            `index_field_type` varchar(100) DEFAULT NULL,
+            `index_field_commentary` varchar(100) DEFAULT NULL,
+            `is_id` tinyint(1) DEFAULT NULL,
+            `configuration_id` bigint(20) DEFAULT NULL,
+            `source_field_type` varchar(100) DEFAULT NULL,
+            PRIMARY KEY (`field_mapping_id`),
+            KEY `configuration_id` (`configuration_id`),
+            CONSTRAINT `FK_FIELD_MAPPING_CONFIGURATION` FOREIGN KEY (`configuration_id`) REFERENCES `CONFIGURATION`
+            (`configuration_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `FIELD_MAPPING`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-9">
+        <comment>Structure for table "PARTITION_TABLE"</comment>
+        <sql>
+            CREATE TABLE `PARTITION_TABLE` (
+            `partition_id` bigint(20) NOT NULL,
+            `collection_id` bigint(20) NOT NULL,
+            `index_name` char(25) NOT NULL,
+            `partition_number` bigint(20) NOT NULL,
+            `partition_key` char(100) NOT NULL,
+            PRIMARY KEY (`partition_id`),
+            KEY `collection_id` (`collection_id`),
+            CONSTRAINT `FK_PARTITION_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION` (`collection_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `PARTITION_TABLE`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-10">
+        <comment>Structure for table "REPLICA"</comment>
+        <sql>
+            CREATE TABLE `REPLICA` (
+            `replica_id` bigint(20) NOT NULL,
+            `collection_id` bigint(20) DEFAULT NULL,
+            `replica_number` bigint(20) NOT NULL,
+            PRIMARY KEY (`replica_id`),
+            KEY `collection_id` (`collection_id`),
+            CONSTRAINT `FK_Replica_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION` (`collection_id`),
+            UNIQUE KEY `UQ_COLLECTION_REPLICA_replica_number` (`collection_id`,`replica_number`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `REPLICA`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-11">
+        <comment>Structure for table "SCHEDULED_TASK"</comment>
+        <sql>
+            CREATE TABLE `SCHEDULED_TASK` (
+            `scheduled_task_id` bigint(20) NOT NULL,
+            `collection_id` bigint(20) DEFAULT NULL,
+            `task_name` varchar(50) NOT NULL,
+            `is_enabled` bool NOT NULL DEFAULT 1,
+            `cron_schedule` varchar(50) NOT NULL DEFAULT '',
+            PRIMARY KEY (`scheduled_task_id`),
+            KEY `collection_id` (`collection_id`),
+            CONSTRAINT `FK_SCHEDULED_TASK_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION`
+            (`collection_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `SCHEDULED_TASK`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-12">
+        <comment>Structure for table "SERVER"</comment>
+        <sql>
+            CREATE TABLE `SERVER` (
+            `server_id` bigint(20) NOT NULL,
+            `ip` varchar(20) NOT NULL,
+            `domain_name` varchar(25) DEFAULT NULL,
+            `name` varchar(25) NOT NULL DEFAULT '',
+            PRIMARY KEY (`server_id`),
+            UNIQUE KEY `UQ_SERVER_ip` (`ip`),
+            UNIQUE KEY `UQ_SERVER_name` (`name`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `SERVER`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-13">
+        <comment>Structure for table "EXTERNAL_ACTION"</comment>
+        <sql>
+            CREATE TABLE `EXTERNAL_ACTION` (
+            `external_action_id` bigint(20) NOT NULL AUTO_INCREMENT,
+            `external_action_type` varchar(10) NOT NULL DEFAULT '',
+            `datasource_id` bigint(20) DEFAULT NULL,
+            `server_id` bigint(20) DEFAULT NULL,
+            `external_action_code` blob NOT NULL,
+            PRIMARY KEY (`external_action_id`),
+            UNIQUE KEY `external_action_id` (`external_action_id`),
+            CONSTRAINT `FK_DELTA_DATASOURCE` FOREIGN KEY (`datasource_id`) REFERENCES `DATASOURCE` (`datasource_id`),
+            CONSTRAINT `FK_DELTA_SERVER` FOREIGN KEY (`server_id`) REFERENCES `SERVER` (`server_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `EXTERNAL_ACTION`;
+        </rollback>
+    </changeSet>
+
+
+    <changeSet author="skuptsov" id="20150821-15">
+        <comment>Structure for table "ADMIN_PROCESS"</comment>
+        <sql>
+            CREATE TABLE `ADMIN_PROCESS` (
+            `admin_process_id` bigint(20) NOT NULL,
+            `type` varchar(20) NOT NULL DEFAULT '',
+            `port` int(11) NOT NULL DEFAULT '0',
+            `server_id` bigint(20) DEFAULT NULL,
+            PRIMARY KEY (`admin_process_id`),
+            KEY `server_id` (`server_id`),
+            CONSTRAINT `FK_ADMIN_PROCESS_SERVER` FOREIGN KEY (`server_id`) REFERENCES `SERVER` (`server_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `ADMIN_PROCESS`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-16">
+        <comment>Structure for table "SPHINX_PROCESS"</comment>
+        <sql>
+            CREATE TABLE `SPHINX_PROCESS` (
+            `sphinx_process_id` bigint(20) NOT NULL,
+            `server_id` bigint(20) NOT NULL,
+            `collection_id` bigint(20) NOT NULL,
+            `index_name` varchar(100) DEFAULT NULL,
+            `configuration_id` bigint(20) DEFAULT NULL,
+            `type` varchar(20) NOT NULL,
+            `generated_sphinx_conf` longblob,
+            `replica_id` bigint(20) NOT NULL,
+            `port` smallint(6) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`sphinx_process_id`),
+            KEY `collection_id` (`collection_id`),
+            KEY `configuration_id` (`configuration_id`),
+            KEY `server_id` (`server_id`),
+            CONSTRAINT `FK_PROCESS_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION` (`collection_id`),
+            CONSTRAINT `FK_PROCESS_CONFIGURATION_TEMPLATE` FOREIGN KEY (`configuration_id`) REFERENCES `CONFIGURATION`
+            (`configuration_id`),
+            CONSTRAINT `FK_SPHINX_PROCESS_REPLICA` FOREIGN KEY (`replica_id`) REFERENCES `REPLICA` (`replica_id`),
+            CONSTRAINT `FK_PROCESS_SERVER` FOREIGN KEY (`server_id`) REFERENCES `SERVER` (`server_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `SPHINX_PROCESS`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-17">
+        <comment>Structure for table "ACTIVITY_LOG"</comment>
+        <sql>
+            CREATE TABLE `ACTIVITY_LOG` (
+            `activity_log_id` bigint(20) NOT NULL,
+            `task_name` varchar(100) NOT NULL DEFAULT '',
+            `date_time` datetime NOT NULL,
+            `collection_id` bigint(20) DEFAULT NULL,
+            `index_name` varchar(200) DEFAULT '',
+            `server_id` bigint(20) DEFAULT '0',
+            `server_name` varchar(25) DEFAULT NULL,
+            `process_id` bigint(20) DEFAULT '0',
+            `process_type` varchar(20) DEFAULT NULL,
+            `start_time` timestamp NULL DEFAULT '0000-00-00 00:00:00.00' ON UPDATE CURRENT_timestamp,
+            `end_time` timestamp NULL DEFAULT '0000-00-00 00:00:00.00',
+            `operation_type` varchar(100) NOT NULL DEFAULT '',
+            `stage_status` varchar(50) NOT NULL DEFAULT '',
+            `exception_text` text,
+            `data` blob,
+            `task_uid` varchar(36) NOT NULL DEFAULT '',
+            `task_status` varchar(100) DEFAULT NULL,
+            `task_start_time` timestamp NULL DEFAULT NULL,
+            `task_end_time` timestamp NULL DEFAULT NULL,
+            `replica_number` int(3) NOT NULL DEFAULT '1',
+            PRIMARY KEY (`activity_log_id`),
+            KEY `collection_id` (`collection_id`),
+            KEY `server_id` (`server_id`),
+            CONSTRAINT `FK_ACTIVITY_LOG_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION`
+            (`collection_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            ALTER TABLE ACTIVITY_LOG ADD INDEX (TASK_UID);
+
+            ALTER TABLE ACTIVITY_LOG ADD INDEX (INDEX_NAME);
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `ACTIVITY_LOG`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-18">
+        <comment>Structure for table "SNIPPET_CONFIGURATION"</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `SNIPPET_CONFIGURATION` (
+            `snippet_configuration_id` bigint(20) NOT NULL AUTO_INCREMENT,
+            `collection_id` bigint(20) DEFAULT NULL,
+            `scheduled_task_id` bigint(20) DEFAULT NULL,
+            `datasource_id` bigint(20) DEFAULT NULL,
+            `last_buildsnippet` timestamp NULL DEFAULT NULL,
+            `next_buildsnippet` timestamp NULL DEFAULT NULL,
+            `pre_query` text,
+            `post_query` text,
+            `main_query` text,
+            `full_pre_query` text,
+            `full_post_query` text,
+            `full_main_query` text,
+            PRIMARY KEY (`snippet_configuration_id`),
+            KEY `collection_id` (`collection_id`),
+            KEY `datasource_id` (`datasource_id`),
+            KEY `scheduled_task_id` (`scheduled_task_id`),
+            CONSTRAINT `FK_SNIPPET_CONFIGURATION_COLLECTION` FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION`
+            (`collection_id`),
+            CONSTRAINT `FK_SNIPPET_CONFIGURATION_SCHEDULE` FOREIGN KEY (`scheduled_task_id`) REFERENCES `SCHEDULED_TASK`
+            (`scheduled_task_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `SNIPPET_CONFIGURATION`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-19">
+        <comment>Structure for table "SNIPPET_CONFIGURATION_FIELD"</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `SNIPPET_CONFIGURATION_FIELD` (
+            `snippet_configuration_field_id` bigint(20) NOT NULL AUTO_INCREMENT,
+            `snippet_configuration_id` bigint(20) DEFAULT NULL,
+            `field_name` varchar(255) DEFAULT NULL,
+            PRIMARY KEY (`snippet_configuration_field_id`),
+            KEY `snippet_configuration_id` (`snippet_configuration_id`),
+            CONSTRAINT `FK_SNIPPET_CONFIGURATION_FIELD_CONFIGURATION` FOREIGN KEY (`snippet_configuration_id`)
+            REFERENCES `SNIPPET_CONFIGURATION` (`snippet_configuration_id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `SNIPPET_CONFIGURATION_FIELD`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-20">
+        <comment>Structure for table "DISTRIBUTED_COLLECTION_NODE"</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `DISTRIBUTED_COLLECTION_NODE` (
+            `distributed_collection_node_id` bigint(20) NOT NULL AUTO_INCREMENT,
+            `distributed_collection_id` bigint(20) NOT NULL,
+            `simple_collection_id` bigint(20) DEFAULT NULL,
+            PRIMARY KEY (`distributed_collection_node_id`),
+            KEY `distributed_collection_id` (`distributed_collection_id`),
+            KEY `simple_collection_id` (`simple_collection_id`),
+            CONSTRAINT `FK_DISTIBUTED_COLLECTION_NODE_DISTRINUTED` FOREIGN KEY (`distributed_collection_id`) REFERENCES
+            `COLLECTION` (`collection_id`),
+            CONSTRAINT `FK_DISTIBUTED_COLLECTION_NODE_SIMPLE` FOREIGN KEY (`simple_collection_id`) REFERENCES
+            `COLLECTION` (`collection_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `DISTRIBUTED_COLLECTION_NODE`;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="skuptsov" id="20150821-21">
+    <comment>Structure for table "DISTRIBUTED_COLLECTION_AGENT"</comment>
+    <sql>
+        CREATE TABLE IF NOT EXISTS `DISTRIBUTED_COLLECTION_AGENT` (
+        `distributed_collection_agent_id` bigint(20) NOT NULL AUTO_INCREMENT,
+        `distributed_collection_node_id` bigint(20) DEFAULT NULL,
+        `node_host` varchar(100) DEFAULT NULL,
+        `node_distrib_port` varchar(6) DEFAULT NULL,
+        `sphinx_process_id` bigint(20) DEFAULT NULL,
+        PRIMARY KEY (`distributed_collection_agent_id`),
+        CONSTRAINT `FK_DISTRIBUTED_COLLECTION_AGENT_SP` FOREIGN KEY (`sphinx_process_id`) REFERENCES `SPHINX_PROCESS` (`sphinx_process_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    </sql>
+    <rollback>
+        DROP TABLE IF EXISTS `DISTRIBUTED_COLLECTION_AGENT`;
+    </rollback>
+</changeSet>
+
+    <changeSet author="skuptsov" id="20150821-22">
+        <comment>Structure for table "COMMAND"</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS `COMMAND` (
+            `id` bigint(20) NOT NULL,
+            `command_id` varchar(2000) NOT NULL,
+            `method_name` varchar(2000) NOT NULL,
+            `json_file_path` varchar(2000) DEFAULT NULL,
+            `execute_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `COMMAND`;
+        </rollback>
+    </changeSet>
+
+    <include file="vw/COLLECTION_REPLICA_V.xml" relativeToChangelogFile="true" />
+
+</databaseChangeLog>

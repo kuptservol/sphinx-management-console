@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:${configLocation}/admin-jdbc.properties</value>
+                <value>file:${configLocation}/admin.properties</value>
+                <value>file:${configLocation}/admin-retry.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="ru.skuptsov.sphinx.console.admin.service.impl" />
+
+    <bean id="retryTemplate" class="org.springframework.retry.support.RetryTemplate">
+        <property name="backOffPolicy">
+            <bean class="org.springframework.retry.backoff.ExponentialBackOffPolicy">
+                <property name="initialInterval" value="${retry.initial.interval}" />
+                <property name="multiplier" value="${retry.multiplier}" />
+                <property name="maxInterval" value="${retry.maxinterval}"/>
+            </bean>
+        </property>
+        <property name="retryPolicy">
+            <bean class="org.springframework.retry.policy.SimpleRetryPolicy">
+                <property name="maxAttempts" value="${retry.max.attempts}"/>
+            </bean>
+        </property>
+    </bean>
+
+    <import resource="classpath:sphinx-console-admin-hibernate-context.xml"/>
+</beans>

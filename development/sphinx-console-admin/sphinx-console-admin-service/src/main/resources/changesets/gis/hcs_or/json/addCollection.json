@@ -1,0 +1,718 @@
+{
+    "searchConfigurationPort" : {
+        "searchConfigurationPort" : 9303
+    },
+    "distributedConfigurationPort" : {
+        "distributedConfigurationPort" : 9313
+    },
+    "searchConfiguration" : {
+        "name" : "search-conf-hcs_or-1",
+        "filePath" : "",
+        "configurationTemplate" : {
+            "name" : "Base configuration template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "CONFIGURATION",
+            "configurationFields" : [ {
+                "fieldKey" : "min_infix_len",
+                "fieldValue" : "3",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "expand_keywords",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "index_exact_words",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "morphology",
+                "fieldValue" : "lemmatize_ru",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "wordforms",
+                "fieldValue" : "/usr/local/bin/ru.txt",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "searchConfigurationTemplate" : {
+            "name" : "Base search template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "SEARCH",
+            "configurationFields" : [ {
+                "fieldKey" : "max_filters",
+                "fieldValue" : "512",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_filter_values",
+                "fieldValue" : "8192",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "read_timeout",
+                "fieldValue" : "5",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_packet_size",
+                "fieldValue" : "16M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "client_timeout",
+                "fieldValue" : "200",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "unlink_old",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mva_updates_pool",
+                "fieldValue" : "1M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "seamless_rotate",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_children",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_batch_queries",
+                "fieldValue" : "22",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "preopen_indexes",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "thread_stack",
+                "fieldValue" : "512K",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "indexerConfigurationTemplate" : {
+            "name" : "Base index template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "INDEX",
+            "configurationFields" : [ {
+                "fieldKey" : "lemmatizer_cache",
+                "fieldValue" : "256M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mem_limit",
+                "fieldValue" : "512M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "datasource" : {
+            "name" : "hcs_srch_or",
+            "type" : "PGSQL",
+            "host" : "195.26.187.155",
+            "port" : 5432,
+            "user" : "hcs_srch_rw",
+            "password" : "hcs_srch_rw",
+            "odbcDsn" : "",
+            "sqlDb" : "hcssrchdb"
+        },
+        "fieldMappings" : [ {
+            "sourceField" : "id",
+            "sourceFieldType" : "int8",
+            "indexField" : "id",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : true
+        }, {
+            "sourceField" : "guid",
+            "sourceFieldType" : "bpchar",
+            "indexField" : "guid",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "chief_last_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "chief_last_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "inn",
+            "sourceFieldType" : "varchar",
+            "indexField" : "inn",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "kpp",
+            "sourceFieldType" : "varchar",
+            "indexField" : "kpp",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "root_entity_guid",
+            "sourceFieldType" : "bpchar",
+            "indexField" : "root_entity_guid",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "organization_type",
+            "sourceFieldType" : "varchar",
+            "indexField" : "organization_type",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "organization_type_order",
+            "sourceFieldType" : "int4",
+            "indexField" : "organization_type_order",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ogrn",
+            "sourceFieldType" : "varchar",
+            "indexField" : "ogrn",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "chief_middle_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "chief_middle_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "full_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "full_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "last_update_date",
+            "sourceFieldType" : "varchar",
+            "indexField" : "last_update_date",
+            "indexFieldType" : "SQL_ATTR_TIMESTAMP",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "short_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "short_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "chief_first_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "chief_first_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        } ],
+        "sourceConfigurationFields" : [ {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  guid,\n  (case organization_type\n    when 'B' then ('ИП ' || chief_last_name || ' ' || chief_first_name  || ' ' || chief_middle_name)\n    else (full_name)\n  end) AS name,\n  root_entity_guid,\n  full_name,\n  short_name,\n  inn,\n  kpp,\n  ogrn,\n  organization_type,\n  (case organization_type when 'L' then 0 when 'B' then 1 else 2 end) organization_type_order,\n  chief_first_name,\n  chief_middle_name,\n  chief_last_name,\n  round(extract(epoch from last_changed_date)::numeric)::varchar last_update_date\nfrom srchorsm.search_organizations\nwhere id>=$start AND id<=$end",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(id), max(id) from srchorsm.search_organizations",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  guid,\n  (case organization_type\n    when 'B' then ('ИП ' || chief_last_name || ' ' || chief_first_name  || ' ' || chief_middle_name)\n    else (full_name)\n  end) AS name,\n  root_entity_guid,\n  full_name,\n  short_name,\n  inn,\n  kpp,\n  ogrn,\n  organization_type,\n  (case organization_type when 'L' then 0 when 'B' then 1 else 2 end) organization_type_order,\n  chief_first_name,\n  chief_middle_name,\n  chief_last_name,\n  round(extract(epoch from last_changed_date)::numeric)::varchar last_update_date\nfrom srchorsm.search_organizations\nwhere id>=$start AND id<=$end",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  guid,\n  (case organization_type\n    when 'B' then ('ИП ' || chief_last_name || ' ' || chief_first_name  || ' ' || chief_middle_name)\n    else (full_name)\n  end) AS name,\n  root_entity_guid,\n  full_name,\n  short_name,\n  inn,\n  kpp,\n  ogrn,\n  organization_type,\n  (case organization_type when 'L' then 0 when 'B' then 1 else 2 end) organization_type_order,\n  chief_first_name,\n  chief_middle_name,\n  chief_last_name,\n  round(extract(epoch from last_changed_date)::numeric)::varchar last_update_date\nfrom srchorsm.search_organizations o\nWHERE EXISTS (\n    SELECT 1 FROM srchorsm.search_update_list_wo l\n    where l.object_type='WO'\n          and l.object_id = o.id\n          and l.update_date >= timezone('UTC', to_timestamp($start/1000000 - 1))\n          and l.update_date <= timezone('UTC', to_timestamp($end/1000000 + 1))\n          and l.operation in ('I', 'U')\n)",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_killlist",
+            "fieldValue" : "SELECT object_id\n    FROM\n        srchorsm.search_update_list_wo l ,\n        (select max(d.index_date) AS index_date, 'W' || d.object_type AS object_type from srchorsm.search_update_indexer d group by d.object_type) i\n    where\n        l.object_type = i.object_type\n        AND l.update_date <= i.index_date;",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_post_index",
+            "fieldValue" : "update srchorsm.search_update_indexer set merge_date = index_date where object_type='O'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_range_step",
+            "fieldValue" : "3600000000",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(min_ts), coalesce(max(max_ts), min(min_ts)) from (\n  select\n    round(extract(epoch from min(l.update_date))::numeric * 1000000) min_ts,\n    round(extract(epoch from max(d.index_date))::numeric * 1000000) max_ts\n  from srchorsm.search_update_list_wo l, srchorsm.search_update_indexer d\n  where d.object_type='O' and l.object_type='WO'\n) extrs",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchorsm.search_update_indexer set index_date = (select max(update_date) from srchorsm.search_update_list_wo where object_type='WO' ) where object_type='O'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        } ],
+        "searchConfigurationFields" : [ {
+            "fieldKey" : "distributed_listen",
+            "fieldValue" : "9313",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        }, {
+            "fieldKey" : "listen",
+            "fieldValue" : "9303",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        } ]
+    },
+    "indexConfiguration" : {
+        "name" : "index-conf-hcs_or",
+        "filePath" : "",
+        "configurationTemplate" : {
+            "name" : "Base configuration template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "CONFIGURATION",
+            "configurationFields" : [ {
+                "fieldKey" : "min_infix_len",
+                "fieldValue" : "3",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "expand_keywords",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "index_exact_words",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "morphology",
+                "fieldValue" : "lemmatize_ru",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "wordforms",
+                "fieldValue" : "/usr/local/bin/ru.txt",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "searchConfigurationTemplate" : {
+            "name" : "Base search template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "SEARCH",
+            "configurationFields" : [ {
+                "fieldKey" : "max_filters",
+                "fieldValue" : "512",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_filter_values",
+                "fieldValue" : "8192",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "read_timeout",
+                "fieldValue" : "5",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_packet_size",
+                "fieldValue" : "16M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "client_timeout",
+                "fieldValue" : "200",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "unlink_old",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mva_updates_pool",
+                "fieldValue" : "1M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "seamless_rotate",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_children",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "max_batch_queries",
+                "fieldValue" : "22",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "preopen_indexes",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "thread_stack",
+                "fieldValue" : "512K",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "indexerConfigurationTemplate" : {
+            "name" : "Base index template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "INDEX",
+            "configurationFields" : [ {
+                "fieldKey" : "lemmatizer_cache",
+                "fieldValue" : "256M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                "fieldKey" : "mem_limit",
+                "fieldValue" : "512M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "datasource" : {
+            "name" : "hcs_srch_or",
+            "type" : "PGSQL",
+            "host" : "195.26.187.155",
+            "port" : 5432,
+            "user" : "hcs_srch_rw",
+            "password" : "hcs_srch_rw",
+            "odbcDsn" : "",
+            "sqlDb" : "hcssrchdb"
+        },
+        "fieldMappings" : [ {
+            "sourceField" : "id",
+            "sourceFieldType" : "int8",
+            "indexField" : "id",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : true
+        }, {
+            "sourceField" : "guid",
+            "sourceFieldType" : "bpchar",
+            "indexField" : "guid",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "chief_last_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "chief_last_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "inn",
+            "sourceFieldType" : "varchar",
+            "indexField" : "inn",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "kpp",
+            "sourceFieldType" : "varchar",
+            "indexField" : "kpp",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "root_entity_guid",
+            "sourceFieldType" : "bpchar",
+            "indexField" : "root_entity_guid",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "organization_type",
+            "sourceFieldType" : "varchar",
+            "indexField" : "organization_type",
+            "indexFieldType" : "SQL_ATTR_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "organization_type_order",
+            "sourceFieldType" : "int4",
+            "indexField" : "organization_type_order",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "ogrn",
+            "sourceFieldType" : "varchar",
+            "indexField" : "ogrn",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "chief_middle_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "chief_middle_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "full_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "full_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "last_update_date",
+            "sourceFieldType" : "varchar",
+            "indexField" : "last_update_date",
+            "indexFieldType" : "SQL_ATTR_TIMESTAMP",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "short_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "short_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        }, {
+            "sourceField" : "chief_first_name",
+            "sourceFieldType" : "varchar",
+            "indexField" : "chief_first_name",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "",
+            "isId" : false
+        } ],
+        "sourceConfigurationFields" : [ {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(id), max(id) from srchorsm.search_organizations",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  guid,\n  (case organization_type\n    when 'B' then ('ИП ' || chief_last_name || ' ' || chief_first_name  || ' ' || chief_middle_name)\n    else (full_name)\n  end) AS name,\n  root_entity_guid,\n  full_name,\n  short_name,\n  inn,\n  kpp,\n  ogrn,\n  organization_type,\n  (case organization_type when 'L' then 0 when 'B' then 1 else 2 end) organization_type_order,\n  chief_first_name,\n  chief_middle_name,\n  chief_last_name,\n  round(extract(epoch from last_changed_date)::numeric)::varchar last_update_date\nfrom srchorsm.search_organizations\nwhere id>=$start AND id<=$end",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "MAIN"
+        }, {
+            "fieldKey" : "sql_query_pre",
+            "fieldValue" : "update srchorsm.search_update_indexer set index_date = (select max(update_date) from srchorsm.search_update_list_wo where object_type='WO' ) where object_type='O'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_range",
+            "fieldValue" : "select min(min_ts), coalesce(max(max_ts), min(min_ts)) from (\n  select\n    round(extract(epoch from min(l.update_date))::numeric * 1000000) min_ts,\n    round(extract(epoch from max(d.index_date))::numeric * 1000000) max_ts\n  from srchorsm.search_update_list_wo l, srchorsm.search_update_indexer d\n  where d.object_type='O' and l.object_type='WO'\n) extrs",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_range_step",
+            "fieldValue" : "3600000000",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_post_index",
+            "fieldValue" : "update srchorsm.search_update_indexer set merge_date = index_date where object_type='O'",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query_killlist",
+            "fieldValue" : "SELECT object_id\n    FROM\n        srchorsm.search_update_list_wo l ,\n        (select max(d.index_date) AS index_date, 'W' || d.object_type AS object_type from srchorsm.search_update_indexer d group by d.object_type) i\n    where\n        l.object_type = i.object_type\n        AND l.update_date <= i.index_date;",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : "",
+            "indexType" : "DELTA"
+        }, {
+            "fieldKey" : "sql_query",
+            "fieldValue" : "select\n  id,\n  guid,\n  (case organization_type\n    when 'B' then ('ИП ' || chief_last_name || ' ' || chief_first_name  || ' ' || chief_middle_name)\n    else (full_name)\n  end) AS name,\n  root_entity_guid,\n  full_name,\n  short_name,\n  inn,\n  kpp,\n  ogrn,\n  organization_type,\n  (case organization_type when 'L' then 0 when 'B' then 1 else 2 end) organization_type_order,\n  chief_first_name,\n  chief_middle_name,\n  chief_last_name,\n  round(extract(epoch from last_changed_date)::numeric)::varchar last_update_date\nfrom srchorsm.search_organizations o\nWHERE EXISTS (\n    SELECT 1 FROM srchorsm.search_update_list_wo l\n    where l.object_type='WO'\n          and l.object_id = o.id\n          and l.update_date >= timezone('UTC', to_timestamp($start/1000000 - 1))\n          and l.update_date <= timezone('UTC', to_timestamp($end/1000000 + 1))\n          and l.operation in ('I', 'U')\n)",
+            "configurationType" : "SOURCE",
+            "fieldCommentary" : null,
+            "indexType" : "DELTA"
+        } ],
+        "searchConfigurationFields" : [ {
+            "fieldKey" : "listen",
+            "fieldValue" : "9303",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        }, {
+            "fieldKey" : "distributed_listen",
+            "fieldValue" : "9313",
+            "configurationType" : "SEARCH",
+            "fieldCommentary" : null,
+            "indexType" : null
+        } ]
+    },
+    "searchServer" : {
+        "ip" : "${search.server.ip}",
+        "domain" : null,
+        "name" : "${search.server.name}"
+    },
+    "indexServer" : {
+        "ip" : "${index.server.ip}",
+        "domain" : null,
+        "name" : "${index.server.name}"
+    },
+    "indexServerPort" : null,
+    "collection" : {
+        "name" : "hcs_or",
+        "type" : "MAIN_DELTA",
+        "description" : "",
+        "lastIndexingTime" : 1435312156000,
+        "nextIndexingTime" : 1435312200000,
+        "lastMergeTime" : null,
+        "nextMergeTime" : null,
+        "isProcessingFailed" : false,
+        "delta" : {
+            "type" : "DELTA",
+            "period" : 1435312133000,
+            "externalAction" : {
+                "type" : "SQL",
+                "code" : "DELETE FROM srchorsm.search_update_list_wo WHERE update_date <= (\n  SELECT MIN(merge_date) FROM srchorsm.search_update_indexer WHERE srchorsm.search_update_indexer.object_type = 'O'\n);",
+                "dataSource" : {
+                    "name" : "hcs_srch_or",
+                    "type" : "PGSQL",
+                    "host" : "195.26.187.155",
+                    "port" : 5432,
+                    "user" : "hcs_srch_rw",
+                    "password" : "hcs_srch_rw",
+                    "odbcDsn" : "",
+                    "sqlDb" : "hcssrchdb"
+                },
+                "server" : null
+            },
+            "field" : null,
+            "mergeTime" : 1435312133000,
+            "deleteScheme" : null
+        },
+        "collectionType" : "SIMPLE",
+        "needReload" : false,
+        "processingFailed" : false
+    },
+    "cronSchedule" : {
+        "cronSchedule" : "0 */10 * * * ?",
+        "enabled" : true
+    },
+    "mainCronSchedule" : {
+        "cronSchedule" : "0 5 */2 * * ?",
+        "enabled" : true
+    },
+    "tableName" : null,
+    "fullIndexingServer" : null,
+    "collectionInfo" : null,
+    "collectionType" : null
+}

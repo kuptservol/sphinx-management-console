@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.skuptsov.sphinx.console</groupId>
+    <artifactId>sphinx-console-base</artifactId>
+    <packaging>pom</packaging>
+
+    <name>sphinx-console: dev base</name>
+
+    <parent>
+        <groupId>ru.skuptsov.sphinx.console</groupId>
+        <artifactId>sphinx-console-root</artifactId>
+        <version>3.2.0</version>
+        <relativePath>../..</relativePath>
+    </parent>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-common-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+             <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-common-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+             <dependency>
+                <groupId>ru.skuptsov.sphinx.console</groupId>
+                <artifactId>sphinx-console-common-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+         </dependencies>
+    </dependencyManagement>
+
+      
+    <modules>
+        <module>sphinx-console-common-model</module>
+        <module>sphinx-console-common-dao</module>
+        <module>sphinx-console-common-service</module>
+    </modules>
+
+</project>

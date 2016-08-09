@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.DistributedCollectionAgent" table="DISTRIBUTED_COLLECTION_AGENT">
+         <id name="id" type="java.lang.Long">
+            <column name="DISTRIBUTED_COLLECTION_AGENT_ID" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="nodeHost">
+            <column name="NODE_HOST" sql-type="CHAR" length="100" not-null="true"/>
+        </property>
+        
+        <property name="nodeDistribPort">
+            <column name="NODE_DISTRIB_PORT" sql-type="CHAR" length="6" not-null="true"/>
+        </property>
+
+        <many-to-one name="distributedCollectionNode" class="ru.skuptsov.sphinx.console.coordinator.model.DistributedCollectionNode" lazy="false">
+            <column name="distributed_collection_node_id" not-null="false"/>
+        </many-to-one>
+        
+        <many-to-one name="sphinxProcess" class="ru.skuptsov.sphinx.console.coordinator.model.SphinxProcess" lazy="false">
+            <column name="sphinx_process_id" not-null="false"/>
+        </many-to-one>
+        
+    </class>
+</hibernate-mapping>

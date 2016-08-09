@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.skuptsov.sphinx.console</groupId>
+	<artifactId>sphinx-console-util</artifactId>
+	<name>sphinx-console: util</name>
+	
+	<parent>
+        <groupId>ru.skuptsov.sphinx.console</groupId>
+        <artifactId>sphinx-console-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath>../sphinx-console-parent</relativePath>
+    </parent>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>ru.skuptsov.sphinx.console</groupId>
+            <artifactId>sphinx-console-coordinator-service-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>ru.skuptsov.sphinx.console</groupId>
+            <artifactId>sphinx-console-coordinator-agent-service-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>ru.skuptsov.sphinx.console</groupId>
+            <artifactId>sphinx-console-coordinator-agent-monitoring-service-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+        </dependency>
+        
+        <dependency>
+	       <groupId>commons-pool</groupId>
+	      <artifactId>commons-pool</artifactId>
+	      <version>1.6</version>
+        </dependency>
+        
+    </dependencies>
+    
+</project>

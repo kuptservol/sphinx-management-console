@@ -1,0 +1,20 @@
+#!/bin/bash
+# description: sphinx-console Start Stop Restart
+# processname: sphinx-console-agent
+# chkconfig: 234 20 80
+sphinx-console_HOME=/opt/sphinx-console
+
+case $1 in
+start)
+sh $sphinx-console_HOME/bin/start-agent.sh
+;;
+stop)
+sh $sphinx-console_HOME/bin/stop-agent.sh
+;;
+restart)
+sh $sphinx-console_HOME/bin/stop-agent.sh
+sh $sphinx-console_HOME/bin/start-agent.sh
+;;
+
+esac
+exit 0

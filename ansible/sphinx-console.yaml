@@ -1,0 +1,105 @@
+---
+# Установочный скрипт для sphinx-console
+# (для того чтобы подготовить сервер к установке sphinx-console может потребоваться запуск скрипта sphinx-console-preinstall.yaml)
+#
+# Ставит Tomcat (только для all или coordinator)
+# Создает БД, таблицы и вносит начальные данные в MySQL (кроме случая установки только агента)
+# Останавливает Томкат
+# Копирует в папку с Томкатом архивы (war) приложений, файлы их конфигурации
+# Запускает Томкат
+#
+# Основные входные параметры для запуска (--extra-vars)
+#   target:       <имя хоста установки>                   (должно быть прописано в /etc/ansible/hosts)
+#   remote_user:  <имя пользователя для заливки на хост>  (должны быть настроены ssh-ключи)
+#   type:         all|coordinator|agent                   (по умолчанию - all, coordinator включает в себя web-интерфейс)
+#   use_own_sphinx: true|false                            (по умолчанию - false, собственные бинарники сфинкса не используются)
+#   sw_user:      <имя пользователя для sphinx-console>        (по умолчанию - sphinx-console)
+#
+#
+# Пример команды запуска:
+#   ansible-playbook sphinx-console.yaml --extra-vars "target=sphinx-console02 remote_user=demo sw_user=sphinx-console type=agent" --ask-sudo-pass
+#
+# TODO: добавить опцию - список хостов, с которыми надо обменяться ssh-ключами
+#
+- hosts: '{{target}}'
+  remote_user: '{{user}}'
+  sudo: yes
+  vars:
+      sw_user       : sphinx-console
+      sw_group      : sphinx-console
+      sw_pass       : $6$CK6F1SdcsdYKlzCr$D1qDS2DehuJcLJUs3yZkt0Q38gALLTFFshqzchDOPik3fZ7TYJBVyhma.PaoDX8YM5NypFBrnMEzrCNGoYh8D.
+      sudo_path     : sudo
+      service_path  : service
+      action        : install
+      type          : all
+      db_name       : sphinx-console
+      db_user       : swuser
+      db_pass       : swpass
+      db_host       : localhost
+      db_port       : 3306
+      db_root_user  : root
+      db_root_pass  :
+      host_ip       : '{{ansible_eth0.ipv4.address}}'
+      rmi_host      : '{{host_ip}}'
+      java_coordinator_management_port: 8090
+      java_agent_management_port: 8091
+      webapp_host   : '{{host_ip}}'
+      webapp_port   : 8080
+      webapp_forwarded_port: '{{webapp_port}}'
+      dist_dir          : ./distrib
+      sphinx-console_path    : /opt/sphinx-console
+      sphinx_base_path  : /opt/sphinx
+      udf_path          : '{{sphinx_base_path}}/udf'
+      sphinx_binaries_path : '/usr/local/bin'
+      admin_script_path : '/usr/local/bin/sphinx-console-admin'
+      agent_path        : '{{sphinx-console_path}}/agent'
+      admin_path        : '{{sphinx-console_path}}/admin'
+      coordinator_path  : '{{sphinx-console_path}}/coordinator'
+      conf_path         : '{{sphinx-console_path}}/conf'
+      wordforms_path    : '{{sphinx-console_path}}/data/wordforms'
+      stopwords_path    : '{{sphinx-console_path}}/data/stopwords'
+      lemmatizer_path   : '{{sphinx-console_path}}/data/dict'
+      snippet_path      : '{{sphinx_base_path}}/snippet'
+      tomcat_distrib_name: apache-tomcat-7.0.61
+      tomcat_distrib    : '{{dist_dir}}/coordinator/{{tomcat_distrib_name}}.tar.gz'
+      sphinx_binaries   : '{{dist_dir}}/sphinx/bin'
+      use_own_sphinx    : false
+      ui_title          : 'sphinx-console'
+      ui_title_pattern  : '<h1>sphinx-console[^<]*'
+      ui_title_replacement: '<h1>{{ui_title}}'
+      liquibase_temp_dir     : '/tmp/liquibase'
+      liquibase_dir          : '{{dist_dir}}/sql/liquibase/'
+
+  tasks:
+    # это для прогонов с параметром --check
+    - command: /bin/true
+      register: noop_result
+    - set_fact: check_mode={{ noop_result|skipped }}
+
+    - set_fact: sphinx_binaries_path='{{sphinx_base_path}}/bin'
+      when: use_own_sphinx == "true"
+
+    - name: Add localhost to hosts
+      lineinfile: dest=/etc/hosts  line="{{host_ip}} {{ansible_hostname}} localhost"
+
+    - group: name={{sw_group}} state=present
+    - user: name={{sw_user}} state=present group={{sw_group}} password={{sw_pass}}
+    - lineinfile: dest=/etc/sudoers line="{{sw_user}}       ALL=(ALL)       NOPASSWD:ALL"
+      # TODO: надо еще ssh-ключи раскидывать, но для этого скрипт должен уметь ставить сразу на несколько серверов
+
+    - name: modify limits.conf
+      lineinfile: dest=/etc/security/limits.conf line="{{item.line}}"
+      with_items:
+        - {line: "{{sw_user}}\tsoft\tnofile\t65536" }
+        - {line: "{{sw_user}}\thard\tnofile\t65536" }
+        - {line: "{{sw_user}}\tsoft\tnproc\t16384" }
+        - {line: "{{sw_user}}\thard\tnproc\t32768" }
+
+    - include: partials/{{action}}/db.yaml
+      when: type == "all" or type == "coordinator"
+
+    - include: partials/{{action}}/coordinator.yaml
+      when: type == "all" or type == "coordinator"
+
+    - include: partials/{{action}}/agent.yaml
+      when: type == "all" or type == "agent"

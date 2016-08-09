@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.skuptsov.sphinx.console</groupId>
+	<artifactId>sphinx-console-admin-service</artifactId>
+	<name>sphinx-console: admin service</name>
+	
+	<parent>
+        <groupId>ru.skuptsov.sphinx.console</groupId>
+        <artifactId>sphinx-console-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath>../../sphinx-console-parent</relativePath>
+    </parent>
+    
+    <dependencies>
+        <dependency>
+            <groupId>ru.skuptsov.sphinx.console</groupId>
+            <artifactId>sphinx-console-common-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.skuptsov.sphinx.console</groupId>
+            <artifactId>sphinx-console-admin-core</artifactId>
+        </dependency>
+         <dependency>
+            <groupId>ru.skuptsov.sphinx.console</groupId>
+            <artifactId>sphinx-console-admin-dao-hibernate-spring</artifactId>
+        </dependency>
+        <!-- Jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>spring-boot</classifier>
+                            <mainClass>ru.skuptsov.sphinx.console.admin.service.launch.SyncCoordinatorExecutorCmd</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+			    <artifactId>maven-antrun-plugin</artifactId>
+			    <executions>
+			        <execution>
+                        <phase>install</phase>
+                        <configuration>
+                          <tasks>
+    <!-- 			            <copy todir="${jars.admin.ansible.path}"> -->
+    <!-- 			              <fileset dir="./target"> -->
+    <!-- 			                   <include name="*.jar"/> -->
+    <!-- 			              </fileset> -->
+    <!-- 			            </copy> -->
+
+                            <copy file="./target/${project.artifactId}-${project.version}-spring-boot.jar"
+                                 tofile="${jars.admin.ansible.path}/sphinx-console-admin.jar" />
+
+                          </tasks>
+                        </configuration>
+                        <goals>
+                          <goal>run</goal>
+                        </goals>
+			        </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

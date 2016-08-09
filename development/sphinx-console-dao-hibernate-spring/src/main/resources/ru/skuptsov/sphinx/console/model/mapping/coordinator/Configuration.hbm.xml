@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.Configuration" table="CONFIGURATION">
+         <id name="id" type="java.lang.Long">
+            <column name="configuration_id" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="name">
+            <column name="name" sql-type="CHAR" length="10" not-null="true"/>
+        </property>
+        
+        <property name="filePath">
+            <column name="file_path" sql-type="CHAR" length="10" not-null="false"/>
+        </property>
+
+        <many-to-one name="indexerConfigurationTemplate" class="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationTemplate" cascade="save-update" lazy="false">
+            <column name="indexer_configuration_template_id" not-null="true"/>
+        </many-to-one>
+
+        <many-to-one name="searchConfigurationTemplate" class="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationTemplate" cascade="save-update" lazy="false">
+            <column name="searchd_configuration_template_id" not-null="true"/>
+        </many-to-one>
+
+        <many-to-one name="configurationTemplate" class="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationTemplate" cascade="save-update" lazy="false">
+            <column name="configuration_template_id" not-null="true"/>
+        </many-to-one>
+
+        <many-to-one name="datasource" class="ru.skuptsov.sphinx.console.coordinator.model.DataSource" lazy="false" cascade="save-update">
+            <column name="datasource_id" not-null="true"/>
+        </many-to-one>
+        
+        
+        <set name="fieldMappings" table="FIELD_MAPPING" cascade="all"
+            lazy="false" inverse="false">
+            <key column="CONFIGURATION_ID" not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.FieldMapping" />
+        </set>
+
+        <set name="sourceConfigurationFields" where="CONFIGURATION_TYPE='SOURCE'" table="CONFIGURATION_FIELDS" cascade="all"
+            lazy="false" inverse="true">
+            <key column="CONFIGURATION_ID" not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationFields" />
+        </set>
+        
+        <set name="searchConfigurationFields" where="CONFIGURATION_TYPE='SEARCH'" table="CONFIGURATION_FIELDS" cascade="all"
+             lazy="false" inverse="true">
+            <key column="CONFIGURATION_ID" not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationFields" />
+        </set>
+
+
+    </class>
+</hibernate-mapping>

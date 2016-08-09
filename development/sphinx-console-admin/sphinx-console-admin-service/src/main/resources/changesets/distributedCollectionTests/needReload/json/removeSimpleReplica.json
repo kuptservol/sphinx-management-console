@@ -1,0 +1,13 @@
+{
+    "collectionName" : "${distributed.simple.collection.name.2}",
+    "replicaNumber" : 3,
+    "server" : {
+                "ip" : "${index.server.ip}",
+        "domain" : null,
+        "name" : "${index.server.name}"
+    },
+    "searchPort" : ${collection2.replica3.search.port.new},
+    "distributedPort" : ${collection2.replica3.distributed.search.port},
+    "searchServerStatus" : false,
+    "collectionType" : null
+}

@@ -1,0 +1,6 @@
+{
+    "id":null,
+    "ip":"${localhost.server.ip}",
+    "domain":null,
+    "name":"${localhost.server.name}"
+}

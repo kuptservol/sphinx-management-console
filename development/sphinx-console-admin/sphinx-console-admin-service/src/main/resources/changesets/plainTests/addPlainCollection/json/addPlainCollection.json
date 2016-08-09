@@ -1,0 +1,406 @@
+{
+    "searchConfigurationPort" : {
+        "searchConfigurationPort" : 9306
+    },
+    "distributedConfigurationPort" : {
+        "distributedConfigurationPort" : 9406
+    },
+    "searchConfiguration" : {
+        "id" : null,
+        "name" : null,
+        "filePath" : null,
+        "configurationTemplate" : {
+                        "name" : "Base configuration template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "CONFIGURATION",
+            "configurationFields" : [ {
+                                "fieldKey" : "expand_keywords",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "min_infix_len",
+                "fieldValue" : "3",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "morphology",
+                "fieldValue" : "lemmatize_ru",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "index_exact_words",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "wordforms",
+                "fieldValue" : "/usr/local/bin/ru.txt",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "searchConfigurationTemplate" : {
+                        "name" : "Base search template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "SEARCH",
+            "configurationFields" : [ {
+                                "fieldKey" : "max_filters",
+                "fieldValue" : "512",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_filter_values",
+                "fieldValue" : "8192",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "read_timeout",
+                "fieldValue" : "5",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_packet_size",
+                "fieldValue" : "16M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "client_timeout",
+                "fieldValue" : "200",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "unlink_old",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "mva_updates_pool",
+                "fieldValue" : "1M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "seamless_rotate",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_children",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_batch_queries",
+                "fieldValue" : "22",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "preopen_indexes",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "thread_stack",
+                "fieldValue" : "512K",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "indexerConfigurationTemplate" : {
+                        "name" : "Base index template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "INDEX",
+            "configurationFields" : [ {
+                                "fieldKey" : "lemmatizer_cache",
+                "fieldValue" : "256M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "mem_limit",
+                "fieldValue" : "512M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "datasource" : {
+            "id" : null,
+            "name" : "plainCollectionDataSource",
+            "type" : "PGSQL",
+            "host" : "195.26.187.155",
+            "port" : 5432,
+            "user" : "sphinx-console",
+            "password" : "sphinx-console",
+            "odbcDsn" : null,
+            "sqlDb" : "sphinx-console"
+        },
+        "fieldMappings" : [ {
+            "id" : null,
+            "sourceField" : "id",
+            "sourceFieldType" : null,
+            "indexField" : "id",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "id",
+            "isId" : true
+        }, {
+            "id" : null,
+            "sourceField" : "text_data",
+            "sourceFieldType" : null,
+            "indexField" : "text_data",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "text_data",
+            "isId" : false
+        } ],
+        "sourceConfigurationFields" : [ ],
+        "searchConfigurationFields" : [ ]
+    },
+    "indexConfiguration" : {
+        "id" : null,
+        "name" : null,
+        "filePath" : null,
+        "configurationTemplate" : {
+                        "name" : "Base configuration template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "CONFIGURATION",
+            "configurationFields" : [ {
+                                "fieldKey" : "expand_keywords",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "min_infix_len",
+                "fieldValue" : "3",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "morphology",
+                "fieldValue" : "lemmatize_ru",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "index_exact_words",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "wordforms",
+                "fieldValue" : "/usr/local/bin/ru.txt",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "searchConfigurationTemplate" : {
+                        "name" : "Base search template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "SEARCH",
+            "configurationFields" : [ {
+                                "fieldKey" : "max_filters",
+                "fieldValue" : "512",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_filter_values",
+                "fieldValue" : "8192",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "read_timeout",
+                "fieldValue" : "5",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_packet_size",
+                "fieldValue" : "16M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "client_timeout",
+                "fieldValue" : "200",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "unlink_old",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "mva_updates_pool",
+                "fieldValue" : "1M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "seamless_rotate",
+                "fieldValue" : "1",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_children",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "max_batch_queries",
+                "fieldValue" : "22",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "preopen_indexes",
+                "fieldValue" : "0",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "thread_stack",
+                "fieldValue" : "512K",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "indexerConfigurationTemplate" : {
+                        "name" : "Base index template",
+            "description" : "",
+            "defaultTemplate" : true,
+            "systemTemplate" : false,
+            "type" : "INDEX",
+            "configurationFields" : [ {
+                                "fieldKey" : "lemmatizer_cache",
+                "fieldValue" : "256M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            }, {
+                                "fieldKey" : "mem_limit",
+                "fieldValue" : "512M",
+                "configurationType" : null,
+                "fieldCommentary" : "",
+                "indexType" : null
+            } ],
+            "collectionType" : "SIMPLE"
+        },
+        "datasource" : {
+            "id" : null,
+            "name" : "plainCollectionDataSource",
+            "type" : "PGSQL",
+            "host" : "195.26.187.155",
+            "port" : 5432,
+            "user" : "sphinx-console",
+            "password" : "sphinx-console",
+            "odbcDsn" : null,
+            "sqlDb" : "sphinx-console"
+        },
+        "fieldMappings" : [ {
+            "id" : null,
+            "sourceField" : "id",
+            "sourceFieldType" : null,
+            "indexField" : "id",
+            "indexFieldType" : "SQL_ATTR_UINT",
+            "indexFieldCommentary" : "id",
+            "isId" : true
+        }, {
+            "id" : null,
+            "sourceField" : "text_data",
+            "sourceFieldType" : null,
+            "indexField" : "text_data",
+            "indexFieldType" : "SQL_FIELD_STRING",
+            "indexFieldCommentary" : "text_data",
+            "isId" : false
+        } ],
+        "sourceConfigurationFields" : [ ],
+        "searchConfigurationFields" : [ ]
+    },
+    "searchServer" : {
+        "ip" : "${search.server.ip}",
+        "domain" : null,
+        "name" : "${search.server.name}"
+    },
+    "indexServer" : {
+        "ip" : "${index.server.ip}",
+        "domain" : null,
+        "name" : "${index.server.name}"
+    },
+    "indexServerPort" : null,
+    "collection" : {
+        "id" : null,
+        "name" : "test_collection_simple_one_server",
+        "type" : "SIMPLE",
+        "description" : null,
+        "lastIndexingTime" : null,
+        "nextIndexingTime" : null,
+        "lastMergeTime" : null,
+        "nextMergeTime" : null,
+        "isProcessingFailed" : true,
+        "delta" : {
+            "id" : null,
+            "type" : "DELTA",
+            "period" : 1435650840012,
+            "externalAction" : null,
+            "field" : null,
+            "mergeTime" : 1435650840012,
+            "deleteScheme" : null
+        },
+        "collectionType" : "SIMPLE",
+        "needReload" : null,
+        "processingFailed" : true
+    },
+    "cronSchedule" : {
+        "cronSchedule" : "0 /10 * * * ?",
+        "enabled" : false
+    },
+    "mainCronSchedule" : {
+        "cronSchedule" : "0 /10 * * * ?",
+        "enabled" : false
+    },
+    "tableName" : "test.files",
+    "fullIndexingServer" : null,
+    "collectionInfo" : null,
+    "collectionType" : null
+}

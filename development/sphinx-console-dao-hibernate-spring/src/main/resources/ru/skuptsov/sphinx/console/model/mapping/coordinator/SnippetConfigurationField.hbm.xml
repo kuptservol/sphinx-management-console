@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.SnippetConfigurationField" table="SNIPPET_CONFIGURATION_FIELD">
+         <id name="id" type="java.lang.Long">
+            <column name="SNIPPET_CONFIGURATION_FIELD_ID" />
+            <generator class="increment" />
+        </id>
+        
+        
+        <many-to-one name="snippetConfiguration" class="ru.skuptsov.sphinx.console.coordinator.model.SnippetConfiguration" lazy="false">
+            <column name="snippet_configuration_id" not-null="false"/>
+        </many-to-one>
+       
+        
+         <property name="fieldName" type="text" column="FIELD_NAME" not-null="false" />
+        
+    </class>
+</hibernate-mapping>

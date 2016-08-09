@@ -1,0 +1,24 @@
+{
+    "adminProcesses" : [ {
+                "port" : ${search.server.port},
+        "type" : "SEARCH_AGENT",
+        "server" : {
+                        "ip" : "${search.server.ip}",
+            "domain" : null,
+            "name" : "${search.server.name}"
+        }
+    }, {
+                "port" : ${search.server.port},
+        "type" : "INDEX_AGENT",
+        "server" : {
+                        "ip" : "${search.server.ip}",
+            "domain" : null,
+            "name" : "${search.server.name}"
+        }
+    } ],
+    "server" : {
+                "ip" : "${search.server.ip}",
+        "domain" : null,
+        "name" : "${search.server.name}"
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <command id="hcs_or-20150331-1">
+        <methodName>addCollection</methodName>
+        <jsonFilePath>json/addCollection.json</jsonFilePath>
+    </command>
+</changeset>

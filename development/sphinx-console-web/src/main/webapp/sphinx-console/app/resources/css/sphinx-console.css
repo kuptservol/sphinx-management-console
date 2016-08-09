@@ -1,0 +1,223 @@
+.x-action-col-icon {margin: 0 4px 0 4px;}
+
+.x-grid-cell-first {border-left: 1px solid #cecece!important;}
+
+.x-column-header-first {border-left: 1px solid #cecece!important;}
+.x-column-header-last {border-right: 1px solid #cecece!important;}
+
+.pausebutton {width:16px!important; height:15px!important; background-image: url('../images/pause.png') !important; background-color: #ffffff; border:none}
+
+/*.startbutton {width:16px!important; height:15px!important; background-image: url('../images/start.png') !important; background-color: #ffffff; border:none}*/
+/* see theme folders*/
+/*.stopbutton {width:16px!important; height:15px!important; background-image: url('../images/stop.png') !important; background-color: #ffffff; border:none}*/
+
+.bugbutton {width:16px!important; height:16px!important; background-image: url('../images/bug_error.png') !important; background-color: #ffffff; border:none}
+
+.searchbutton {width:150px!important; margin-left:5px!important;}
+
+.clearfilterbutton {width:150px!important; margin-left:5px!important;}
+
+.verifysqlbutton {width:16px!important; height:16px!important; background-image: url('../images/accept.png') !important; background-color: #ffffff !important; border:none !important}
+
+.flagLoading {
+    background-image: url('../images/loading.gif') !important;
+}
+
+.tableImage {
+    width:17px!important;
+    height:17px!important;
+    background-size: cover;
+    background-color: transparent;
+    border:none;
+}
+.calendarButton {
+    width:24px!important;
+    height:24px!important;
+    background-image: url('../images/theme2/calendar.png') !important;
+}
+
+.applyCalendarButton {
+    width:24px!important;
+    height:24px!important;
+    background-image: url('../images/theme2/apply_calendar.png') !important;
+}
+.calendarRunning {
+    width:24px!important;
+    height:24px!important;
+    background-size: cover;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/flag_calendar_running.png') !important;
+}
+
+.calendarStopped {
+     width:24px!important;
+     height:24px!important;
+     background-size: cover;
+     background-color: transparent;
+     border:none;
+     background-image: url('../images/flag_calendar_stopped.png') !important;
+ }
+
+.indexingLogButton {
+    width:20px!important;
+    height:24px!important;
+    background-size: contain;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/log.png') !important;
+
+}
+
+.indexingDeleteButton {
+    width:20px!important;
+    height:24px!important;
+    background-size: contain;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/delete.png') !important;
+}
+
+.indexingRefreshButton {
+    width:20px!important;
+    height:24px!important;
+    background-size: contain;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/refresh.png') !important;
+}
+
+.marginLeft10 {
+    margin-left: 10px!important;
+}
+
+#mainSourceConfigurationFields .x-grid-item {
+    font-size: 87.5%!important;
+}
+
+#deltaSourceConfigurationFields .x-grid-item {
+    font-size: 87.5%!important;
+}
+
+.text-wrap,
+.text-wrap * {
+    white-space: normal !important;
+}
+
+.disabledText {
+    color: #999999;
+}
+
+.imgHolder {
+    padding-right: 10px;
+    display: inline-block;
+    height: 16px;
+    overflow: visible;
+}
+
+.imgHolder img,
+.imgHolder .x-btn {
+    vertical-align: middle;
+    margin-top: -4px;
+}
+
+.btn-server-name {
+    display: inline-block;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.state-note-picture {
+    width: 16px;
+    height: 16px;
+    vertical-align: top;
+    margin-top: -6px;
+    background-image: url('../images/theme2/warning.png');
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+   
+}
+
+
+.distributed-name {
+    font-weight: bold;
+}
+
+.btn-full-rebuild {
+    width:24px;
+    height:24px;
+    background-size: contain;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/refresh.png');
+    float: right;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.btn-start {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    background-image: url('../images/theme2/start.png');
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.btn-stop {
+    width:24px;
+    height:24px;
+    background-size: contain;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/theme2/stop.png');
+    vertical-align: middle;
+    margin-right: 10px;
+    cursor: hand;
+}
+
+.btn-calendar {
+    width:24px;
+    height:24px;
+    background-size: contain;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/theme2/calendar.png');
+    vertical-align: middle;
+    cursor: hand;
+    margin-right: 10px;
+}
+
+.cron {
+    width: 130px;
+    height: 25px;
+    padding: 4px 6px 3px 6px;
+    background-color: white;
+    vertical-align: middle;
+    font: 300 15px/23px helvetica, arial, verdana, sans-serif;
+    margin: 0px 10px 0px 10px;
+}
+
+.note-label {
+    font-style: italic;
+    font-size: 80%;
+}
+
+.btn-log {
+    width:20px;
+    height:24px;
+    background-size: contain;
+    background-color: transparent;
+    border:none;
+    background-image: url('../images/log.png');
+    vertical-align: middle;
+    cursor: hand;
+}
+
+.dygraph-Div {
+    border: 8px double black;
+}

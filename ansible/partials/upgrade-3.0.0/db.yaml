@@ -1,0 +1,9 @@
+- name: DB upgrade - preparing mysql database dump
+  template: src={{dist_dir}}/sql/upgrade_3.0.0.sql.j2 dest=/tmp/upgrade_3.0.0.sql
+
+- name: DB upgrade - running script
+  shell: mysql -u {{db_root_user}} --password={{db_root_pass}} < /tmp/upgrade_3.0.0.sql
+
+- name: DB setup - cleanup db dump
+  command: "rm /tmp/upgrade_3.0.0.sql"
+

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <command id="20150331-1">
+        <methodName>makeCollectionFullRebuildApply/test_collection_simple_one_server/CoordinatorServer</methodName>
+    </command>
+</changeset>

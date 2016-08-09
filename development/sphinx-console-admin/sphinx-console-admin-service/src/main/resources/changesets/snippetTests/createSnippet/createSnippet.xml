@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../../changesets.properties</jsonPropsFilePath>
+    <command id="20150331-1">
+        <methodName>addCollection</methodName>
+        <jsonFilePath>json/prepare.json</jsonFilePath>
+    </command>
+    <command id="20150331-2">
+        <methodName>createSnippetConfiguration</methodName>
+        <jsonFilePath>json/createSnippet.json</jsonFilePath>
+    </command>
+</changeset>

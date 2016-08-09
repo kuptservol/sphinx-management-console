@@ -1,0 +1,25 @@
+#!/bin/bash
+# description: Tomcat Start Stop Restart
+# processname: tomcat
+# chkconfig: 234 20 80
+CATALINA_HOME={{sphinx-console_path}}/coordinator
+
+RUNAS={{sw_user}}
+
+case $1 in
+start)
+    sudo -u $RUNAS sh -c "$CATALINA_HOME/bin/catalina.sh start"
+;;
+stop)
+    sudo -u $RUNAS sh -c "$CATALINA_HOME/bin/catalina.sh stop -force"
+;;
+restart)
+    sudo -u $RUNAS sh -c "$CATALINA_HOME/bin/catalina.sh stop -force"
+    sleep 5
+    sudo -u $RUNAS sh -c "$CATALINA_HOME/bin/catalina.sh start"
+;;
+jpda)
+    sudo -u $RUNAS sh -c "$CATALINA_HOME/bin/catalina.sh jpda start"
+;;
+esac
+exit 0

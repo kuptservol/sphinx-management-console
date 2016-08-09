@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <command id="20150331-1">
+        <methodName>server/delete/name/${localhost.server.name}</methodName>
+        <type>DELETE</type>
+    </command>
+</changeset>

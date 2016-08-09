@@ -1,0 +1,40 @@
+#
+# Sphinx configuration - конфигурация сфинкс
+#
+
+
+index ${root_index_name}
+{
+type = distributed
+#foreach( $item in $agentConfigs )
+agent = $item
+#end
+    
+#foreach( $item in $index )
+#if ($item.fieldCommentary && $item.fieldCommentary != "")
+# $item.fieldCommentary
+#end
+$item.fieldKey     = $item.fieldValue
+#end  
+}
+
+
+searchd
+{
+ mysql_version_string = 5.5.21
+ workers = threads
+
+ log                =  ${baseDir}log/${pathPrefix}/${index_name}/searchd.log
+ query_log          = ${baseDir}log/${pathPrefix}/${index_name}/query.log
+ pid_file		     = ${baseDir}pid/${pathPrefix}/${index_name}/searchd.pid
+ binlog_path		 = ${baseDir}binlog/${pathPrefix}/${index_name}
+#foreach( $item in $searchd )
+#if($item.fieldKey != "log" && $item.fieldKey != "query_log" && $item.fieldKey != "pid_file" && $item.fieldKey != "binlog_path")
+ #if ($item.fieldCommentary && $item.fieldCommentary != "")
+ # $item.fieldCommentary
+ #end
+ $item.fieldKey     = $item.fieldValue
+#end
+#end
+
+}

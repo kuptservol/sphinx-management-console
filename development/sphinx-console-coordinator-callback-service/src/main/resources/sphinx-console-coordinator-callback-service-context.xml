@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"> 
+ 
+ 
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<import resource="classpath:sphinx-console-coordinator-service-context.xml"/>
+    
+	
+	<!-- In order to automatically detect MBeans we need to recognise Spring beans -->
+   <context:component-scan base-package="ru.skuptsov.sphinx.console.coordinator.callback.service.impl" />
+ 
+   <!-- This causes MBeans annotations to be recognised and MBeans to be registered with the JMX server -->
+   <context:mbean-export default-domain="coordinator.callback.mbeans"/> 
+	
+   <!-- server side -->
+    <bean id="rmiCoordinatorCallbackRegistry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean">
+       <property name="port" value="${jmx.coordinator.callback.port}" />
+       <property name="alwaysCreate" value="true" />
+    </bean>
+
+    <bean id="coordinatorCallbackServer" depends-on="rmiCoordinatorCallbackRegistry" class="org.springframework.jmx.support.ConnectorServerFactoryBean">
+        <property name="serviceUrl" value="service:jmx:rmi://127.0.0.1/jndi/rmi://127.0.0.1:${jmx.coordinator.callback.port}/coordinatorCallbackConnector" />
+    </bean>
+    
+       	
+</beans>

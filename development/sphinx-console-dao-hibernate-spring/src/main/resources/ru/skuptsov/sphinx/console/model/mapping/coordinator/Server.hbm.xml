@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.Server" table="SERVER">
+        <id name="id" type="java.lang.Long">
+            <column name="SERVER_ID" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="ip">
+            <column name="IP" sql-type="char" length="16" not-null="true"/>
+        </property>
+        
+        <property name="domain">
+            <column name="DOMAIN_NAME" sql-type="CHAR" length="25"/>
+        </property>
+         
+        
+        <property name="name">
+            <column name="NAME" sql-type="CHAR" length="25"/>
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>

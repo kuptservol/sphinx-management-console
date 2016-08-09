@@ -1,0 +1,13 @@
+{
+    "collectionName" : "test_collection_delta_main_distributed_server",
+    "replicaNumber" : null,
+    "server" : {
+                "ip" : "${index.server.ip}",
+        "domain" : null,
+        "name" : "${index.server.name}"
+    },
+    "searchPort" : 9309,
+    "distributedPort" : 9409,
+    "searchServerStatus" : false,
+    "collectionType" : null
+}

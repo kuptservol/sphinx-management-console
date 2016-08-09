@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.FieldMapping" table="FIELD_MAPPING">
+         <id name="id" type="java.lang.Long">
+            <column name="field_mapping_id" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="sourceField">
+            <column name="source_field" sql-type="CHAR" length="100" not-null="true"/>
+        </property>
+        
+        <property name="sourceFieldType">
+            <column name="source_field_type" sql-type="CHAR" length="100" not-null="false"/>
+        </property>
+        
+        
+        <property name="indexField">
+            <column name="index_field" sql-type="CHAR" length="100" not-null="false"/>
+        </property>
+
+        <property name="indexFieldType">
+            <column name="index_field_type" not-null="false"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.IndexFieldType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <property name="indexFieldCommentary">
+            <column name="index_field_commentary" sql-type="CHAR" length="100" not-null="false"/>
+        </property>
+
+        <property name="isId">
+            <column name="is_id" sql-type="tinyint" length="1" not-null="false"/>
+        </property>
+
+        <many-to-one name="configuration" insert="false" lazy="false" class="ru.skuptsov.sphinx.console.coordinator.model.Configuration">
+            <column name="configuration_id" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

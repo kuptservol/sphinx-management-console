@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../../changesets.properties</jsonPropsFilePath>
+    <command id="20150331-1">
+        <methodName>adminProcesses/add</methodName>
+        <jsonFilePath>json/addCoordinatorServer.json</jsonFilePath>
+    </command>
+    <command id="20150331-2">
+        <methodName>adminProcesses/add</methodName>
+        <jsonFilePath>json/addSearchingAgentServer.json</jsonFilePath>
+    </command>
+</changeset>

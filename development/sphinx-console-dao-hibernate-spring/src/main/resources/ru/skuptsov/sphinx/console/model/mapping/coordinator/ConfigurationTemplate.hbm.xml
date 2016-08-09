@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationTemplate" table="CONFIGURATION_TEMPLATE">
+         <id name="id" type="java.lang.Long">
+            <column name="configuration_template_id" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="name">
+            <column name="name" not-null="true"/>
+        </property>
+        
+        <property name="description">
+            <column name="description" not-null="false"/>
+        </property>
+
+        <property name="defaultTemplate">
+            <column name="is_default" not-null="false"/>
+        </property>
+
+        <property name="systemTemplate">
+            <column name="is_system" not-null="false"/>
+        </property>
+
+        <property name="type" column="type" not-null="false">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.ConfigurationType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        
+        <property name="collectionType">
+            <column name="collection_type" not-null="false"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.CollectionRoleType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        
+        <set name="configurationFields" table="CONFIGURATION_FIELDS" cascade="all"
+            lazy="false" inverse="false">
+            <key column="CONFIGURATION_TEMPLATE_ID" not-null="true"></key>
+            <one-to-many class="ru.skuptsov.sphinx.console.coordinator.model.ConfigurationFields" />
+        </set>
+
+    </class>
+</hibernate-mapping>

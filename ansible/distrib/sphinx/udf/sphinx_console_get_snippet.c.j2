@@ -1,0 +1,189 @@
+#include <stdio.h> /* required for file operations */
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <dirent.h>
+
+#include "sphinxudf.h"
+
+// our library will be called sphinx-console_get_snippet.so, thus, so it must define
+// a version function named sphinx-console_get_snippet_ver()
+int sphinx-console_get_snippet_ver() {
+    return SPH_UDF_VERSION;
+}
+
+int sphinx-console_get_snippet_init(SPH_UDF_INIT *init, SPH_UDF_ARGS *args, char *error_message) {
+    if ( args->arg_count != 3 ) {
+        snprintf(error_message, SPH_UDF_ERROR_LEN, "sphinx-console_get_snippet() takes 3 arguments");
+        return 1;
+    }
+
+    return 0;
+}
+
+bool starts_with(const char *pre, const char *str) {
+    size_t lenpre = strlen(pre),
+            lenstr = strlen(str);
+    return lenstr < lenpre ? false : strncmp(pre, str, lenpre) == 0;
+}
+
+char* add_replica_to_collection_name(char *folder_name, char *collectionName) {
+    DIR *dp;
+    struct dirent *ep;
+    dp = opendir(folder_name);
+
+    char *tmp = calloc(strlen(collectionName) + 2, sizeof(char));
+    snprintf(tmp, strlen(collectionName) + 2, "%s_", collectionName);
+
+    if (dp != NULL) {
+        while (ep = readdir (dp)) {
+            if(starts_with(tmp, ep->d_name)) {
+                free(tmp);
+                return ep->d_name;
+            }
+        }
+
+        (void) closedir(dp);
+    }
+    else {
+        perror ("Couldn't open the directory");
+    }
+
+    free(tmp);
+    return (char *)NULL;
+}
+
+char* read_file(char *file_name, SPH_UDF_ARGS *args) {
+    char *res;
+    size_t n_read;
+    long lSize;
+
+    FILE* file;
+    file = fopen(file_name, "rb");
+    if(file == NULL) {
+        return (char*) NULL;
+    }
+
+    // obtain file size:
+    fseek (file , 0 , SEEK_END);
+    lSize = ftell (file);
+    rewind (file);
+
+    // allocate mem storage
+    res = (char *)args->fn_malloc(sizeof(char)*lSize + 1);
+    if (res == NULL) {
+        fclose (file);
+        return (char *)NULL;
+    }
+    memset(res, 0, lSize + 1);
+
+    /**
+    * Read the contents of a file into a buffer. Return the size of the file
+    * and set buf to point to a buffer allocated with malloc that contains
+    * the file contents.
+    */
+    n_read = fread (res, 1, lSize, file);
+    res[strlen(res)] = '\0';
+
+    /* the whole file is now loaded in the memory buffer. */
+    // terminate
+    fclose (file);
+
+    if (n_read != lSize) {
+        return (char*)NULL;
+    }
+
+    return res;
+}
+
+char* get_id_str(long long *id, char *idStr) {
+    //long max -3 char = 18 char
+    idStr = (char *)calloc(20, sizeof(char));
+
+    sprintf(idStr, "%lld", *id);
+
+    return idStr;
+}
+
+char* get_folders_by_idStr(char *path, char *idStr) {
+    //long max -3 char + path symbols '/' = 25
+    path = (char *)calloc(27, sizeof(char));
+
+    int idLength = strlen(idStr);
+
+    int i = 0, pathIdx = 0;
+    if(idLength < 12) {
+        for(; i < (idLength > 3 ? 12 - idLength : 9) ; i++) {
+            if(i % 3 == 0) {
+                path[pathIdx] = '/';
+                pathIdx++;
+            }
+            path[pathIdx] ='0';
+            pathIdx++;
+        }
+    } else if(idLength > 12 && idLength % 3 != 0) {
+        for(; i < 3 - (idLength % 3); i++) {
+            if(i % 3 == 0) {
+                path[pathIdx] = '/';
+                pathIdx++;
+            }
+            path[pathIdx] ='0';
+            pathIdx++;
+        }
+    }
+
+    int startPrefix = 3 - (idLength % 3);
+    i = 0;
+    for(; i < idLength - 3; i++) {
+        if((i + startPrefix) % 3 == 0) {
+            path[pathIdx] = '/';
+            pathIdx++;
+        }
+        path[pathIdx] = idStr[i];
+        pathIdx++;
+    }
+
+    return path;
+}
+
+char* get_snippet_file_path(long long *id, char *collectionName, char *fieldName) {
+    char *prefix = "{{snippet_path}}/searching/", *idStr = "", *path, *idFolders = "";
+
+    idStr = get_id_str(id, idStr);
+    idFolders = get_folders_by_idStr(idFolders, idStr);
+    collectionName = add_replica_to_collection_name(prefix, collectionName);
+    if(collectionName == NULL) {
+        return (char *)NULL;
+    }
+
+    int pathLength = strlen(prefix) + strlen(collectionName) + strlen(idFolders) + 1 + strlen(fieldName) + 1 + strlen(idStr) + 5;
+    path = (char *) calloc(pathLength, sizeof(char));
+
+    snprintf(path, pathLength, "%s%s%s/%s/%s.txt\000", prefix, collectionName, idFolders, fieldName, idStr);
+
+    free(idStr);
+    free(idFolders);
+//    free((char *)prefix);
+
+    return (char*)path;
+}
+
+char* sphinx-console_get_snippet(SPH_UDF_INIT *init, SPH_UDF_ARGS *args, char *error_flag) {
+    char* path;
+
+    path = get_snippet_file_path((long long *)args->arg_values[0], (char *)args->arg_values[1], (char *)args->arg_values[2]);
+
+    char* fileContent = read_file(path, args);
+
+    free(path);
+
+    return fileContent;
+}
+
+void sphinx-console_get_snippet_deinit(SPH_UDF_INIT *init) {
+    // deallocate storage
+//     if ( init->func_data ) {
+//         free ( init->func_data );
+//         init->func_data = NULL;
+//     }
+}

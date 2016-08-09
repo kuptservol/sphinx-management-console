@@ -1,0 +1,9 @@
+{
+    "collectionName" : "test_collection_delta_main_distributed_server",
+    "replicaNumber" : 3,
+    "server" : null,
+    "searchPort" : null,
+    "distributedPort" : null,
+    "searchServerStatus" : false,
+    "collectionType" : null
+}

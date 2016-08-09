@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../changesets.properties</jsonPropsFilePath>
+    <changesetLink>
+        <changesetFilePath>prepare/prepare.xml</changesetFilePath>
+    </changesetLink>
+    <changesetLink>
+        <changesetFilePath>ft_quick_search/ft_quick_search.xml</changesetFilePath>
+    </changesetLink>
+    <changesetLink>
+        <changesetFilePath>hm_address_search_index/hm_address_search_index.xml</changesetFilePath>
+    </changesetLink>
+    <changesetLink>
+        <changesetFilePath>hcs_or/hcs_or.xml</changesetFilePath>
+    </changesetLink>
+</changeset>

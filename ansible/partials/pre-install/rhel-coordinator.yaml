@@ -1,0 +1,9 @@
+---
+- yum: name=http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm state=present
+  sudo: yes
+- yum: name=mysql-community-server state=latest
+  sudo: yes
+- service: name=mysqld state=started
+  sudo: yes
+- command: chkconfig --level 345 mysqld on
+  sudo: yes

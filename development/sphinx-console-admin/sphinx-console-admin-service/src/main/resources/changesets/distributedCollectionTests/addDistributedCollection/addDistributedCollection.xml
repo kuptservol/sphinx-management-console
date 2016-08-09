@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<changeset>
+    <jsonPropsFilePath>../../changesets.properties</jsonPropsFilePath>
+    <changesetLink>
+        <changesetFilePath>prepare/prepare.xml</changesetFilePath>
+    </changesetLink>
+    <changesetLink>
+        <changesetFilePath>add/add.xml</changesetFilePath>
+    </changesetLink>
+</changeset>

@@ -1,0 +1,9 @@
+{
+    "collectionName" : "test_collection_simple_one_server",
+    "replicaNumber" : 1,
+    "server" : null,
+    "searchPort" : 9312,
+    "distributedPort" : null,
+    "searchServerStatus" : false,
+    "collectionType" : null
+}

@@ -1,0 +1,75 @@
+---
+#
+# Ставит админку (sphinx-console-admin.jar + скрипт в /usr/local/bin)
+#
+# Обновляет скрипты, запускающие сервисы:
+#   /opt/sphinx-console/coordinator/bin/sphinx-console-coordinator
+#
+# Передеплоивает:
+#   /opt/sphinx-console/coordinator/webapps/sphinx-console-coordinator.war
+#   /opt/sphinx-console/coordinator/webapps/sphinx-console-web.war
+#
+- name: Stop sphinx-console Coordinator (if exists)
+  command: "nohup {{service_path}} sphinx-console-coordinator stop"
+  ignore_errors: yes
+
+- file: path={{coordinator_path}}/webapps state=absent
+- file: path={{coordinator_path}}/webapps state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+
+
+# Installs coordinator and web UI
+- file: path={{conf_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- file: path={{conf_path}}/templates state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+- template: src={{dist_dir}}/conf/templates/{{ item }}.j2  dest={{conf_path}}/templates/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - sphinx_service_conf.vm
+    - sphinx_distributed_conf.vm
+    - sphinx_conf.vm
+
+- copy: src={{dist_dir}}/conf/{{ item }} dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - admin-retry.properties
+    - messages_en_US.properties
+    - messages_ru_RU.properties
+    - scheduled-cache.properties
+
+- template: src={{dist_dir}}/conf/{{ item }}.j2 dest={{conf_path}}/{{ item }} owner={{sw_user}} group={{sw_group}} mode="0644"
+  with_items:
+    - admin.properties
+    - admin-jdbc.properties
+    - sphinx.properties
+
+- copy: src={{dist_dir}}/coordinator/webapps/sphinx-console-coordinator.war dest={{coordinator_path}}/webapps/sphinx-console-coordinator.war owner={{sw_user}} group={{sw_group}} mode="0644"
+
+- copy: src={{dist_dir}}/coordinator/webapps/sphinx-console-web.war dest={{coordinator_path}}/webapps/sphinx-console-web.zip owner={{sw_user}} group={{sw_group}} mode="0644"
+
+# name: Prepare dir for web ui contents and unpack it
+- file: path={{coordinator_path}}/webapps/sphinx-console-web state=directory owner={{sw_user}} group={{sw_group}} mode="0644"
+- unarchive: src={{coordinator_path}}/webapps/sphinx-console-web.zip dest={{coordinator_path}}/webapps/sphinx-console-web copy=no owner={{sw_user}} group={{sw_group}} mode="0644"
+  when: not check_mode
+- command: "mv {{coordinator_path}}/webapps/sphinx-console-web.zip {{coordinator_path}}/webapps/sphinx-console-web.war"
+- command: "chmod -R a+x {{coordinator_path}}/webapps/sphinx-console-web/"
+
+# name: Configure webapps
+- template: src={{dist_dir}}/coordinator/webapps/sphinx-console-web/sphinx-console/app/util/Utilities.js.j2 dest={{coordinator_path}}/webapps/sphinx-console-web/sphinx-console/app/util/Utilities.js owner={{sw_user}} group={{sw_group}} mode="0644"
+- replace: dest={{coordinator_path}}/webapps/sphinx-console-web/sphinx-console/app/view/Viewport.js regexp='{{ui_title_pattern}}' replace='{{ui_title_replacement}}' backup=no
+
+# Create coordinator service
+- template: src={{dist_dir}}/coordinator/bin/sphinx-console-coordinator.j2 dest=/etc/init.d/sphinx-console-coordinator owner={{sw_user}} group={{sw_group}} mode="0755"
+- command: "chkconfig --add sphinx-console-coordinator"
+
+# Install admin
+- file: path={{admin_path}} state=directory owner={{sw_user}} group={{sw_group}} mode="0755"
+
+- copy: src={{dist_dir}}/admin/sphinx-console-admin.jar dest={{admin_path}}/sphinx-console-admin.jar owner={{sw_user}} group={{sw_group}} mode="0644"
+
+- template: src={{dist_dir}}/bin/sphinx-console-admin.j2 dest={{admin_script_path}} owner={{sw_user}} group={{sw_group}} mode="0755"
+
+- command: "chown -R {{sw_user}} {{sphinx-console_path}}"
+
+- name: Start sphinx-console Coordinator
+  when: not check_mode
+  command: "setsid /etc/init.d/sphinx-console-coordinator start &"
+  #service: name=sphinx-console-coordinator state=started sleep=10 pattern="catalina.home={{coordinator_path}}"
+
+- pause: seconds=2

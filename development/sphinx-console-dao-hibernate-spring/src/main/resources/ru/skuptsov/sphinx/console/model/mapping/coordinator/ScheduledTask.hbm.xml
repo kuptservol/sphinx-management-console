@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.skuptsov.sphinx.console.coordinator.model.ScheduledTask" table="SCHEDULED_TASK">
+        <id name="id" type="java.lang.Long">
+            <column name="scheduled_task_id" />
+            <generator class="increment" />
+        </id>
+        
+        <property name="cronSchedule">
+            <column name="cron_schedule" sql-type="char" length="10" not-null="false"/>
+        </property>
+
+        <property name="type">
+            <column name="task_name" not-null="true"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">ru.skuptsov.sphinx.console.coordinator.model.ScheduledTaskType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <property name="isEnabled">
+            <column name="is_enabled" sql-type="yes_no" not-null="true"/>
+        </property>
+
+        <many-to-one name="collection" class="ru.skuptsov.sphinx.console.coordinator.model.Collection" lazy="false">
+            <column name="collection_id" not-null="false"/>
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>
